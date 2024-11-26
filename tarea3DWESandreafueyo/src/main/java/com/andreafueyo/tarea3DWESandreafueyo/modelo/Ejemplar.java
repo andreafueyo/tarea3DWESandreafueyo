@@ -1,5 +1,6 @@
 package com.andreafueyo.tarea3DWESandreafueyo.modelo;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,43 +11,37 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="plantas")
+@Table(name="ejemplares")
 
-public class Planta {
-
+public class Ejemplar implements Serializable{
+	
+	private static final long serialVersionUID=1L;
+	
 	@Id
-	/*autoincrement*/
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique=true)
-	private String codigo;
-	
 	@Column
-	private String nombrecomun;
+	private String nombre;
 	
-	@Column
-	private String nombrecientifico;
-	
-	@OneToMany(cascade= CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="idplanta")
-	private List<Ejemplar> ejemplaresEjemplars = new LinkedList<Ejemplar>();
+	private Planta planta;
 	
-	public Planta() {}
+//	@OneToMany
+//	(cascade = CascadeType.ALL)
+//	@JoinColumn(name="idejemplar")
+//	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
+	
+	public Ejemplar() {}
 	
 	public Long getId() {
 		return id;
 	}
 	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getNombrecomun() {
-		return nombrecomun;
-	}
 }
