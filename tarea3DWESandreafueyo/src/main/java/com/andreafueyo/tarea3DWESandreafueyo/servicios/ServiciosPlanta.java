@@ -1,7 +1,10 @@
 package com.andreafueyo.tarea3DWESandreafueyo.servicios;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.CallbackPreferringPlatformTransactionManager;
 
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.repositorios.PlantaRepository;
@@ -13,13 +16,26 @@ public class ServiciosPlanta {
 	private PlantaRepository plantarepo;
 	
 	public boolean validarPlanta(Planta p) {
-		if (plantarepo.existeCodigo(p))
+		if (plantarepo.existeCodigo(p)) {
 			return false;
-		return false;
+		}
+		return true;
 	}
 	
 	
 	public void insertarPlanta(Planta p) {
 		plantarepo.saveAndFlush(p);
+	}
+	
+	public int modificar(Planta p) {
+		return plantarepo.modificar(p);
+	}
+
+//	public Planta findByCod(String cod) {
+//		return plantarepo.findByCod(cod);
+//	}
+	
+	public List<Planta> findAll() {
+		return plantarepo.findAll();
 	}
 }
