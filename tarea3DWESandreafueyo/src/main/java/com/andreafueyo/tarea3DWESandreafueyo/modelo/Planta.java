@@ -34,7 +34,7 @@ public class Planta {
 	
 	@OneToMany(cascade= CascadeType.ALL)
 	@JoinColumn(name="idplanta")
-	private List<Ejemplar> ejemplaresEjemplars = new LinkedList<Ejemplar>();
+	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
 	
 	public Planta() {}
 	
@@ -49,4 +49,40 @@ public class Planta {
 	public String getNombrecomun() {
 		return nombrecomun;
 	}
+
+	public void setNombrecomun(String nombrecomun) {
+		this.nombrecomun = nombrecomun;
+	}
+
+	public String getNombrecientifico() {
+		return nombrecientifico;
+	}
+
+	public void setNombrecientifico(String nombrecientifico) {
+		this.nombrecientifico = nombrecientifico;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public void setEjemplares(List<Ejemplar> ejemplares) {
+		this.ejemplares = ejemplares;
+	}
+
+	public List<Ejemplar> getEjemplares() {
+		return ejemplares;
+	}
+
+	public void setEjemplaresEjemplars(List<Ejemplar> ejemplares) {
+		this.ejemplares = ejemplares;
+	}
+
+	
+	
+	
 }

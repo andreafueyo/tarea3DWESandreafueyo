@@ -10,15 +10,14 @@ import com.andreafueyo.tarea3DWESandreafueyo.repositorios.PlantaRepository;
 public class ServiciosPlanta {
 
 	@Autowired
-	PlantaRepository plantarepo;
-	
-//	@Autowired
-//	ServiciosEjemplar servejemplar;
+	private PlantaRepository plantarepo;
 	
 	public boolean validarPlanta(Planta p) {
-	
-		return true;
+		if (plantarepo.existeCodigo(p))
+			return false;
+		return false;
 	}
+	
 	
 	public void insertarPlanta(Planta p) {
 		plantarepo.saveAndFlush(p);
