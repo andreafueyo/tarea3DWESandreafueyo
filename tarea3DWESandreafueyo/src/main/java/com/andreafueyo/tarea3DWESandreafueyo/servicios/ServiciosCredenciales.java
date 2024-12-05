@@ -7,7 +7,9 @@ import com.andreafueyo.tarea3DWESandreafueyo.repositorios.CredencialesRepository
 
 @Service
 public class ServiciosCredenciales {
+	
 	@Autowired
 	CredencialesRepository credencialesrepo;
 
+	
 }

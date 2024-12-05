@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 
 
@@ -16,20 +17,15 @@ import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 public interface PlantaRepository extends JpaRepository<Planta, Long>{
 
 	default boolean existeCodigo(Planta p) {
-	List<Planta> listaplantas = findAll();
-	for(Planta aux:listaplantas) {
-		if(p.getCodigo().equals(aux.getCodigo()))
-				return true;
-	}
+		List<Planta> listaplantas = findAll();
+		for(Planta aux:listaplantas) {
+			if(aux.getCodigo() != null && p.getCodigo().equals(aux.getCodigo()))
+					return true;
+		}
 		return false;
 	}
 	
-	@Modifying
-	@Query("UPDATE Planta p SET p.nombreComun = :planta.nombreComun, p.nombreCientifico = :planta.nombreCientifico WHERE p.id = :planta.id")
-	int modificar(@Param("planta") Planta p);
-
-	
-//	default Planta findByCod(String cod) {
-//		
-//	}
+	@Query("SELECT p FROM Planta p WHERE p.codigo = : cod")
+	Planta findByCod(@Param("cod") String cod);
+			
 }

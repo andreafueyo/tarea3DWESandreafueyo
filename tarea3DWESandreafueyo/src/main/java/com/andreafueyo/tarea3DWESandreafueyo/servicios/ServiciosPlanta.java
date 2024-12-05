@@ -24,16 +24,16 @@ public class ServiciosPlanta {
 	
 	
 	public void insertarPlanta(Planta p) {
-		plantarepo.saveAndFlush(p);
+		Planta planta =  plantarepo.saveAndFlush(p);
 	}
 	
-	public int modificar(Planta p) {
-		return plantarepo.modificar(p);
+	public Planta modificar(Planta p) {
+		return plantarepo.saveAndFlush(p);
 	}
 
-//	public Planta findByCod(String cod) {
-//		return plantarepo.findByCod(cod);
-//	}
+	public Planta findByCod(String cod) {
+		return plantarepo.findByCod(cod);
+	}
 	
 	public List<Planta> findAll() {
 		return plantarepo.findAll();

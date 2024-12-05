@@ -31,24 +31,27 @@ public class Principal implements CommandLineRunner {
 		//Log.info("------------------------");
 		
 		Planta p1 = new Planta();
-		p1.setNombrecomun("GIRASOL");
+		p1.setCodigo("312");
+		p1.setNombrecomun("MARGARITA");
 		p1.setNombrecientifico("Pipa pipae");
 		
 		if(!servplanta.validarPlanta(p1))
 			System.out.println("El código ya existe.");
 		
-		Ejemplar ej1 = new Ejemplar();
-		ej1.setPlanta(p1);
-		p1.getEjemplares().add(ej1);
+//		Ejemplar ej1 = new Ejemplar();
+//		ej1.setId((long) 1);
+//		ej1.setPlanta(p1);
+//		p1.getEjemplares().add(ej1);
 		
 		
 		//servplant.validarPlanta(p1);
 		
 		servplanta.insertarPlanta(p1);
 		
-		String nombreejemplar = p1.getNombrecomun().toUpperCase()+"_"+p1.getNombrecientifico();
-		ej1.setNombre(nombreejemplar);
-		servejemplar.actualizar(ej1);
+		//String nombreejemplar = p1.getNombrecomun().toUpperCase()+"_"+p1.getNombrecientifico();
+//		String nombreejemplar = "test 312";
+//		ej1.setNombre(nombreejemplar);
+//		servejemplar.actualizar(ej1);
 		
 		System.out.println("--------------");
 		

@@ -43,9 +43,5 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 		return findAll((Sort.by(Sort.Direction.DESC, "id")));
 	}
 
-//	public S saveAndFlush(Ejemplar e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 }
