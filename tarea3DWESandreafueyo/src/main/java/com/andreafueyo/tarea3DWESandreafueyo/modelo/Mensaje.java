@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +27,14 @@ public class Mensaje implements Serializable{
 	
 	@Column 
 	private String mensaje;
+	
+	@ManyToOne
+	@JoinColumn(name="idejemplar")
+	private Ejemplar ejemplar;
+	
+	@ManyToOne
+	@JoinColumn(name="idpersona")
+	private Persona persona;
 
 	public Long getId() {
 		return id;
@@ -50,9 +60,20 @@ public class Mensaje implements Serializable{
 		this.mensaje = mensaje;
 	}
 	
+	public void setEjemplar(Ejemplar ejemplar) {
+		this.ejemplar = ejemplar;
+	}
 	
+	public Ejemplar getEjemplar() {
+		return ejemplar;
+	}
 	
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
 	
-	
-	
+	public Persona getPersona() {
+		return persona;
+	}
+		
 }

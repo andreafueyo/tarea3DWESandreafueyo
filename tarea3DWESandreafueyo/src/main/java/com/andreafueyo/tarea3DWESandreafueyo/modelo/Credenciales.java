@@ -7,12 +7,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="credenciales")
 	public class Credenciales implements Serializable {
-
 
 		private static final long serialVersionUID = 1L;
 		
@@ -26,6 +28,10 @@ import jakarta.persistence.Table;
 		
 		@Column 
 		private String password;
+		
+		@OneToOne
+		@JoinColumn(name="idpersona")
+		private Persona persona;
 		
 		
 		public Credenciales() {}
@@ -42,7 +48,23 @@ import jakarta.persistence.Table;
 			return usuario;
 		}
 		
-		public void setNombre(String password) {
+		public void setUsuario(String usuario) {
+			this.usuario = usuario;
+		}
+		
+		public String getPassword() {
+			return password;
+		}
+		
+		public void setPassword(String password) {
 			this.password = password;
-	}
+		}
+		
+		public Persona getPersona() {
+			return persona;
+		}
+
+		public void setPersona(Persona persona) {
+			this.persona = persona;
+		}
 }

@@ -15,7 +15,7 @@ public interface PersonaRepository extends JpaRepository<Persona, Long>{
 	Persona findByEmail(@Param("email") String email);
 	
 	@Query("SELECT p FROM Persona p WHERE p.id = : id")
-	Persona findById(@Param("id") int id);
+	Persona findByPersonaId(@Param("id") Long id);
 	
 	default boolean validarPersona(Persona p) { 
 		//si ya existe persona con ese email devuelve false

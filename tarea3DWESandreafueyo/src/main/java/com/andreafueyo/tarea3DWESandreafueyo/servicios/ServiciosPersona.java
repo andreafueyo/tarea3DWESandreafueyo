@@ -26,8 +26,8 @@ public class ServiciosPersona {
 		return personarepo.findByEmail(email);
 	}
 	
-	public Persona findById(int id) {
-		return personarepo.findById(id);
+	public Persona findById(Long id) {
+		return personarepo.findByPersonaId(id);
 	}
 
 	public Persona registrarPersona(String nombre,String email) {
