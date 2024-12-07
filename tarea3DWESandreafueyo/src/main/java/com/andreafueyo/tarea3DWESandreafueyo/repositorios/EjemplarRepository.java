@@ -23,11 +23,16 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 	@Query("SELECT Ejemplar e FROM Ejemplar e WHERE e.id = : id")
 	Ejemplar findEjemplaresById(@Param("id") Long id);
 	
+	@Query("SELECT MAX(id) FROM Ejemplar e")
+	Long findMaxId();
+	
+	@Query("SELECT Ejemplar e FROM Ejemplar e INNER JOIN e.planta p WHERE p.codigo IN :tipos")
+	List<Ejemplar> findByTipo(@Param("tipos") String tipos);
+	
 	@Transactional
 	@Modifying
 	@Query("UPDATE Ejemplar e SET e.nombre = :nombre WHERE e.id = :id")
 	int actualizarNombreEjemplar(@Param("id") Long id, @Param("nombre") String nombre);
-	
 	
 	default Long ultimoIdEjemplarByPlanta(Planta p) {
 		List<Ejemplar> lista = findAll();
@@ -45,6 +50,5 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 	default List<Ejemplar> todosEjemplaresDescendiente() {
 		return findAll((Sort.by(Sort.Direction.DESC, "id")));
 	}
-
 
 }

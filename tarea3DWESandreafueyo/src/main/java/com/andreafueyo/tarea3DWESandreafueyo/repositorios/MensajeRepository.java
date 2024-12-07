@@ -15,7 +15,7 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
 //	@Query("SELECT m FROM Mensaje m INNER JOIN plantas ON m.fk_ejemplaresMensajes = plantas.codigo WHERE plantas.nombreComun =: tipo")
 //	List<Mensaje> findByTipo(@Param("tipo") String tipo);
 	
-	@Query("SELECT m FROM Mensaje m INNER JOIN ejemplares ON mensajes.idejemplar = ejemplares.id WHERE ejemplares.id=: idejemplar")
+	@Query("SELECT m FROM Mensaje m INNER JOIN m.ejemplar e WHERE e.id = :idejemplar")
 	List<Mensaje> findByEjemplar(@Param("idejemplar") Long idejemplar);
 	
 }
