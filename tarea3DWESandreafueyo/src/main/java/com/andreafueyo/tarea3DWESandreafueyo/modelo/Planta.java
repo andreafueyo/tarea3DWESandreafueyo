@@ -82,7 +82,14 @@ public class Planta {
 		this.ejemplares = ejemplares;
 	}
 
-	
+	@Override
+	public String toString() {
+		String ret = "";
+		ret += "Codigo de planta: " + this.codigo;
+		ret += "\nNombre científico: " + this.nombrecientifico;
+		ret += "\nNombre común: " + this.nombrecomun;
+		return ret;
+	}
 	
 	
 }

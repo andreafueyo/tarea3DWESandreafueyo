@@ -36,8 +36,17 @@ public class Principal implements CommandLineRunner {
 		System.out.println("Programa de gestión de un invernadero");
 		
 		portal.mostrarMenuPrincipal();
-		
-		
+				
+//		Planta p1 = new Planta();
+//		p1.setCodigo("314");
+//		p1.setNombrecomun("MARGARITA");
+//		p1.setNombrecientifico("Pipa pipae");
+//		
+//		if(!servplanta.validarPlanta(p1))
+//			System.out.println("El código ya existe.");
+//		
+//
+//		servplanta.insertarPlanta(p1);
 		
 		
 		
