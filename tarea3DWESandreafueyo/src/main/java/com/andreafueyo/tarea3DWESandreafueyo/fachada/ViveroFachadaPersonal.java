@@ -3,6 +3,10 @@ package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
 
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
@@ -11,24 +15,41 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
+@Component
 public class ViveroFachadaPersonal {
 	
 		Scanner in = new Scanner(System.in);
 	
 		private static ViveroFachadaPersonal personal;
 		
-		private static ViveroFachadaPrincipal portal = ViveroFachadaPrincipal.getPortal();
-		private static ViveroFachadaGestionEjemplares gestEjemp = ViveroFachadaGestionEjemplares.getPortal();
-		private static ViveroFachadaGestionMensajes gestMens = ViveroFachadaGestionMensajes.getPortal();
+		@Autowired
+	    @Lazy
+		private static ViveroFachadaAdmin admin;
 		
-		ViveroServiciosConexion conServicios = ViveroServiciosConexion.getServicios();
+		@Autowired
+	    @Lazy
+		private static ViveroFachadaPrincipal portal;
+		@Autowired
+	    @Lazy
+		private static ViveroFachadaGestionEjemplares gestEjemp;
+		@Autowired
+	    @Lazy
+		private static ViveroFachadaGestionMensajes gestMens;
+		
+		@Autowired
+	    @Lazy
+		ViveroServiciosConexion conServicios;
 
-		
-		ServiciosCredenciales crServ = conServicios.getServiciosCredenciales();
-		ServiciosEjemplar ejServ = conServicios.getServiciosEjemplar();
-		ServiciosMensaje menServ = conServicios.getServiciosMensaje();
-		ServiciosPersona perServ = conServicios.getServiciosPersona();
-		ServiciosPlanta plServ = conServicios.getServiciosPlanta();
+		@Autowired
+		ServiciosCredenciales crServ;
+		@Autowired
+		ServiciosEjemplar ejServ;
+		@Autowired
+		ServiciosMensaje menServ;
+		@Autowired
+		ServiciosPersona perServ;
+		@Autowired
+		ServiciosPlanta plServ;
 		
 		
 		

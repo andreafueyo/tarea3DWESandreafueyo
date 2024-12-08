@@ -3,6 +3,10 @@ package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
 
@@ -12,25 +16,42 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 
+@Component
 public class ViveroFachadaAdmin {
 
 	Scanner in = new Scanner(System.in);
 	
+	@Autowired
+    @Lazy
 	private static ViveroFachadaAdmin admin;
 	
-	private static ViveroFachadaPrincipal portal = ViveroFachadaPrincipal.getPortal();
-	private static ViveroFachadaGestionEjemplares gestEjemp = ViveroFachadaGestionEjemplares.getPortal();
-	private static ViveroFachadaGestionMensajes gestMens = ViveroFachadaGestionMensajes.getPortal();
-	private static ViveroFachadaGestionPlantas gestPlantas = ViveroFachadaGestionPlantas.getPortal();
+	@Autowired
+    @Lazy
+	private static ViveroFachadaPrincipal portal;
+	@Autowired
+    @Lazy
+	private static ViveroFachadaGestionEjemplares gestEjemp;
+	@Autowired
+    @Lazy
+	private static ViveroFachadaGestionMensajes gestMens;
+	@Autowired
+    @Lazy
+	private static ViveroFachadaGestionPlantas gestPlantas;
 	
-	ViveroServiciosConexion conServicios = ViveroServiciosConexion.getServicios();
+	@Autowired
+    @Lazy
+	ViveroServiciosConexion conServicios;
 
-	
-	ServiciosCredenciales crServ = conServicios.getServiciosCredenciales();
-	ServiciosEjemplar ejServ = conServicios.getServiciosEjemplar();
-	ServiciosMensaje menServ = conServicios.getServiciosMensaje();
-	ServiciosPersona perServ = conServicios.getServiciosPersona();
-	ServiciosPlanta plServ = conServicios.getServiciosPlanta();
+	@Autowired
+	ServiciosCredenciales crServ;
+	@Autowired
+	ServiciosEjemplar ejServ;
+	@Autowired
+	ServiciosMensaje menServ;
+	@Autowired
+	ServiciosPersona perServ;
+	@Autowired
+	ServiciosPlanta plServ;
 	
 	
 	

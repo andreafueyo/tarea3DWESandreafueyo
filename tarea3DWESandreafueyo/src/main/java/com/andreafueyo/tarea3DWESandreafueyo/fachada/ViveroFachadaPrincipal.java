@@ -4,6 +4,10 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
@@ -15,22 +19,37 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
 
-
+@Component
 public class ViveroFachadaPrincipal {
 	
-	private static ViveroFachadaPrincipal portal;
-	private static ViveroFachadaPersonal personal = ViveroFachadaPersonal.getPortal();
-	private static ViveroFachadaAdmin admin = ViveroFachadaAdmin.getPortal();
-	
 	private Credenciales credencial;
+		
+	@Autowired
+    @Lazy
+	private static ViveroFachadaAdmin admin;
 	
-	ViveroServiciosConexion conServicios = ViveroServiciosConexion.getServicios();
+	@Autowired
+    @Lazy
+	private static ViveroFachadaPrincipal portal;
+	
+	@Autowired
+    @Lazy
+	private static ViveroFachadaPersonal personal;
+	
+	@Autowired
+    @Lazy
+	ViveroServiciosConexion conServicios;
 
-	ServiciosCredenciales crServ = conServicios.getServiciosCredenciales();
-	ServiciosEjemplar ejServ = conServicios.getServiciosEjemplar();
-	ServiciosMensaje menServ = conServicios.getServiciosMensaje();
-	ServiciosPersona perServ = conServicios.getServiciosPersona();
-	ServiciosPlanta plServ = conServicios.getServiciosPlanta();
+	@Autowired
+	ServiciosCredenciales crServ;
+	@Autowired
+	ServiciosEjemplar ejServ;
+	@Autowired
+	ServiciosMensaje menServ;
+	@Autowired
+	ServiciosPersona perServ;
+	@Autowired
+	ServiciosPlanta plServ;
 	
 	Scanner in = new Scanner(System.in);
 	
@@ -125,7 +144,7 @@ public class ViveroFachadaPrincipal {
 	public void mostarPlantas() {
 		System.out.println();
 		System.out.println("Estas son las plantas: ");
-	 	List<Planta> listaPlantas = Controlador.getServicios().getServPlanta().findAll();
+	 	List<Planta> listaPlantas = Controlador.getServicios().getServPlanta().verPlantas();
 		
 		int contador = 1;
 	 	for(Planta p : listaPlantas) {

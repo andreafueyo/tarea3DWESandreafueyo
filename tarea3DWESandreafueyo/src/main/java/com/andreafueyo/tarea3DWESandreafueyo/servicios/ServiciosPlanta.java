@@ -35,7 +35,7 @@ public class ServiciosPlanta {
 		return plantarepo.findByCod(cod);
 	}
 	
-	public List<Planta> findAll() {
-		return plantarepo.findAllByOrderByCodigoAsc();
+	public List<Planta> verPlantas() {
+		return plantarepo.findAllByOrderByNombrecientificoAsc();
 	}
 }

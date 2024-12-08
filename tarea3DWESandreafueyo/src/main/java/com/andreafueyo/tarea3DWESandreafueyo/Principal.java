@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
@@ -14,6 +15,7 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
 
 //NUESTRA CAPA DE VISTA
+@Component
 public class Principal implements CommandLineRunner {
 
 	@Autowired
@@ -35,6 +37,10 @@ public class Principal implements CommandLineRunner {
 	
 		System.out.println("Programa de gestión de un invernadero");
 		
+		Planta p =servplanta.findByCod("314");
+		
+		System.out.println(servplanta.validarPlanta(p));
+			
 		portal.mostrarMenuPrincipal();
 				
 //		Planta p1 = new Planta();

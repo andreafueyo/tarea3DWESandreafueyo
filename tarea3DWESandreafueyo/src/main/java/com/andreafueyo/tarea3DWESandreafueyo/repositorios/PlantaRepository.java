@@ -19,6 +19,7 @@ public interface PlantaRepository extends JpaRepository<Planta, Long>{
 
 	default boolean existeCodigo(Planta p) {
 		List<Planta> listaplantas = findAll();
+		System.out.println(listaplantas);
 		for(Planta aux:listaplantas) {
 			if(aux.getCodigo() != null && p.getCodigo().equals(aux.getCodigo()))
 					return true;
@@ -29,6 +30,7 @@ public interface PlantaRepository extends JpaRepository<Planta, Long>{
 	@Query("SELECT p FROM Planta p WHERE p.codigo = :cod")
 	Planta findByCod(@Param("cod") String cod);
 	
-	List<Planta> findAllByOrderByCodigoAsc();
+	List<Planta> findAllByOrderByNombrecientificoAsc();
+
 			
 }
