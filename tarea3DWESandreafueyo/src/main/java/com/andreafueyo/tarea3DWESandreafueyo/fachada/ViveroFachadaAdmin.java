@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
@@ -16,7 +16,7 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 
-@Component
+@Controller
 public class ViveroFachadaAdmin {
 
 	Scanner in = new Scanner(System.in);
@@ -52,6 +52,9 @@ public class ViveroFachadaAdmin {
 	ServiciosPersona perServ;
 	@Autowired
 	ServiciosPlanta plServ;
+	
+	@Autowired
+	Controlador controlador;
 	
 	
 	
@@ -131,7 +134,7 @@ public class ViveroFachadaAdmin {
 				System.out.println("Nombre o email no válidos. Introduzca de nuevo los datos sin espacios.");
 			}
 		} while (nombre.contains(" ") || email.contains(" ") || 
-				Controlador.getServicios().getServPersona().registrarPersona(nombre, email) == null);	
+				controlador.getServPersona().registrarPersona(nombre, email) == null);	
 		
 		String usuario;
 		String contrasena;
@@ -144,7 +147,7 @@ public class ViveroFachadaAdmin {
 			System.out.println("Usuario o contraseña no válidos. Introduzca de nuevo los datos sin espacios.");
 			}
 		} while (usuario.contains(" ") || contrasena.contains(" ") ||
-				Controlador.getServicios().getServCredenciales().registrarCredencial(usuario,contrasena, email) == null);
+				controlador.getServCredenciales().registrarCredencial(usuario,contrasena, email) == null);
 		
 	}
 	

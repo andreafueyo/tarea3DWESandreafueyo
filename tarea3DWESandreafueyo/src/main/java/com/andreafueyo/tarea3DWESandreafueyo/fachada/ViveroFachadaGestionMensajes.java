@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
@@ -16,7 +16,7 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
-@Component
+@Controller
 public class ViveroFachadaGestionMensajes {
 
 private static ViveroFachadaGestionMensajes gestMens;
@@ -41,6 +41,9 @@ private static ViveroFachadaGestionMensajes gestMens;
 	ServiciosPersona perServ;
 	@Autowired
 	ServiciosPlanta plServ;
+	
+	@Autowired
+	Controlador controlador;
 	
 	
 	public static ViveroFachadaGestionMensajes getPortal() {
@@ -87,7 +90,7 @@ private static ViveroFachadaGestionMensajes gestMens;
 
 		System.out.println("A continuación se muestran todos los ejemplares. Introduce el código del ejemplar para el que realizar una anotación.");
 		System.out.println();
-		Controlador.getServicios().getServEjemplar().mostrarEjemplares();
+		controlador.getServEjemplar().mostrarEjemplares();
 		System.out.println();
 		System.out.println("Código de ejemplar: ");
 		Long id_ej = (long) in.nextInt();
@@ -96,7 +99,7 @@ private static ViveroFachadaGestionMensajes gestMens;
 		System.out.println("Mensaje: ");
 		String mensaje = in.nextLine();
 
-		Controlador.getServicios().getServMensaje().registrarMensaje(id_ej, portal.getCredencial().getPersona().getId(), mensaje);
+		controlador.getServMensaje().registrarMensaje(id_ej, portal.getCredencial().getPersona().getId(), mensaje);
 		
 	}
 	

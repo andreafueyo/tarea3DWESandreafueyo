@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
 
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
@@ -15,7 +16,7 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
-@Component
+@Controller
 public class ViveroFachadaPersonal {
 	
 		Scanner in = new Scanner(System.in);
@@ -50,6 +51,9 @@ public class ViveroFachadaPersonal {
 		ServiciosPersona perServ;
 		@Autowired
 		ServiciosPlanta plServ;
+		
+		@Autowired
+		Controlador controlador;
 		
 		
 		

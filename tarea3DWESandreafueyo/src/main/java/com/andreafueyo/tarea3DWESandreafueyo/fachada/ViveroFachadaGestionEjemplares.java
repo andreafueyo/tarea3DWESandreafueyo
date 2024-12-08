@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
@@ -16,7 +16,7 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 
-@Component
+@Controller
 public class ViveroFachadaGestionEjemplares {
 	
 	Scanner in = new Scanner(System.in);
@@ -42,6 +42,9 @@ public class ViveroFachadaGestionEjemplares {
 	ServiciosPersona perServ;
 	@Autowired
 	ServiciosPlanta plServ;
+	
+	@Autowired
+	Controlador controlador;
 	
 	
 	public static ViveroFachadaGestionEjemplares getPortal() {
@@ -101,12 +104,12 @@ public class ViveroFachadaGestionEjemplares {
 		Planta pValidar = new Planta();
 		pValidar.setCodigo(cod_planta);
 		
-		while(!Controlador.getServicios().getServPlanta().validarPlanta(pValidar)) {
+		while(!controlador.getServPlanta().validarPlanta(pValidar)) {
 			System.out.println("Código de planta incorrecto, vuelva a intentarlo: ");
 			cod_planta = in.nextLine();
 		}
-		Planta p = Controlador.getServicios().getServPlanta().findByCod(cod_planta);
-		Controlador.getServicios().getServEjemplar().registrarEjemplar(p, portal.getCredencial().getPersona().getId());
+		Planta p = controlador.getServPlanta().findByCod(cod_planta);
+		controlador.getServEjemplar().registrarEjemplar(p, portal.getCredencial().getPersona().getId());
 				
 	}
 	
@@ -120,12 +123,12 @@ public class ViveroFachadaGestionEjemplares {
 	
 		System.out.println("A continuación se muestran todos los ejemplares. Introduce el código del ejemplar para el que mostrar sus mensajes.");
 		System.out.println();
-		Controlador.getServicios().getServEjemplar().mostrarEjemplares();
+		controlador.getServEjemplar().mostrarEjemplares();
 		System.out.println();
 		System.out.println("Código de ejemplar: ");
 		Long id_ej = (long) in.nextInt();
 
-		Controlador.getServicios().getServEjemplar().verMensajes(id_ej);
+		controlador.getServEjemplar().verMensajes(id_ej);
 				
 	}
 	

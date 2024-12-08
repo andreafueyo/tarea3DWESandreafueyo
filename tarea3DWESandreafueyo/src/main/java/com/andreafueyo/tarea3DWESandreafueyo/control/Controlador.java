@@ -1,36 +1,29 @@
 package com.andreafueyo.tarea3DWESandreafueyo.control;
 
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 
+@Service
 public class Controlador {
 	
-private static Controlador servicios;
-	
+	@Autowired
 	private ServiciosPlanta servPlanta;
+	@Autowired
 	private ServiciosCredenciales servCredenciales;
+	@Autowired
 	private ServiciosEjemplar servEjemplar;
+	@Autowired
 	private ServiciosMensaje servMensaje;
+	@Autowired
 	private ServiciosPersona servPersona;
-	
-	public static Controlador getServicios() {
-		if(servicios == null) 
-			servicios = new Controlador();
-		return servicios;
-	}
-	
-	private Controlador() {
-		servPlanta = new ServiciosPlanta();
-		servCredenciales = new ServiciosCredenciales();
-		servEjemplar = new ServiciosEjemplar();
-		servMensaje = new ServiciosMensaje();
-		servPersona = new ServiciosPersona();		
-	}
-
-	
+		
 	public ServiciosPlanta getServPlanta() {
 		return servPlanta;
 	}

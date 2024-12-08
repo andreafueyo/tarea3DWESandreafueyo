@@ -23,14 +23,14 @@ public class Principal implements CommandLineRunner {
 	
 	@Autowired
 	ServiciosPlanta servplanta;
+		
+	@Autowired
+	ViveroFachadaPrincipal portal;
 	
 	/*antes era nuestro main, ahora pongo INSTRUCCIONES*/
 	@Override
 	public void run(String... args) throws Exception {
-		
-		
-		ViveroFachadaPrincipal portal = ViveroFachadaPrincipal.getPortal();
-		
+				
 		Scanner in = new Scanner (System.in);
 		
 		System.out.println("INICIO");

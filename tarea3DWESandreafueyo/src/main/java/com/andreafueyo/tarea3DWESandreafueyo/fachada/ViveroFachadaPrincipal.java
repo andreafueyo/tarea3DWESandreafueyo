@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
@@ -19,46 +19,22 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
 
-@Component
+@Controller
 public class ViveroFachadaPrincipal {
 	
 	private Credenciales credencial;
-		
-	@Autowired
-    @Lazy
-	private static ViveroFachadaAdmin admin;
 	
 	@Autowired
-    @Lazy
-	private static ViveroFachadaPrincipal portal;
+	ViveroFachadaAdmin admin;
+	@Autowired
+	ViveroFachadaPersonal personal;
 	
 	@Autowired
-    @Lazy
-	private static ViveroFachadaPersonal personal;
-	
-	@Autowired
-    @Lazy
-	ViveroServiciosConexion conServicios;
-
-	@Autowired
-	ServiciosCredenciales crServ;
-	@Autowired
-	ServiciosEjemplar ejServ;
-	@Autowired
-	ServiciosMensaje menServ;
-	@Autowired
-	ServiciosPersona perServ;
-	@Autowired
-	ServiciosPlanta plServ;
+	Controlador controlador;
 	
 	Scanner in = new Scanner(System.in);
 	
-	
-	public static ViveroFachadaPrincipal getPortal() {
-		if (portal==null)
-				portal = new ViveroFachadaPrincipal();
-		return portal;
-	}
+
 	
 	public void mostrarMenuPrincipal() {
 		
@@ -80,10 +56,10 @@ public class ViveroFachadaPrincipal {
             }
             switch (opcion) {
             	case 1:
-            		portal.mostarPlantas();
+            		this.mostarPlantas();
             		break;
             	case 2:
-            		portal.mostrarMenuLogin();
+            		this.mostrarMenuLogin();
             		break;
             }
     		} catch (InputMismatchException e) {
@@ -100,24 +76,24 @@ public class ViveroFachadaPrincipal {
 		
 		if(c.getUsuario().equals("admin") && c.getPassword().equals("admin")) {
 			System.out.println("¡Hola, admin!, ¿qué desea hacer?");
-			ViveroFachadaPrincipal.admin.mostrarMenuAdmin();	
+			admin.mostrarMenuAdmin();	
 		}
 		else {
 			boolean loginCorrecto = false;
 			while(!loginCorrecto) {
-				if(!Controlador.getServicios().getServCredenciales().validarCredencialContraseña(c)) {
+				if(!controlador.getServCredenciales().validarCredencialContraseña(c)) {
 					System.out.println("Usuario o contraseña incorrectos, vuelva a introducir los datos.");
 					System.out.println();
 					c = this.pedirCredenciales();
 				} else {
 					loginCorrecto = true;
-					credencial = Controlador.getServicios().getServCredenciales().findByUsuario(c.getUsuario());
+					credencial = controlador.getServCredenciales().findByUsuario(c.getUsuario());
 				}
 			
 			}
 			//USUARIO: andrea CONTRASEÑA: andrea || USUARIO: a CONTRASEÑA: a
 			System.out.println("¡Hola, "+c.getUsuario()+"!, ¿Qué desea hacer?");
-			ViveroFachadaPrincipal.personal.mostrarMenuPersonal();		
+			personal.mostrarMenuPersonal();		
 		}
 	}
 		
@@ -144,7 +120,7 @@ public class ViveroFachadaPrincipal {
 	public void mostarPlantas() {
 		System.out.println();
 		System.out.println("Estas son las plantas: ");
-	 	List<Planta> listaPlantas = Controlador.getServicios().getServPlanta().verPlantas();
+	 	List<Planta> listaPlantas = controlador.getServPlanta().verPlantas();
 		
 		int contador = 1;
 	 	for(Planta p : listaPlantas) {

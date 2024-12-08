@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
@@ -16,7 +16,7 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
-@Component
+@Controller
 public class ViveroFachadaGestionPlantas {
 	
 	Scanner in = new Scanner(System.in);
@@ -47,6 +47,9 @@ public class ViveroFachadaGestionPlantas {
 	ServiciosPersona perServ;
 	@Autowired
 	ServiciosPlanta plServ;
+	
+	@Autowired
+	Controlador controlador;
 	
 
 	public static ViveroFachadaGestionPlantas getPortal() {
@@ -98,7 +101,7 @@ public class ViveroFachadaGestionPlantas {
 		Planta planta = new Planta();
 		planta.setCodigo(codigo);
 		
-		while(Controlador.getServicios().getServPlanta().validarPlanta(planta)) {
+		while(controlador.getServPlanta().validarPlanta(planta)) {
 			System.out.println("Código de planta ya existente, vuelva a intentarlo: ");
 			in.nextLine();
 			codigo = in.nextLine();
@@ -113,7 +116,7 @@ public class ViveroFachadaGestionPlantas {
 		p.setNombrecomun(nom_com);
 		p.setNombrecientifico(nom_cien);
 		
-		Controlador.getServicios().getServPlanta().insertarPlanta(p);	
+		controlador.getServPlanta().insertarPlanta(p);	
 	}
 	
 	public void modificarPlanta() {
@@ -138,7 +141,7 @@ public class ViveroFachadaGestionPlantas {
 		p.setNombrecomun(nom_com);
 		p.setNombrecientifico(nom_cien);
 		
-		Controlador.getServicios().getServPlanta().modificar(p);	
+		controlador.getServPlanta().modificar(p);	
 	}
 		
 }
