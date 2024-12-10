@@ -15,10 +15,10 @@ import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Long>{
 
-	@Query("SELECT p FROM Persona p WHERE p.email = : email")
+	@Query("SELECT p FROM Persona p WHERE p.email = :email")
 	Persona findByEmail(@Param("email") String email);
 	
-	@Query("SELECT p FROM Persona p WHERE p.id = : id")
+	@Query("SELECT p FROM Persona p WHERE p.id = :id")
 	Persona findByPersonaId(@Param("id") Long id);
 	
 	default boolean validarPersona(Persona p) { 

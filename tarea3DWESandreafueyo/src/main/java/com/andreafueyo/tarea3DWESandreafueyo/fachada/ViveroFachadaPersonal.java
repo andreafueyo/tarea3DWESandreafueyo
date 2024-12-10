@@ -25,17 +25,17 @@ public class ViveroFachadaPersonal {
 		
 		@Autowired
 	    @Lazy
-		private static ViveroFachadaAdmin admin;
+		ViveroFachadaAdmin admin;
 		
 		@Autowired
 	    @Lazy
-		private static ViveroFachadaPrincipal portal;
+	    ViveroFachadaPrincipal portal;
 		@Autowired
 	    @Lazy
-		private static ViveroFachadaGestionEjemplares gestEjemp;
+	    ViveroFachadaGestionEjemplares gestEjemp;
 		@Autowired
 	    @Lazy
-		private static ViveroFachadaGestionMensajes gestMens;
+	    ViveroFachadaGestionMensajes gestMens;
 		
 		@Autowired
 	    @Lazy

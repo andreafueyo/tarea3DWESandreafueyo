@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.SimpleAutowireCandidateResolver;
 import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
@@ -90,8 +91,11 @@ public class ViveroFachadaPrincipal {
 		
 		Credenciales c = this.pedirCredenciales();
 		
+		/*HACER DO-WHILE*/
+		
 		if(c.getUsuario().equals("admin") && c.getPassword().equals("admin")) {
 			System.out.println("¡Hola, admin!, ¿qué desea hacer?");
+			credencial = controlador.getServCredenciales().findByUsuario(c.getUsuario());
 			admin.mostrarMenuAdmin();	
 		}
 		else {
@@ -105,7 +109,6 @@ public class ViveroFachadaPrincipal {
 					loginCorrecto = true;
 					credencial = controlador.getServCredenciales().findByUsuario(c.getUsuario());
 				}
-			
 			}
 			//USUARIO: andrea CONTRASEÑA: andrea || USUARIO: a CONTRASEÑA: a
 			System.out.println("¡Hola, "+c.getUsuario()+"!, ¿Qué desea hacer?");

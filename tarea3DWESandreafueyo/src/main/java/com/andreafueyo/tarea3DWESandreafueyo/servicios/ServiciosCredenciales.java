@@ -44,10 +44,10 @@ public class ServiciosCredenciales {
 	}
 	
 	public String validarTipoUsuario(Credenciales c) { //Devuelve el tipo de usuario
-		if(c.getUsuario().equals("invitado") && c.getPassword().equals("invitado")) {
-			return "invitado";
-		}
-		else if(c.getUsuario().equals("admin") && c.getPassword().equals("admin")) {
+//		if(c.getUsuario().equals("invitado") && c.getPassword().equals("invitado")) {
+//			return "invitado";
+//		}
+		if((c.getUsuario()).equals("admin") && (c.getPassword()).equals("admin")) {
 			return "admin";
 		} else {
 				return "personal";
@@ -68,8 +68,14 @@ public class ServiciosCredenciales {
 
 	public Credenciales registrarCredencial(String usuario, String password, String email) {
 				
-		Long id_persona = personarepo.findByEmail(email).getId();
-		Persona persona = personarepo.findByPersonaId(id_persona);
+//		Long id_persona = personarepo.findByEmail(email).getId();
+//		Persona persona = personarepo.findByPersonaId(id_persona);
+		
+		Persona persona = personarepo.findByEmail(email);
+		if (persona == null) {
+			return null; 
+		}
+		
 		Credenciales c = new Credenciales();
 		c.setUsuario(usuario);
 		c.setPassword(password);

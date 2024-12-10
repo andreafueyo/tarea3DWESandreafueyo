@@ -23,10 +23,10 @@ public class ViveroFachadaGestionEjemplares {
 	
 	@Autowired
     @Lazy
-	private static ViveroFachadaPrincipal portal;
+	ViveroFachadaPrincipal portal;
 	@Autowired
     @Lazy
-	private static ViveroFachadaGestionEjemplares gestEjemp;
+	ViveroFachadaGestionEjemplares gestEjemp;
 	
 	@Autowired
     @Lazy
@@ -46,12 +46,6 @@ public class ViveroFachadaGestionEjemplares {
 	@Autowired
 	Controlador controlador;
 	
-	
-	public static ViveroFachadaGestionEjemplares getPortal() {
-		if (gestEjemp==null)
-			gestEjemp = new ViveroFachadaGestionEjemplares();
-		return gestEjemp;
-	}
 	
 	public void mostrarMenuGestionEjemplares() {
 		

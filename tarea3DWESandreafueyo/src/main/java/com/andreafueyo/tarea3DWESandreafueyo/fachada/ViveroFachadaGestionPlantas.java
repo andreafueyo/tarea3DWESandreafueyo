@@ -23,15 +23,15 @@ public class ViveroFachadaGestionPlantas {
 	
 	@Autowired
     @Lazy
-	private static ViveroFachadaAdmin admin;
+	ViveroFachadaAdmin admin;
 	
 	@Autowired
     @Lazy
-	private static ViveroFachadaPrincipal portal;
+	ViveroFachadaPrincipal portal;
 
 	@Autowired
     @Lazy
-	private static ViveroFachadaGestionPlantas gestPlantas;
+	ViveroFachadaGestionPlantas gestPlantas;
 	
 	@Autowired
     @Lazy
@@ -52,11 +52,11 @@ public class ViveroFachadaGestionPlantas {
 	Controlador controlador;
 	
 
-	public static ViveroFachadaGestionPlantas getPortal() {
-		if (gestPlantas==null)
-			gestPlantas = new ViveroFachadaGestionPlantas();
-		return gestPlantas;
-	}
+//	public static ViveroFachadaGestionPlantas getPortal() {
+//		if (gestPlantas==null)
+//			gestPlantas = new ViveroFachadaGestionPlantas();
+//		return gestPlantas;
+//	}
 	
 	public void mostrarMenuGestionPlantas() {
 		System.out.println();

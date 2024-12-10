@@ -28,6 +28,9 @@ public class ServiciosPlanta {
 	}
 	
 	public Planta modificar(Planta p) {
+		if (!plantarepo.existeCodigo(p)) {
+			return null;
+		}
 		return plantarepo.saveAndFlush(p);
 	}
 

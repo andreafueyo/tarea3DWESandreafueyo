@@ -26,7 +26,7 @@ public interface PlantaRepository extends JpaRepository<Planta, Long>{
 		}
 		return false;
 	}
-	
+
 	@Query("SELECT p FROM Planta p WHERE p.codigo = :cod")
 	Planta findByCod(@Param("cod") String cod);
 	

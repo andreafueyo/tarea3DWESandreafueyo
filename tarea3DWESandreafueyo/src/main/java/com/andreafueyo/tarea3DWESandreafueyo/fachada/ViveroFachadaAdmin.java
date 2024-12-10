@@ -3,6 +3,7 @@ package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.hibernate.engine.internal.StatisticalLoggingSessionEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -27,16 +28,18 @@ public class ViveroFachadaAdmin {
 	
 	@Autowired
     @Lazy
-	private static ViveroFachadaPrincipal portal;
+    ViveroFachadaPrincipal portal;
+	@Autowired
+	ViveroFachadaPersonal personal;
 	@Autowired
     @Lazy
-	private static ViveroFachadaGestionEjemplares gestEjemp;
+	ViveroFachadaGestionEjemplares gestEjemp;
 	@Autowired
     @Lazy
-	private static ViveroFachadaGestionMensajes gestMens;
+	ViveroFachadaGestionMensajes gestMens;
 	@Autowired
     @Lazy
-	private static ViveroFachadaGestionPlantas gestPlantas;
+	ViveroFachadaGestionPlantas gestPlantas;
 	
 	@Autowired
     @Lazy

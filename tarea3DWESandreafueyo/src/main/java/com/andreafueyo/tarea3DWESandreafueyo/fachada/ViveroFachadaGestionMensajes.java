@@ -18,8 +18,6 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 @Controller
 public class ViveroFachadaGestionMensajes {
 
-//private static ViveroFachadaGestionMensajes gestMens;
-
 	@Autowired
 	@Lazy
 	ViveroFachadaPrincipal portal;
