@@ -20,9 +20,6 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 	@Query("SELECT Ejemplar e FROM Ejemplar e WHERE e.nombre = : nombre")
 	List<Ejemplar> findEjemplaresByNombre(@Param("nombre") String nombre);
 	
-	@Query("SELECT Ejemplar e FROM Ejemplar e WHERE e.id = : id")
-	Ejemplar findEjemplaresById(@Param("id") Long id);
-	
 	@Query("SELECT MAX(id) FROM Ejemplar e")
 	Long findMaxId();
 	

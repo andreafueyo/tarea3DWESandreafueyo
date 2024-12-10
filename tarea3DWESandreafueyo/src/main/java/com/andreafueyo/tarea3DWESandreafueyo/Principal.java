@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaGestionEjemplares;
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
+import com.andreafueyo.tarea3DWESandreafueyo.repositorios.EjemplarRepository;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
@@ -32,7 +34,7 @@ public class Principal implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 				
 		Scanner in = new Scanner (System.in);
-		
+			
 		System.out.println("INICIO");
 	
 		System.out.println("Programa de gestión de un invernadero");

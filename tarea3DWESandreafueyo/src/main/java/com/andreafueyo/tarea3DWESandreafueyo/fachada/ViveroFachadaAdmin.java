@@ -60,13 +60,6 @@ public class ViveroFachadaAdmin {
 	Controlador controlador;
 	
 	
-	
-//	public static ViveroFachadaAdmin getPortal() {
-//		if (admin==null)
-//				admin = new ViveroFachadaAdmin();
-//		return admin;
-//	}
-	
 	public void mostrarMenuAdmin() {
 		
         int opcion = 0;

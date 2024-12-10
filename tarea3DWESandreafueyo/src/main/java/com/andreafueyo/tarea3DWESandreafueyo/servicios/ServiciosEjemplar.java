@@ -2,6 +2,7 @@ package com.andreafueyo.tarea3DWESandreafueyo.servicios;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,10 @@ public class ServiciosEjemplar {
 		return ejemplarrepo.findAll();
 	}
 	
+	//Como es findById, deuvelve un Optional
 	public Ejemplar findById(Long id) {
-		return ejemplarrepo.findEjemplaresById(id);
+		Optional<Ejemplar> optEjemplar = ejemplarrepo.findById(id);
+		return optEjemplar.get();
 	}
 	
 	public Long findMaxId() {

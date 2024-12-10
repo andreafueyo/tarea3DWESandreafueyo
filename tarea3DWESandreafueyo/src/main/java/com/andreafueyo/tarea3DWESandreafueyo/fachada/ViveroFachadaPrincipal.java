@@ -91,16 +91,15 @@ public class ViveroFachadaPrincipal {
 		
 		Credenciales c = this.pedirCredenciales();
 		
-		/*HACER DO-WHILE*/
-		
-		if(c.getUsuario().equals("admin") && c.getPassword().equals("admin")) {
-			System.out.println("¡Hola, admin!, ¿qué desea hacer?");
-			credencial = controlador.getServCredenciales().findByUsuario(c.getUsuario());
-			admin.mostrarMenuAdmin();	
-		}
-		else {
-			boolean loginCorrecto = false;
-			while(!loginCorrecto) {
+		boolean loginCorrecto = false;
+		do {
+			if(c.getUsuario().equals("admin") && c.getPassword().equals("admin")) {
+				System.out.println("¡Hola, admin!, ¿qué desea hacer?");
+				credencial = controlador.getServCredenciales().findByUsuario(c.getUsuario());
+				loginCorrecto = true;
+				admin.mostrarMenuAdmin();	
+			}
+			else {
 				if(!controlador.getServCredenciales().validarCredencialContraseña(c)) {
 					System.out.println("Usuario o contraseña incorrectos, vuelva a introducir los datos.");
 					System.out.println();
@@ -108,12 +107,14 @@ public class ViveroFachadaPrincipal {
 				} else {
 					loginCorrecto = true;
 					credencial = controlador.getServCredenciales().findByUsuario(c.getUsuario());
+					//USUARIO: andre CONTRASEÑA: andre || USUARIO: a CONTRASEÑA: a
+					System.out.println("¡Hola, "+c.getUsuario()+"! ¿Qué desea hacer?");
+					personal.mostrarMenuPersonal();		
 				}
 			}
-			//USUARIO: andrea CONTRASEÑA: andrea || USUARIO: a CONTRASEÑA: a
-			System.out.println("¡Hola, "+c.getUsuario()+"!, ¿Qué desea hacer?");
-			personal.mostrarMenuPersonal();		
-		}
+		} while (!loginCorrecto);
+		
+		
 	}
 		
 	

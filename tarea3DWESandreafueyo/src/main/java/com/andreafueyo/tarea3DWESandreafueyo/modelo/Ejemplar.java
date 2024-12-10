@@ -33,10 +33,8 @@ public class Ejemplar implements Serializable{
 	@JoinColumn(name="idplanta")
 	private Planta planta;
 	
-//	@OneToMany
-//	(cascade = CascadeType.ALL)
-//	@JoinColumn(name="idejemplar")
-//	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
+	@OneToMany(mappedBy = "ejemplar", cascade = CascadeType.ALL)
+	private List<Mensaje> mensajes = new LinkedList<Mensaje>();	
 	
 	public Ejemplar() {}
 	
@@ -62,6 +60,16 @@ public class Ejemplar implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@Override
+	public String toString() {
+		String ret ="";
+		ret ="EJEMPLAR";
+		ret += "\tID: " + this.id;
+		ret += "\tNombre: " + this.nombre;
+		ret += "\tfk_planta " + this.planta.getId();
+		return ret;
 	}
 	
 	

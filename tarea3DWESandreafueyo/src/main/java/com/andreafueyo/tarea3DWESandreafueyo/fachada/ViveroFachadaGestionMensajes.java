@@ -39,12 +39,6 @@ public class ViveroFachadaGestionMensajes {
 	ServiciosPlanta plServ;
 	
 	
-//	public static ViveroFachadaGestionMensajes getPortal() {
-//		if (gestMens==null)
-//			gestMens = new ViveroFachadaGestionMensajes();
-//		return gestMens;
-//	}
-	
 	public void mostrarMenuGestionMensajes() {
 		System.out.println();
 		
@@ -91,7 +85,7 @@ public class ViveroFachadaGestionMensajes {
 		System.out.println();
 		System.out.println("Mensaje: ");
 		String mensaje = in.nextLine();
-
+		System.out.print(id_ej); //Falta validar que existe el id
 		controlador.getServMensaje().registrarMensaje(id_ej, portal.getCredencial().getPersona().getId(), mensaje);
 		
 	}

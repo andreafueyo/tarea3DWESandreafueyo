@@ -124,24 +124,33 @@ public class ViveroFachadaGestionPlantas {
 		System.out.println();
 		portal.mostarPlantas();
 		System.out.println();
-		System.out.println("Código de planta: ");
-		String cod_planta = in.next();
 		
-		in.nextLine();
-		System.out.println();
-		System.out.println("Introduzca los nuevos datos.");
-		System.out.println();
-		System.out.println("Nombre común: ");
-		String nom_com = in.next();
-		System.out.println("Nombre científico: ");
-		String nom_cien = in.next();
+		boolean plantaCorrecta = false;
 		
-		Planta p = new Planta();
-		p.setCodigo(cod_planta);
-		p.setNombrecomun(nom_com);
-		p.setNombrecientifico(nom_cien);
-		
-		controlador.getServPlanta().modificar(p);	
+		while(!plantaCorrecta) {
+			System.out.println("Código de planta: ");
+			String cod_planta = in.next();
+			
+			in.nextLine();
+			System.out.println();
+			
+			Planta p = controlador.getServPlanta().findByCod(cod_planta);
+			if(p == null) {
+				System.out.println("No existe una planta con ese código, vuelva a intentarlo.");
+			}
+			else {
+				plantaCorrecta = true;
+				System.out.println("Introduzca los nuevos datos.");
+				System.out.println();
+				System.out.println("Nombre común: ");
+				String nom_com = in.next();
+				System.out.println("Nombre científico: ");
+				String nom_cien = in.next();
+				p.setNombrecomun(nom_com);
+				p.setNombrecientifico(nom_cien);
+				controlador.getServPlanta().modificar(p);
+			}			
+		}
 	}
 		
 }

@@ -43,11 +43,11 @@ public class ServiciosMensaje {
 	public void registrarMensaje(Long id_ej, Long id_persona, String mensaje) {
 		Mensaje m = new Mensaje();
 		Persona persona = personarepo.findByPersonaId(id_persona);
-		Ejemplar ejemplar = ejemplarrepo.findEjemplaresById(id_ej);
+		Optional<Ejemplar> ejemplarOptional = ejemplarrepo.findById(id_ej);
 		m.setFechahora(LocalDateTime.now());
 		m.setMensaje(mensaje);
 		m.setPersona(persona);
-		m.setEjemplar(ejemplar);
+		m.setEjemplar(ejemplarOptional.get());
 		this.insertar(m);
 	}
 }
