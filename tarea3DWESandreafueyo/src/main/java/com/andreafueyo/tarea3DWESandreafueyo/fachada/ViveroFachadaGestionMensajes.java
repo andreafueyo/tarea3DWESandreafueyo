@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
-import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
 
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
@@ -19,17 +18,16 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 @Controller
 public class ViveroFachadaGestionMensajes {
 
-private static ViveroFachadaGestionMensajes gestMens;
+//private static ViveroFachadaGestionMensajes gestMens;
+
+	@Autowired
+	@Lazy
+	ViveroFachadaPrincipal portal;
+
+	@Autowired
+	Controlador controlador;
 
 	Scanner in = new Scanner(System.in);
-	
-	@Autowired
-    @Lazy
-	private static ViveroFachadaPrincipal portal;
-	
-	@Autowired
-    @Lazy
-	ViveroServiciosConexion conServicios;
 
 	@Autowired
 	ServiciosCredenciales crServ;
@@ -42,15 +40,12 @@ private static ViveroFachadaGestionMensajes gestMens;
 	@Autowired
 	ServiciosPlanta plServ;
 	
-	@Autowired
-	Controlador controlador;
 	
-	
-	public static ViveroFachadaGestionMensajes getPortal() {
-		if (gestMens==null)
-			gestMens = new ViveroFachadaGestionMensajes();
-		return gestMens;
-	}
+//	public static ViveroFachadaGestionMensajes getPortal() {
+//		if (gestMens==null)
+//			gestMens = new ViveroFachadaGestionMensajes();
+//		return gestMens;
+//	}
 	
 	public void mostrarMenuGestionMensajes() {
 		System.out.println();

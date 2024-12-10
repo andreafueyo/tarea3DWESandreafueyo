@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
-import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
@@ -28,6 +26,24 @@ public class ViveroFachadaPrincipal {
 	ViveroFachadaAdmin admin;
 	@Autowired
 	ViveroFachadaPersonal personal;
+	
+//	 @Autowired
+//	 private ServiciosPlanta servPlanta;
+//
+//	 @Autowired
+//	 private ServiciosCredenciales servCredenciales;
+	
+	@Autowired
+	ServiciosCredenciales crServ;
+	@Autowired
+	ServiciosEjemplar ejServ;
+	@Autowired
+	ServiciosMensaje menServ;
+	@Autowired
+	ServiciosPersona perServ;
+	@Autowired
+	ServiciosPlanta plServ;
+
 	
 	@Autowired
 	Controlador controlador;

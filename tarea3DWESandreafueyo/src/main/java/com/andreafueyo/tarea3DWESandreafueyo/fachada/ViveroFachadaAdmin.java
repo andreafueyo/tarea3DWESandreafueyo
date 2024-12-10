@@ -21,9 +21,9 @@ public class ViveroFachadaAdmin {
 
 	Scanner in = new Scanner(System.in);
 	
-	@Autowired
-    @Lazy
-	private static ViveroFachadaAdmin admin;
+//	@Autowired
+//    @Lazy
+//	private static ViveroFachadaAdmin admin;
 	
 	@Autowired
     @Lazy
@@ -58,11 +58,11 @@ public class ViveroFachadaAdmin {
 	
 	
 	
-	public static ViveroFachadaAdmin getPortal() {
-		if (admin==null)
-				admin = new ViveroFachadaAdmin();
-		return admin;
-	}
+//	public static ViveroFachadaAdmin getPortal() {
+//		if (admin==null)
+//				admin = new ViveroFachadaAdmin();
+//		return admin;
+//	}
 	
 	public void mostrarMenuAdmin() {
 		
