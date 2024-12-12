@@ -67,4 +67,15 @@ import jakarta.persistence.Table;
 		public void setPersona(Persona persona) {
 			this.persona = persona;
 		}
+		
+		@Override
+		public String toString() {
+			String ret ="";
+			ret ="CREDENCIAL";
+			ret += "\tID: " + this.id;
+			ret += "\tUsuario: " + this.usuario;
+			ret += "\tPassword: " + this.password;
+			ret += "\tfk_persona: " + this.persona.getId();
+			return ret;
+		}
 }

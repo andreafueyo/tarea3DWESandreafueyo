@@ -55,14 +55,6 @@ public class ViveroFachadaPersonal {
 		@Autowired
 		Controlador controlador;
 		
-		
-		
-		public static ViveroFachadaPersonal getPortal() {
-			if (personal==null)
-					personal = new ViveroFachadaPersonal();
-			return personal;
-		}
-		
 		public void mostrarMenuPersonal() {
 			System.out.println();
 			

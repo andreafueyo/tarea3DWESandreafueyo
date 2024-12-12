@@ -29,7 +29,7 @@ public interface PlantaRepository extends JpaRepository<Planta, Long>{
 	@Query("SELECT p FROM Planta p WHERE p.codigo = :cod")
 	Planta findByCod(@Param("cod") String cod);
 	
-	List<Planta> findAllByOrderByNombrecientificoAsc();
+	List<Planta> findAllByOrderByCodigoAsc();
 
 			
 }

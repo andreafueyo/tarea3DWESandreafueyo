@@ -51,13 +51,6 @@ public class ViveroFachadaGestionPlantas {
 	@Autowired
 	Controlador controlador;
 	
-
-//	public static ViveroFachadaGestionPlantas getPortal() {
-//		if (gestPlantas==null)
-//			gestPlantas = new ViveroFachadaGestionPlantas();
-//		return gestPlantas;
-//	}
-	
 	public void mostrarMenuGestionPlantas() {
 		System.out.println();
 		
@@ -72,7 +65,7 @@ public class ViveroFachadaGestionPlantas {
     	try {
     		opcion = in.nextInt();
             if (opcion < 1 || opcion > 3) {
-                System.out.println("Opción incorrecta.");
+                System.out.println("Opción incorrecta. Introduzca un número de los indicados.");
                 continue;
             }
             switch (opcion) {
@@ -97,17 +90,27 @@ public class ViveroFachadaGestionPlantas {
 		System.out.println("Introduzca los datos de la nueva planta.");
 		System.out.println();
 		System.out.println("Código: ");
-		String codigo = in.next();
+		in.nextLine();
+		String codigo = in.nextLine();
 		Planta planta = new Planta();
 		planta.setCodigo(codigo);
 		
-		while(controlador.getServPlanta().validarPlanta(planta)) {
-			System.out.println("Código de planta ya existente, vuelva a intentarlo: ");
-			in.nextLine();
+		while(codigo.isEmpty() || codigo.contains(" ") || !controlador.getServPlanta().validarPlanta(planta)) {
+			if(codigo.contains(" ")) {
+				System.out.println("Código de planta con espacio, introduzca otro código: ");
+			}
+			else if(!controlador.getServPlanta().validarPlanta(planta)) {
+					System.out.println("Código de planta ya existente, vuelva a intentarlo: ");
+			}
+			
 			codigo = in.nextLine();
+			planta.setCodigo(codigo);
+
 		}
+		
 		System.out.println("Nombre común: ");
 		String nom_com = in.next();
+		in.nextLine();
 		System.out.println("Nombre científico: ");
 		String nom_cien = in.next();
 		
@@ -136,16 +139,16 @@ public class ViveroFachadaGestionPlantas {
 			
 			Planta p = controlador.getServPlanta().findByCod(cod_planta);
 			if(p == null) {
-				System.out.println("No existe una planta con ese código, vuelva a intentarlo.");
+				System.out.println("No hay ninguna planta con ese código en nuestra base de datos, introduzca de nuevo otro número por favor.");
 			}
 			else {
 				plantaCorrecta = true;
 				System.out.println("Introduzca los nuevos datos.");
 				System.out.println();
 				System.out.println("Nombre común: ");
-				String nom_com = in.next();
+				String nom_com = in.nextLine();
 				System.out.println("Nombre científico: ");
-				String nom_cien = in.next();
+				String nom_cien = in.nextLine();
 				p.setNombrecomun(nom_com);
 				p.setNombrecientifico(nom_cien);
 				controlador.getServPlanta().modificar(p);

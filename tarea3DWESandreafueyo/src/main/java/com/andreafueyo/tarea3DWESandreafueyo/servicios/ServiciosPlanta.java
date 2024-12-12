@@ -39,6 +39,6 @@ public class ServiciosPlanta {
 	}
 	
 	public List<Planta> verPlantas() {
-		return plantarepo.findAllByOrderByNombrecientificoAsc();
+		return plantarepo.findAllByOrderByCodigoAsc();
 	}
 }

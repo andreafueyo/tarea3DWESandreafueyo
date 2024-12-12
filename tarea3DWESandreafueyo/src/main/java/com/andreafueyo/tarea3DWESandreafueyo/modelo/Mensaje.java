@@ -75,5 +75,17 @@ public class Mensaje implements Serializable{
 	public Persona getPersona() {
 		return persona;
 	}
+	
+	@Override
+	public String toString() {
+		String ret ="";
+		ret ="MENSAJE";
+		ret += "\tID: " + this.id;
+		ret += "\tFecha y hora: " + this.fechahora;
+		ret += "\tMensaje: " + this.mensaje;
+		ret += "\tfk_personasMensajes: " + this.persona.getId();
+		ret += "\tfk_ejemplaresMensajes: " + this.ejemplar.getId();
+		return ret;
+	}
 		
 }

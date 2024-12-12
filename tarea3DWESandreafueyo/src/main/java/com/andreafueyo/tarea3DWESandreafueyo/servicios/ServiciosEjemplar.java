@@ -56,16 +56,21 @@ public class ServiciosEjemplar {
 	//Como es findById, deuvelve un Optional
 	public Ejemplar findById(Long id) {
 		Optional<Ejemplar> optEjemplar = ejemplarrepo.findById(id);
-		return optEjemplar.get();
+		if(optEjemplar.isEmpty()) {
+			return null;
+		}
+		else {
+			return optEjemplar.get();
+		}
 	}
 	
-	public Long findMaxId() {
-		return ejemplarrepo.findMaxId();
+	public Long findUltimoId() {
+		return ejemplarrepo.findUltimoId();
 	}
 	
-	public void registrarEjemplar(Planta pl, Long id_persona) {
+	public void registrarEjemplar(Planta pl, Long id_persona, String mensaje) {
 		
-		Long new_id = this.findMaxId()+1;
+		Long new_id = this.findUltimoId()+1;
 		Ejemplar ej = new Ejemplar();
 		ej.setId(new_id);
 		ej.setNombre(pl.getCodigo()+"_"+new_id);
@@ -74,10 +79,10 @@ public class ServiciosEjemplar {
 		
 		Mensaje m = new Mensaje();
 		m.setFechahora(LocalDateTime.now());
-		m.setMensaje("mensaje");
+		m.setMensaje(mensaje);
 		
 		Persona p = personarepo.findByPersonaId(id_persona);
-		m.setPersona(null);
+		m.setPersona(p);
 		m.setEjemplar(ej);
 		
 		mensajerepo.saveAndFlush(m);

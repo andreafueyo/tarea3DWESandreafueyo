@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
-
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
@@ -25,8 +26,6 @@ public class ViveroFachadaGestionMensajes {
 	@Autowired
 	Controlador controlador;
 
-	Scanner in = new Scanner(System.in);
-
 	@Autowired
 	ServiciosCredenciales crServ;
 	@Autowired
@@ -37,6 +36,8 @@ public class ViveroFachadaGestionMensajes {
 	ServiciosPersona perServ;
 	@Autowired
 	ServiciosPlanta plServ;
+	
+	Scanner in = new Scanner(System.in);
 	
 	
 	public void mostrarMenuGestionMensajes() {
@@ -79,15 +80,35 @@ public class ViveroFachadaGestionMensajes {
 		System.out.println();
 		controlador.getServEjemplar().mostrarEjemplares();
 		System.out.println();
-		System.out.println("Código de ejemplar: ");
-		Long id_ej = (long) in.nextInt();
-		in.nextLine();
+		Ejemplar ej = null;
+		Long id_ej = null;
+		boolean ejemplarCorrecto = false;
+		
+		while(!ejemplarCorrecto) {
+			try {
+				System.out.println("Id de ejemplar: ");
+				id_ej = (long) in.nextInt();
+				in.nextLine();
+				System.out.println();
+				
+				ej = controlador.getServEjemplar().findById(id_ej);
+			}catch (InputMismatchException e) {
+				in.nextLine();
+	        }
+			
+			if(ej == null) {
+				System.out.println("No hay ningún ejemplar con ese id en nuestra base de datos o no ha metido un número válido, introduzca de nuevo otro.");
+			}
+			else {
+				ejemplarCorrecto = true;
+			}			
+		}
 		System.out.println();
 		System.out.println("Mensaje: ");
 		String mensaje = in.nextLine();
-		System.out.print(id_ej); //Falta validar que existe el id
-		controlador.getServMensaje().registrarMensaje(id_ej, portal.getCredencial().getPersona().getId(), mensaje);
 		
+		controlador.getServMensaje().registrarMensaje(id_ej, portal.getCredencial().getPersona().getId(), mensaje);
+		System.out.println("¡Mensaje insertado!");
 	}
 	
 	public void mostrarMenuFiltrarMensajes(){

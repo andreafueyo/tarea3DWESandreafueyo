@@ -53,4 +53,14 @@ import jakarta.persistence.Table;
 		public void setEmail(String email) {
 			this.email = email;
 		}
+		
+		@Override
+		public String toString() {
+			String ret ="";
+			ret ="PERSONA";
+			ret += "\tID: " + this.id;
+			ret += "\tNombre: " + this.nombre;
+			ret += "\tCorreo electrónico " + this.email;
+			return ret;
+		}
 }

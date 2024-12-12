@@ -3,7 +3,6 @@ package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import org.hibernate.engine.internal.StatisticalLoggingSessionEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -21,10 +20,6 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 public class ViveroFachadaAdmin {
 
 	Scanner in = new Scanner(System.in);
-	
-//	@Autowired
-//    @Lazy
-//	private static ViveroFachadaAdmin admin;
 	
 	@Autowired
     @Lazy
@@ -77,7 +72,7 @@ public class ViveroFachadaAdmin {
             	opcion = in.nextInt();
             	
             	  if (opcion < 1 || opcion > 6) {
-                      System.out.println("Opción incorrecta.");
+                      System.out.println("Opción incorrecta. Introduzca un número de los indicados.");
                       continue;
             }
             
@@ -129,22 +124,28 @@ public class ViveroFachadaAdmin {
 			if(nombre.contains(" ") || email.contains(" ")) {
 				System.out.println("Nombre o email no válidos. Introduzca de nuevo los datos sin espacios.");
 			}
+			if(controlador.getServPersona().findByEmail(email.toLowerCase()) != null) {
+				System.out.println("Email ya registrado. Introduzca de nuevo otro email.");
+			}
 		} while (nombre.contains(" ") || email.contains(" ") || 
-				controlador.getServPersona().registrarPersona(nombre, email) == null);	
-		
+				controlador.getServPersona().findByEmail(email) != null);
 		String usuario;
 		String contrasena;
 		do {
-		System.out.println("Usuario: ");
-		usuario = in.next();
-		System.out.println("Contraseña: ");
-		contrasena = in.next();
-		if(usuario.contains(" ") || contrasena.contains(" ")) {
-			System.out.println("Usuario o contraseña no válidos. Introduzca de nuevo los datos sin espacios.");
+			System.out.println("Usuario: ");
+			usuario = in.nextLine();
+			System.out.println("Contraseña: ");
+			contrasena = in.nextLine();
+			if(usuario.contains(" ") || contrasena.contains(" ")) {
+				System.out.println("Usuario o contraseña no válidos. Introduzca de nuevo los datos sin espacios.");
+			}
+			if(controlador.getServCredenciales().findByUsuario(usuario.toLowerCase()) != null) {
+				System.out.println("Usuario ya registrado. Introduzca de nuevo otro email.");
 			}
 		} while (usuario.contains(" ") || contrasena.contains(" ") ||
-				controlador.getServCredenciales().registrarCredencial(usuario,contrasena, email) == null);
-		
+				controlador.getServCredenciales().findByUsuario(usuario) != null);
+		controlador.getServPersona().registrarPersona(nombre, email);
+		controlador.getServCredenciales().registrarCredencial(usuario,contrasena, email);
+		System.out.println("¡Usuario creado con éxito!");
 	}
-	
 }

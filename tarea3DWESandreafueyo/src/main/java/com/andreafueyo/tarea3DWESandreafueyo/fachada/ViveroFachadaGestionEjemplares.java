@@ -93,18 +93,29 @@ public class ViveroFachadaGestionEjemplares {
 		System.out.println("A continuación se muestran todas las plantas disponibles. Introduce el código de la planta sobre la que quieres crear un ejemplar nuevo.");
 		System.out.println();
 		portal.mostarPlantas();
-		System.out.println("Código de planta: ");
-		String cod_planta = in.nextLine();
-		Planta pValidar = new Planta();
-		pValidar.setCodigo(cod_planta);
+		Planta p = null;
+		boolean plantaCorrecta = false;
 		
-		while(!controlador.getServPlanta().validarPlanta(pValidar)) {
-			System.out.println("Código de planta incorrecto, vuelva a intentarlo: ");
-			cod_planta = in.nextLine();
+		while(!plantaCorrecta) {
+			System.out.println("Código de planta: ");
+			String cod_planta = in.next();
+			
+			in.nextLine();
+			System.out.println();
+			
+			p = controlador.getServPlanta().findByCod(cod_planta);
+			if(p == null) {
+				System.out.println("No hay ninguna planta con ese código en nuestra base de datos, introduzca de nuevo otro número por favor.");
+			}
+			else {
+				plantaCorrecta = true;
+			}			
 		}
-		Planta p = controlador.getServPlanta().findByCod(cod_planta);
-		controlador.getServEjemplar().registrarEjemplar(p, portal.getCredencial().getPersona().getId());
-				
+		System.out.println("Introduzca una anotación: ");
+		String mensaje = in.nextLine();
+		
+		controlador.getServEjemplar().registrarEjemplar(p, portal.getCredencial().getPersona().getId(), mensaje);
+		System.out.println("¡Ejemplar insertado!");
 	}
 	
 	
