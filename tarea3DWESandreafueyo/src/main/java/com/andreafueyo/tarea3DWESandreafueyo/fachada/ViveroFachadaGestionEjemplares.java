@@ -1,6 +1,8 @@
 package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +87,13 @@ public class ViveroFachadaGestionEjemplares {
         } while(opcion != 4);
 	}
 	
-	
+	   /**
+     * Registra un nuevo ejemplar asociado a una planta existente.
+     * 
+     * Este método pide al usuario que introduzca el código de una planta existente y una anotación.
+     * Una vez validados los datos, se crea un nuevo ejemplar en el sistema relacionado a la planta.
+     *
+     */
 	
 	public void registrarEjemplar() {
 		
@@ -118,11 +126,48 @@ public class ViveroFachadaGestionEjemplares {
 		System.out.println("¡Ejemplar insertado!");
 	}
 	
+    /**
+     * Filtra los ejemplares por tipos de planta introducidos por el usuario.
+     * 
+     * Este método permite al usuario introducir una lista de tipos de planta para filtrar 
+     * los ejemplares asociados a esos tipos. El proceso se finaliza cuando el usuario 
+     * escribe 'FIN'.
+     * NO FUNCIONA, solo muestra un mensaje.
+     */
 	
 	public void filtrarEjemplares() {
-		
+//        List<String> tipos = new ArrayList<>();
+//        
+//        System.out.println("Introduce los tipos de planta uno por uno. Escribe 'FIN' para terminar:");
+//        
+//        while (true) {
+//            System.out.print("Tipo de planta: ");
+//            String input = in.nextLine().trim();
+//            
+//            if (input.equalsIgnoreCase("FIN")) {
+//                break;
+//            }
+//            
+//            if (!input.isEmpty()) {
+//                tipos.add(input);
+//            } else {
+//                System.out.println("El tipo de planta no puede estar vacío. Inténtalo de nuevo.");
+//            }
+//        }
+//        
+//		System.out.println();
+//
+//		controlador.getServEjemplar().buscarEjemplaresPorTipos(tipos);
+//	
 	}
 	
+	/**
+     * Muestra los mensajes de seguimiento asociados a un ejemplar específico.
+     * 
+     * Este método solicita al usuario que introduzca el código de un ejemplar existente
+     * y muestra los mensajes de seguimiento asociados a dicho ejemplar.
+     *
+     */
 	
 	public void verMensajes() {
 	

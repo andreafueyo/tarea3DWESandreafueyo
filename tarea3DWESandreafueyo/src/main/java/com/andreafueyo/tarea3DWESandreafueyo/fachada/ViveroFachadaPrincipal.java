@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.SimpleAutowireCandidateResolver;
 import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
@@ -28,12 +27,6 @@ public class ViveroFachadaPrincipal {
 	@Autowired
 	ViveroFachadaPersonal personal;
 	
-//	 @Autowired
-//	 private ServiciosPlanta servPlanta;
-//
-//	 @Autowired
-//	 private ServiciosCredenciales servCredenciales;
-	
 	@Autowired
 	ServiciosCredenciales crServ;
 	@Autowired
@@ -51,7 +44,20 @@ public class ViveroFachadaPrincipal {
 	
 	Scanner in = new Scanner(System.in);
 	
-
+	/**
+	 * Clase controladora que gestiona el menú principal del vivero.
+	 * 
+	 * Esta clase actúa como la fachada principal para el usuario final. Permite 
+	 * visualizar plantas disponibles, realizar un login para acceder a funcionalidades
+	 * restringidas y delega acciones a otras fachadas según el rol del usuario.
+	 * 
+	 * Puedes acceder como administrador o como usuario.
+	 * El nombre para acceder al menú de administrador es "admin" y la contraseña "admin".
+	 * Uno de los perfiles de usuario que existe es "a" cuya contraseña es "a".
+	 * 
+	 * @author Andrea
+	 */
+	
 	
 	public void mostrarMenuPrincipal() {
 		
@@ -117,6 +123,11 @@ public class ViveroFachadaPrincipal {
 		
 	}
 		
+    /**
+     * Solicita las credenciales de acceso al usuario.
+     * 
+     * @return Un objeto {@link Credenciales} con los datos ingresados por el usuario.
+     */
 	
 	public Credenciales pedirCredenciales() {
 		
@@ -136,6 +147,14 @@ public class ViveroFachadaPrincipal {
 	
 	
 	//MÉTODOS COMUNES A TODAS LAS FACHADAS
+	
+    /**
+     * Muestra la lista de plantas disponibles en el vivero.
+     * 
+     * Consulta a través del controlador las plantas disponibles y las muestra
+     * al usuario en orden numerado.
+     * No hace falta inidicar sesión, es lo que consideramos el perfil de invitado.
+     */
 	
 	public void mostarPlantas() {
 		System.out.println();

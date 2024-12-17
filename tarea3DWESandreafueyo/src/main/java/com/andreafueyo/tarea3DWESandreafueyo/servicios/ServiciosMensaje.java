@@ -39,6 +39,18 @@ public class ServiciosMensaje {
 	public List<Mensaje> findAll() { 
 		return mensajerepo.findAll();
 	}
+	
+	public List<Mensaje> findByTipoPlanta(String tipo){
+		return mensajerepo.findByTipoPlanta(tipo);
+	}
+	
+	public List<Mensaje> findByNombrePersona(String persona){
+		return mensajerepo.findByNombrePersona(persona);
+	}
+	
+	public List<Mensaje> findMensajesEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin){
+		return mensajerepo.findMensajesEntreFechas(fechaInicio, fechaFin);
+	}
 		
 	public void registrarMensaje(Long id_ej, Long id_persona, String mensaje) {
 		Mensaje m = new Mensaje();
@@ -50,4 +62,5 @@ public class ServiciosMensaje {
 		m.setEjemplar(ejemplarOptional.get());
 		this.insertar(m);
 	}
+	
 }

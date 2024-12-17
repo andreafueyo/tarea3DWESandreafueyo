@@ -86,6 +86,18 @@ public class ViveroFachadaGestionPlantas {
         } while(opcion != 3);
 	}
 	
+    /**
+     * Registra una nueva planta en el sistema.
+     * 
+     * Solicita al usuario que introduzca el código, nombre común y nombre científico 
+     * de la planta. Se aplican validaciones para garantizar que:
+     * 1. El código no esté vacío.
+     * 2. El código no contenga espacios.
+     * 3. El código no esté ya registrado en la base de datos.
+     * 
+     * Una vez validados los datos, la planta se inserta en la base de datos.
+     */
+	
 	public void registrarPlanta() {
 		System.out.println("Introduzca los datos de la nueva planta.");
 		System.out.println();
@@ -121,6 +133,18 @@ public class ViveroFachadaGestionPlantas {
 		
 		controlador.getServPlanta().insertarPlanta(p);	
 	}
+	
+    /**
+     * Modifica los datos de una planta existente.
+     * 
+     * Primero muestra una lista de todas las plantas disponibles y solicita al usuario 
+     * el código de la planta a modificar. Si el código no existe, se pide al usuario 
+     * que lo reintroduzca.
+     * 
+     * Una vez validado el código, se solicita al usuario que introduzca los nuevos 
+     * valores para el nombre común y el nombre científico de la planta, y los datos 
+     * se actualizan en la base de datos.
+     */
 	
 	public void modificarPlanta() {
 		System.out.println("A continuación se muestran todas las plantas disponibles. Introduce el código de la planta a modificar.");

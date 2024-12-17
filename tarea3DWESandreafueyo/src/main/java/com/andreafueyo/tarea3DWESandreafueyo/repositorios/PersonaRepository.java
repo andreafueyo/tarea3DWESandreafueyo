@@ -22,12 +22,6 @@ public interface PersonaRepository extends JpaRepository<Persona, Long>{
 	Persona findByPersonaId(@Param("id") Long id);
 	
 	
-	/**
-	 * Método para validar usuarios
-	 * Si ya existe una persona con ese email devuelve false y no permite ejecutar la acción
-	 * @param p
-	 * @return
-	 */
 	default boolean validarPersona(Persona p) { 
 		
 		if(this.findByEmail(p.getEmail()) == null) {

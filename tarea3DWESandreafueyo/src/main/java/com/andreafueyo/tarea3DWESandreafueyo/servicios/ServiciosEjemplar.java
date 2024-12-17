@@ -44,10 +44,6 @@ public class ServiciosEjemplar {
 	public void actualizar(Ejemplar e) {
 		ejemplarrepo.saveAndFlush(e);
 	}
-
-	public List<Ejemplar> findByTipo(String tipos) {
-		return ejemplarrepo.findByTipo(tipos);
-	}
 	
 	public List<Ejemplar> findAll() {
 		return ejemplarrepo.findAll();
@@ -88,8 +84,8 @@ public class ServiciosEjemplar {
 		mensajerepo.saveAndFlush(m);
 	}
 	
-	public void filtrarEjemplares(String codigos) {
-		List<Ejemplar> listaEjemplares = this.findByTipo(codigos);
+	public void buscarEjemplaresPorTipos(List<String> codigos) {
+		List<Ejemplar> listaEjemplares = ejemplarrepo.buscarEjemplaresPorTipos(codigos);
 		
 		for(Ejemplar e : listaEjemplares) {
 			System.out.println();

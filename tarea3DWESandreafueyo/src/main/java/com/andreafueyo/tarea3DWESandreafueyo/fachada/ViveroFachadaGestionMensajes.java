@@ -1,6 +1,10 @@
 package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
-import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Mensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
@@ -48,7 +52,7 @@ public class ViveroFachadaGestionMensajes {
         	System.out.println("---MENÚ DE GESTIÓN DE MENSAJES---");
     		System.out.println("Seleccione una opción:");
     		System.out.println("1.  Registrar un nuevo mensaje.");
-    		System.out.println("2.  Filtrar mensajes (vacío).");
+    		System.out.println("2.  Filtrar mensajes.");
     		System.out.println("3.  Volver al menú anterior.");
             
     	try {
@@ -73,6 +77,13 @@ public class ViveroFachadaGestionMensajes {
         }
         } while(opcion != 3);
 	}
+	
+    /**
+     * Registra un nuevo mensaje asociado a un ejemplar.
+     * 
+     * Solicita al usuario el ID del ejemplar existente y una anotación y se
+     * registra en el sistema.
+     */
 	
 	public void registrarMensaje(){
 
@@ -111,8 +122,141 @@ public class ViveroFachadaGestionMensajes {
 		System.out.println("¡Mensaje insertado!");
 	}
 	
+    /**
+     * Muestra un submenú para filtrar mensajes por criterios específicos.
+     */
+	
 	public void mostrarMenuFiltrarMensajes(){
+		System.out.println();
 		
+        int opcion = 0;
+        do {
+        	System.out.println("Elige por qué filtrar");
+    		System.out.println("Seleccione una opción:");
+    		System.out.println("1.  Persona que lo escribió.");
+    		System.out.println("2.  Por rango de fechas.");
+    		System.out.println("3.  Por tipo de planta.");
+    		System.out.println("4.  Volver al menú anterior.");
+            
+    	try {
+    		opcion = in.nextInt();
+            if (opcion < 1 || opcion > 4) {
+                System.out.println("Opción incorrecta.");
+                continue;
+            }
+            switch (opcion) {
+            	case 1:
+            		this.filtrarPorPersona();
+            		break;
+            	case 2:
+            		this.filtrarPorFechas();
+            		break;
+            	case 3:
+            		this.filtrarPorPlanta();
+            		break;
+            	case 4:
+            		break;
+            }
+    	} catch (InputMismatchException e) {
+			System.out.println("ERROR. Ingrese un número entero.");
+			in.nextLine();
+        }
+        } while(opcion != 4);
+	}
+	
+    /**
+     * Filtra mensajes por tipo de planta introducido por el usuario.
+     */
+	
+	public void filtrarPorPlanta() {
+		System.out.println("¿Por qué tipo de planta quieres buscar los mensajes?");
+		System.out.println();
+		System.out.println("Tipo: ");
+		in.nextLine();
+		String tipo = in.nextLine();
+		List<Mensaje> listaMensajes = controlador.getServMensaje().findByTipoPlanta(tipo);
+	 	if(listaMensajes == null || listaMensajes.isEmpty()) {
+	 		System.out.println("No hay mensajes para este tipo de planta");
+		 	System.out.println();
+	 	}else {
+			for(Mensaje m : listaMensajes) {
+		 		System.out.println(m.toString());
+		 	}
+		 	System.out.println();
+	 	}
+
+	}
+	
+	   /**
+     * Filtra mensajes por nombre de persona introducido por el usuario.
+     */
+	
+	public void filtrarPorPersona() {
+		System.out.println("¿Por qué persona quieres buscar los mensajes?");
+		System.out.println();
+		System.out.println("Persona: ");
+		in.nextLine();
+		String persona = in.nextLine();
+		List<Mensaje> listaMensajes = controlador.getServMensaje().findByNombrePersona(persona);
+	 	if(listaMensajes == null || listaMensajes.isEmpty()) {
+	 		System.out.println("No hay mensajes para esta persona");
+		 	System.out.println();
+	 	}else {
+			for(Mensaje m : listaMensajes) {
+		 		System.out.println(m.toString());
+		 	}
+		 	System.out.println();
+	 	}
+
+	}
+	
+	   /**
+     * Filtra mensajes por fecha introducido por el usuario.
+     */
+	
+	public void filtrarPorFechas() {
+		System.out.println("¿Entre qué fechas quieres buscar los mensajes?");
+		
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        LocalDateTime fechaInicio = null;
+        LocalDateTime fechaFin = null;
+        in.nextLine();
+        while (fechaInicio == null) {
+            System.out.print("Introduce la fecha de inicio (yyyy-MM-dd HH:mm): ");
+            String input = in.nextLine();
+            try {
+                fechaInicio = LocalDateTime.parse(input, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha inválido. Intenta de nuevo.");
+            }
+        }
+        
+        while (fechaFin == null) {
+            System.out.print("Introduce la fecha final (yyyy-MM-dd HH:mm): ");
+            String input = in.nextLine();
+            try {
+                fechaFin = LocalDateTime.parse(input, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha inválido. Intenta de nuevo.");
+            }
+        }
+
+		System.out.println();
+		
+		
+
+		List<Mensaje> listaMensajes = controlador.getServMensaje().findMensajesEntreFechas(fechaInicio, fechaFin);
+	 	if(listaMensajes == null || listaMensajes.isEmpty()) {
+	 		System.out.println("No hay mensajes entre estas fechas");
+		 	System.out.println();
+	 	}else {
+			for(Mensaje m : listaMensajes) {
+		 		System.out.println(m.toString());
+		 	}
+		 	System.out.println();
+	 	}
+
 	}
 	
 }

@@ -104,6 +104,14 @@ public class ViveroFachadaAdmin {
         } while(opcion != 6);
 	}
         
+	 /**
+     * Registra una nueva persona en el sistema.
+     * 
+     * El usuario admin introduce los datos del nuevo usuario y este
+     * valida que los datos no incluyan espacios ni que ya estén. 
+     * Si los datos son válidos,
+     * registra a la persona y sus credenciales. 
+     */
 	
 	public void registrarPersona() {
 		
