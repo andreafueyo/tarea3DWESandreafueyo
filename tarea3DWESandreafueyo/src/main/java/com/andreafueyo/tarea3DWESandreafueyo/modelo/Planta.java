@@ -1,5 +1,6 @@
 package com.andreafueyo.tarea3DWESandreafueyo.modelo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -31,6 +34,23 @@ public class Planta {
 	
 	@Column
 	private String nombrecientifico;
+	
+	 @ManyToMany
+	 @JoinTable(
+			 name = "planta_enfermedad",
+	         joinColumns = @JoinColumn(name = "planta_id"),
+	         inverseJoinColumns = @JoinColumn(name = "enfermedad_id")
+	    )
+	    private List<Enfermedad> enfermedades = new ArrayList<>();
+		
+		public List<Enfermedad> getEnfermedades() {
+			return enfermedades;
+		}
+
+		public void setEnfermedades(List<Enfermedad> enfermedades) {
+			this.enfermedades = enfermedades;
+		}
+	
 	
 	@OneToMany(cascade= CascadeType.ALL)
 	@JoinColumn(name="idplanta")
@@ -82,14 +102,21 @@ public class Planta {
 		this.ejemplares = ejemplares;
 	}
 
+	
 	@Override
 	public String toString() {
 		String ret = "";
 		ret += "Codigo de planta: " + this.codigo;
 		ret += "\nNombre científico: " + this.nombrecientifico;
 		ret += "\nNombre común: " + this.nombrecomun;
+		/** 
+		 * me da error, tengo que mirarlo
+		 * ret += "\nEnfermedades: " + this.enfermedades;
+		 */
 		return ret;
 	}
+	
+	
 	
 	
 }

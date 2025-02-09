@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral - Menú ADMIN</title>
+    <link rel="stylesheet" th:href="@{/menuadmin.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo del Vivero">
+        </div>
+    </header>
+    <h2>MENÚ DEL ADMINISTRADOR</h2>
+    <div class="menu">
+        <div class="menu-item" th:onclick="'window.location.href=\'' + @{/ver_plantas} + '\'';">
+            <img th:src="@{/imagenes/planta.png}" alt="VER PLANTAS">
+            <span>1. VER PLANTAS</span>
+        </div>
+        <div class="menu-item" th:onclick="'window.location.href=\'' + @{/registrar_persona} + '\'';">
+            <img th:src="@{/imagenes/persona.png}" alt="REGISTRAR PERSONA">
+            <span>2. REGISTRAR PERSONA</span>
+        </div>
+        <div class="menu-item" th:onclick="'window.location.href=\'' + @{/gestion_plantas} + '\'';">
+            <img th:src="@{/imagenes/plantas.png}" alt="GESTIÓN DE PLANTAS">
+            <span>3. GESTIÓN DE PLANTAS</span>
+        </div>
+        <div class="menu-item" th:onclick="'window.location.href=\'' + @{/gestion_ejemplares} + '\'';">
+            <img th:src="@{/imagenes/ejemplares.png}" alt="GESTIÓN DE EJEMPLARES">
+            <span>4. GESTIÓN DE EJEMPLARES</span>
+        </div>
+        <div class="menu-item" th:onclick="'window.location.href=\'' + @{/gestion_mensajes} + '\'';">
+            <img th:src="@{/imagenes/mensajes.png}" alt="GESTIÓN DE MENSAJES">
+            <span>5. GESTIÓN DE MENSAJES</span>
+        </div>
+        <div class="menu-item" th:onclick="'window.location.href=\'' + @{/cerrar_sesion} + '\'';">
+            <img th:src="@{/imagenes/cerrarsesion.png}" alt="CERRAR SESIÓN">
+            <span>6. CERRAR SESIÓN</span>
+        </div>
+    </div>
+</body>
+</html>

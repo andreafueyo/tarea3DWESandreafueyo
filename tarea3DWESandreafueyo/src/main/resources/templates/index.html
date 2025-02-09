@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral</title>
+    <link rel="stylesheet" th:href="@{/index.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo">
+        </div>
+    </header>
+    <h1>VIVERO LA LABORAL</h1>
+    <div class="menu">
+	    <a th:href="@{/verplantas}" class="menu-item">
+	        <img th:src="@{/imagenes/planta.png}" alt="VER PLANTAS">
+	        <span>VER PLANTAS</span>
+	    </a>
+	    <a th:href="@{/iniciarsesion}" class="menu-item">
+	        <img th:src="@{/imagenes/persona.png}" alt="INICIAR SESION">
+	        <span>INICIAR SESIÓN</span>
+	    </a>
+    </div>
+</body>
+</html>

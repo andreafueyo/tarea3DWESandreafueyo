@@ -79,7 +79,7 @@ public class ViveroFachadaPrincipal {
             }
             switch (opcion) {
             	case 1:
-            		this.mostarPlantas();
+            		this.mostarPlantasDetalle();
             		break;
             	case 2:
             		this.mostrarMenuLogin();
@@ -175,6 +175,43 @@ public class ViveroFachadaPrincipal {
 	
 	public void setCredencial(Credenciales credencial) {
 		this.credencial = credencial;
+	}
+	
+	public void mostarPlantasDetalle() {
+		System.out.println();
+		System.out.println("Estas son las plantas: ");
+	 	List<Planta> listaPlantas = controlador.getServPlanta().verPlantas();
+		
+		int contador = 1;
+	 	for(Planta p : listaPlantas) {
+	 		System.out.println(contador + ": " + p.toString());
+	 		contador++;
+	 	}
+	 	System.out.println();
+	 	
+	 	System.out.println("Selecciona una de esas plantas para mostrar más detalle.");
+		System.out.println();
+		Planta p = null;
+		boolean plantaCorrecta = false;
+		
+		while(!plantaCorrecta) {
+			System.out.println("Código de planta: ");
+			String cod_planta = in.next();
+			
+			in.nextLine();
+			System.out.println();
+			
+			p = controlador.getServPlanta().findByCod(cod_planta);
+			if(p == null) {
+				System.out.println("No hay ninguna planta con ese código en nuestra base de datos, introduzca de nuevo otro número por favor.");
+			}
+			else {
+				plantaCorrecta = true;
+			}			
+		}
+		
+		System.out.println(controlador.getServPlanta().verPlantaDetalle(p));
+		System.out.println();
 	}
 	
 }

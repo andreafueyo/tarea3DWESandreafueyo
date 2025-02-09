@@ -1,6 +1,8 @@
 package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Enfermedad;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
@@ -125,13 +128,50 @@ public class ViveroFachadaGestionPlantas {
 		in.nextLine();
 		System.out.println("Nombre científico: ");
 		String nom_cien = in.next();
+		in.nextLine();
+		List<Enfermedad> listaEnfermedades = new ArrayList<>();
+	    while (true) {
+	        System.out.print("¿Tiene esta enfermedad alguna enfermedad típica? (SI/NO): ");
+	        String respuesta = in.nextLine().toUpperCase();
+
+	        if (respuesta.equals("NO")) {
+	            System.out.println("No se han añadido enfermedades a esta planta.");
+	            break;
+	        } else if (respuesta.equals("SI")) {
+	            boolean enfermedadCorrecto = false;
+
+	            while (!enfermedadCorrecto) {
+	                System.out.print("Introduzca el nombre de la enfermedad: ");
+	                String nombre_enfermedad = in.nextLine();
+
+	                Enfermedad e = controlador.getServEnfermedad().findByNombre(nombre_enfermedad);
+
+	                if (e == null) {
+	                    System.out.println("No existe ningún parásito con ese nombre. Inténtelo de nuevo.");
+	                } else {
+	                    listaEnfermedades.add(e);
+	                    enfermedadCorrecto = true;
+	                }
+	            }
+
+	            System.out.print("¿Quiere añadir otra enfermedad? (SI/NO): ");
+	            String continuar = in.nextLine().toUpperCase();
+	            if (continuar.equals("NO")) {
+	                break;
+	            }
+	        } else {
+	            System.out.println("Respuesta inválida. Introduce 'SI' o 'NO'.");
+	        }
+	    }
+
+		
 		
 		Planta p = new Planta();
 		p.setCodigo(codigo);
 		p.setNombrecomun(nom_com);
 		p.setNombrecientifico(nom_cien);
 		
-		controlador.getServPlanta().insertarPlanta(p);	
+		controlador.getServPlanta().insertarPlanta(p, listaEnfermedades);	
 	}
 	
     /**
