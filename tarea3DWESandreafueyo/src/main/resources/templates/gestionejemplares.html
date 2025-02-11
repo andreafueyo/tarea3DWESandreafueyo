@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral - Gestión ejemplares</title>
+    <link rel="stylesheet" th:href="@{/menuadmin.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo del Vivero">
+        </div>
+    </header>
+    <h2>GESTIÓN DE EJEMPLARES</h2>
+    <div class="menu">
+         <a th:href="@{/registrarejemplar}" class="menu-item">
+            <img th:src="@{/imagenes/registrar.png}" alt="REGISTRAR EJEMPLAR">
+            <span>1. Registrar un nuevo ejemplar.</span>
+        </a>
+        <a th:href="@{/filtrarejemplares}" class="menu-item">
+            <img th:src="@{/imagenes/filtrar.png}" alt="FILTRAR EJEMPLARES">
+            <span>2. Filtrar ejemplares por tipo de planta.</span>
+        </a>
+        <a th:href="@{/modificarplanta}" class="menu-item">
+            <img th:src="@{/imagenes/mensajes.png}" alt="MENSAJES EJEMPLARES">
+            <span>3. Ver mensajes de seguimiento de un ejemplar.</span>
+        </a>
+		<a th:href="@{${origen == 'menuadmin' ? '/menuadmin' : '/menupersonal'}}" class="menu-item">
+		    <img th:src="@{/imagenes/casa.png}" alt="VOLVER">
+		    <span>4. Volver al menú anterior.</span>
+		</a>
+    </div>
+</body>
+</html>

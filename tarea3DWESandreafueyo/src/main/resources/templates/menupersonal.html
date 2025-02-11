@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vivero La Laboral - Menú ADMIN</title>
+    <title>Vivero La Laboral - Menú PERSONAL</title>
     <link rel="stylesheet" th:href="@{/menuadmin.css}">
 </head>
 <body>
@@ -12,31 +12,23 @@
             <img th:src="@{/imagenes/logo.png}" alt="Logo del Vivero">
         </div>
     </header>
-    <h2>MENÚ DEL ADMINISTRADOR</h2>
+    <h2>MENÚ PERSONAL</h2>
     <div class="menu">
          <a th:href="@{/verplantas}" class="menu-item">
             <img th:src="@{/imagenes/planta.png}" alt="VER PLANTAS">
             <span>1. VER PLANTAS</span>
         </a>
-        <a th:href="@{/registrarpersona}" class="menu-item">
-            <img th:src="@{/imagenes/persona.png}" alt="REGISTRAR PERSONA">
-            <span>2. REGISTRAR PERSONA</span>
-        </a>
-        <a th:href="@{/gestionplantas}" class="menu-item">
-            <img th:src="@{/imagenes/plantas.png}" alt="GESTIÓN DE PLANTAS">
-            <span>3. GESTIÓN DE PLANTAS</span>
-        </a>
-        <a th:href="@{/gestionejemplares?origen=menuadmin}" class="menu-item">
+        <a th:href="@{/gestionejemplares?origen=menupersonal}" class="menu-item">
             <img th:src="@{/imagenes/ejemplares.png}" alt="GESTIÓN DE EJEMPLARES">
-            <span>4. GESTIÓN DE EJEMPLARES</span>
+            <span>2. GESTIÓN DE EJEMPLARES</span>
         </a>
-        <a th:href="@{/gestionmensajes?origen=menuadmin}" class="menu-item">
+        <a th:href="@{/gestionmensajes?origen=menupersonal}" class="menu-item">
             <img th:src="@{/imagenes/mensajes.png}" alt="GESTIÓN DE MENSAJES">
-            <span>5. GESTIÓN DE MENSAJES</span>
+            <span>3. GESTIÓN DE MENSAJES</span>
         </a>
         <a th:href="@{/cerrarsesion}" class="menu-item">
             <img th:src="@{/imagenes/cerrarsesion.png}" alt="CERRAR SESIÓN">
-            <span>6. CERRAR SESIÓN</span>
+            <span>4. CERRAR SESIÓN</span>
         </a>
     </div>
 </body>

@@ -12,7 +12,7 @@
     </header>
     <div class="login-container">
         <h2 class="iniciarsesion">INICIAR SESIÓN</h2>
-        <form>
+        <form th:action="@{/login}" method="post">
             <label for="usuario">USUARIO:</label>
             <input type="text" id="usuario" name="usuario" required>
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral - Gestión plantas</title>
+    <link rel="stylesheet" th:href="@{/menuadmin.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo del Vivero">
+        </div>
+    </header>
+    <h2>GESTIÓN DE PLANTAS</h2>
+    <div class="menu">
+         <a th:href="@{/registrarplanta}" class="menu-item">
+            <img th:src="@{/imagenes/registrar.png}" alt="REGISTRAR PLANTA">
+            <span>1. Registrar una nueva planta.</span>
+        </a>
+        <a th:href="@{/modificarplanta}" class="menu-item">
+            <img th:src="@{/imagenes/modificar.png}" alt="MODIFICAR PLANTA">
+            <span>2. Modificar una planta existente.</span>
+        </a>
+        <a th:href="@{/menuadmin}" class="menu-item">
+            <img th:src="@{/imagenes/casa.png}" alt="VOLVER">
+            <span>3. Volver al menú administrador.</span>
+        </a>
+    </div>
+</body>
+</html>
