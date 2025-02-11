@@ -7,18 +7,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaAdmin;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
-import com.andreafueyo.tarea3DWESandreafueyo.modelo.Persona;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
-import jakarta.servlet.http.HttpFilter;
 
 @Controller
 public class MainController {
@@ -81,19 +78,6 @@ public class MainController {
         return "menupersonal"; 
     }
     
-    /*Gestión plantas*/
-    @GetMapping("/gestionplantas")
-    public String gestionPlantas(Model model) {
-        return "gestionplantas"; 
-    }
-    
-    /*Gestión ejemplares*/
-    @GetMapping("/gestionejemplares")
-    public String gestionEjemplares(@RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen, Model model) {
-        model.addAttribute("origen", origen);  
-        return "gestionejemplares"; 
-    }
-    
     /*Gestión mensajes*/
     @GetMapping("/gestionmensajes")
     public String gestionMensajes(@RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen, Model model) {
@@ -101,12 +85,24 @@ public class MainController {
         return "gestionmensajes"; 
     }
 
+    /*Registrar persona*/
     @GetMapping("/registrarpersona")
     public String registrarPersona(Model model) {
-        model.addAttribute("persona", new Persona());
-        return "registrarpersona"; 
+        model.addAttribute("credenciales", new Credenciales());
+        return "registrarpersona";
     }
 
+    @PostMapping("/registrarpersona")
+    public String procesarRegistro(@ModelAttribute Credenciales credenciales, Model model) {
+        if (servCredenciales.validarNuevaCredencial(credenciales)) {
+            servCredenciales.insertar(credenciales);
+            return "redirect:/menuadmin"; 
+        } else {
+            model.addAttribute("error", "El usuario ya existe");
+            return "registrarpersona";
+        }
+    }
+    
     /*Cerrar sesión*/
     @GetMapping("/cerrarsesion")
     public String cerrarSesion(SessionStatus status) {

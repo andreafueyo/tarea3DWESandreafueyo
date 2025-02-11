@@ -1,8 +1,6 @@
 package com.andreafueyo.tarea3DWESandreafueyo.fachada;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Controller;
 
 import com.andreafueyo.tarea3DWESandreafueyo.control.Controlador;
 import com.andreafueyo.tarea3DWESandreafueyo.control.ViveroServiciosConexion;
-import com.andreafueyo.tarea3DWESandreafueyo.modelo.Enfermedad;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
@@ -109,6 +106,43 @@ public class ViveroFachadaGestionPlantas {
 		String codigo = in.nextLine();
 		Planta planta = new Planta();
 		planta.setCodigo(codigo);
+
+		while(codigo.isEmpty() || codigo.contains(" ") || !controlador.getServPlanta().validarPlanta(planta)) {
+			if(codigo.contains(" ")) {
+				System.out.println("Código de planta con espacio, introduzca otro código: ");
+			}
+			else if(!controlador.getServPlanta().validarPlanta(planta)) {
+					System.out.println("Código de planta ya existente, vuelva a intentarlo: ");
+			}
+
+			codigo = in.nextLine();
+			planta.setCodigo(codigo);
+
+		}
+
+		System.out.println("Nombre común: ");
+		String nom_com = in.next();
+		in.nextLine();
+		System.out.println("Nombre científico: ");
+		String nom_cien = in.next();
+
+		Planta p = new Planta();
+		p.setCodigo(codigo);
+		p.setNombrecomun(nom_com);
+		p.setNombrecientifico(nom_cien);
+
+		controlador.getServPlanta().insertarPlanta(p);	
+	}
+	
+	/**REGISTRAR PLANTA - ENFERMEDAD
+	public void registrarPlanta() {
+		System.out.println("Introduzca los datos de la nueva planta.");
+		System.out.println();
+		System.out.println("Código: ");
+		in.nextLine();
+		String codigo = in.nextLine();
+		Planta planta = new Planta();
+		planta.setCodigo(codigo);
 		
 		while(codigo.isEmpty() || codigo.contains(" ") || !controlador.getServPlanta().validarPlanta(planta)) {
 			if(codigo.contains(" ")) {
@@ -173,6 +207,8 @@ public class ViveroFachadaGestionPlantas {
 		
 		controlador.getServPlanta().insertarPlanta(p, listaEnfermedades);	
 	}
+	
+	**/
 	
     /**
      * Modifica los datos de una planta existente.

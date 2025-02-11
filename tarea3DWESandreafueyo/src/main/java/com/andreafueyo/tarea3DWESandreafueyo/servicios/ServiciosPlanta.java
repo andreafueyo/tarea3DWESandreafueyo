@@ -24,12 +24,15 @@ public class ServiciosPlanta {
 		return true;
 	}
 	
-	
-	public void insertarPlanta(Planta p, List<Enfermedad> listaEnfermedades) {
-		p.getEnfermedades().addAll(listaEnfermedades);
+
+	public void insertarPlanta(Planta p) {
 		Planta planta =  plantarepo.saveAndFlush(p);
 	}
-	
+//	public void insertarPlanta(Planta p, List<Enfermedad> listaEnfermedades) {
+//		p.getEnfermedades().addAll(listaEnfermedades);
+//		Planta planta =  plantarepo.saveAndFlush(p);
+//	}
+//	
 	public Planta modificar(Planta p) {
 		if (!plantarepo.existeCodigo(p)) {
 			return null;

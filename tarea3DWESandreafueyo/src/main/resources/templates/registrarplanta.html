@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Planta</title>
+    <link rel="stylesheet" th:href="@{/registrarpersona.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo">
+        </div>
+    </header> 
+    <main>
+        <h2>MENÚ DEL ADMINISTRADOR</h2>
+        <h3>GESTIÓN DE PLANTAS - Registrar una nueva planta</h3>
+        
+        <div class="form-container">
+        	<p>Introduzca los datos de la nueva planta.</p>
+            <form th:action="@{/registrarplanta}" method="post">
+               
+                <label for="codigo">Código:</label>
+                <input type="text" id="codigo" name="codigo" required>
+                <p th:if="${errorCodigo}" th:text="${errorCodigo}" style="color: red;"></p>
+
+                <label for="nombrecomun">Nombre común:</label>
+                <input type="text" id="nombrecomun" name="nom_com" required>
+
+                <label for="nombrecientifico">Nombre científico:</label>
+                <input type="text" id="nombrecientifico" name="nom_cien" required>
+
+                <button type="submit">Enviar <span>&raquo;</span></button>
+            </form>
+            <!-- Mensaje de error general -->
+            <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+        </div>
+    </main>
+</body>
+</html>
