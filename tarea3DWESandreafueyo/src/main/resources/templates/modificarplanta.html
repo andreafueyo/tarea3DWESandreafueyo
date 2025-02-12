@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral - Modificar Planta</title>
+    <link rel="stylesheet" th:href="@{/registrarpersona.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo">
+        </div>
+    </header>
+    <main>
+        <h2>MENÚ DEL ADMINISTRADOR</h2>
+        <h3>MODIFICAR PLANTA</h3>
+
+        <div class="form-container">
+            <form th:action="@{/modificarplanta}" method="POST">
+                <input type="hidden" name="codPlanta" th:value="${planta.codigo}" />
+
+                <div class="form-group">
+                    <label for="nombreComun">Nombre Común:</label>
+                    <input type="text" id="nombreComun" name="nombreComun" th:value="${planta.nombrecomun}" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="nombreCientifico">Nombre Científico:</label>
+                    <input type="text" id="nombreCientifico" name="nombreCientifico" th:value="${planta.nombrecientifico}" required />
+                </div>
+
+                <button type="submit">Modificar planta <span>&raquo;</span></button>
+            </form>
+
+            <!-- Tabla de plantas -->
+            <table>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre Común</th>
+                    <th>Acciones</th>
+                </tr>
+                <tr th:each="planta : ${listaPlantas}">
+                    <td th:text="${planta.codigo}"></td>
+                    <td th:text="${planta.nombrecomun}"></td>
+                    <td>
+                        <a th:href="@{'/modificarplanta?codPlanta=' + ${planta.codigo}}">Modificar</a>
+                    </td>
+                </tr>
+            </table>
+
+            <a th:href="@{/gestionplantas}" class="btn-back">Volver a la Gestión de Plantas</a>
+        </div>
+    </main>
+</body>
+</html>

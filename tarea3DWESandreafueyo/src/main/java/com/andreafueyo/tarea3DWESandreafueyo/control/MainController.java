@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaAdmin;
+import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
@@ -26,6 +27,10 @@ public class MainController {
     private ServiciosCredenciales servCredenciales;
     @Autowired
     private ViveroFachadaAdmin viveroFachadaAdmin;
+    @Autowired
+    private ViveroFachadaPrincipal portal;
+	@Autowired
+	Controlador controlador;
 
     /*Ver plantas*/
     @GetMapping("/verplantas")
@@ -49,12 +54,13 @@ public class MainController {
         Credenciales credenciales = new Credenciales();
         credenciales.setUsuario(usuario);
         credenciales.setPassword(contrasena);
-
+        
         if (servCredenciales.validarCredencialContraseña(credenciales)) {
             model.addAttribute("usuario", usuario);
             
             String tipoUsuario = servCredenciales.validarTipoUsuario(credenciales);
-            
+            credenciales = controlador.getServCredenciales().findByUsuario(credenciales.getUsuario());
+            portal.setCredencial(credenciales);
             if ("admin".equals(tipoUsuario)) {
                 return "redirect:/menuadmin";
             } else {
@@ -64,6 +70,7 @@ public class MainController {
             model.addAttribute("error", "Usuario o contraseña incorrectos.");
             return "iniciarsesion";
         }
+        
     }
 
     /*Sesión ADMIN*/

@@ -45,6 +45,10 @@ public class ServiciosEjemplar {
 		ejemplarrepo.saveAndFlush(e);
 	}
 	
+	public void insertar(Ejemplar e) {
+		ejemplarrepo.save(e);
+	}
+	
 	public List<Ejemplar> findAll() {
 		return ejemplarrepo.findAll();
 	}
@@ -71,8 +75,8 @@ public class ServiciosEjemplar {
 		ej.setId(new_id);
 		ej.setNombre(pl.getCodigo()+"_"+new_id);
 		ej.setPlanta(pl);
-		this.actualizar(ej);	
-		
+//		this.actualizar(ej);	
+		this.insertar(ej);
 		Mensaje m = new Mensaje();
 		m.setFechahora(LocalDateTime.now());
 		m.setMensaje(mensaje);
