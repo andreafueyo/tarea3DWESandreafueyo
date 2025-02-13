@@ -55,17 +55,23 @@ public class ControllerPlantas {
 
     /* Modificar Planta */
     @GetMapping("/modificarplanta")
-    public String mostrarFormularioModificarPlanta(@RequestParam String codPlanta, Model model) {
-        Planta planta = servPlanta.findByCod(codPlanta);
+    public String mostrarFormularioModificarPlanta(@RequestParam(required = false) String codPlanta, Model model) {
+        if (codPlanta == null || codPlanta.isEmpty()) {
+            model.addAttribute("error", "Código de planta no proporcionado.");
+            List<Planta> listaPlantas = servPlanta.verPlantas();
+            model.addAttribute("listaPlantas", listaPlantas);
+            return "gestionplantas";  
+        }
 
+        Planta planta = servPlanta.findByCod(codPlanta);
         if (planta == null) {
             model.addAttribute("error", "Planta no encontrada con el código proporcionado.");
+            List<Planta> listaPlantas = servPlanta.verPlantas();
+            model.addAttribute("listaPlantas", listaPlantas);
             return "gestionplantas";  
         }
 
         model.addAttribute("planta", planta);
-
-        // Para mostrar la lista completa de plantas en la tabla
         List<Planta> listaPlantas = servPlanta.verPlantas();
         model.addAttribute("listaPlantas", listaPlantas);
 
@@ -77,8 +83,13 @@ public class ControllerPlantas {
                                   @RequestParam String nombreComun, 
                                   @RequestParam String nombreCientifico, 
                                   RedirectAttributes redirectAttributes) {
-        Planta planta = servPlanta.findByCod(codPlanta);
 
+        if (nombreComun.trim().isEmpty() || nombreCientifico.trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Todos los campos son obligatorios.");
+            return "redirect:/modificarplanta?codPlanta=" + codPlanta;
+        }
+
+        Planta planta = servPlanta.findByCod(codPlanta);
         if (planta == null) {
             redirectAttributes.addFlashAttribute("error", "Planta no encontrada.");
             return "redirect:/gestionplantas";  
@@ -86,9 +97,16 @@ public class ControllerPlantas {
 
         planta.setNombrecomun(nombreComun);
         planta.setNombrecientifico(nombreCientifico);
-        servPlanta.modificar(planta);
+        
+        try {
+            servPlanta.modificar(planta);
+            redirectAttributes.addFlashAttribute("success", "Planta modificada correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al modificar la planta.");
+        }
 
-        redirectAttributes.addFlashAttribute("success", "Planta modificada correctamente.");
         return "redirect:/gestionplantas";  
     }
+
+
 }

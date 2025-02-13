@@ -2,11 +2,13 @@ package com.andreafueyo.tarea3DWESandreafueyo.modelo;
 
 import java.io.Serializable;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 	@Entity
@@ -27,6 +29,8 @@ import jakarta.persistence.Table;
 		@Column (unique = true)
 		private String email;
 		
+		@OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
+	    private Credenciales credenciales;
 		
 		public Persona() {}
 		
@@ -54,6 +58,9 @@ import jakarta.persistence.Table;
 			this.email = email;
 		}
 		
+		public Credenciales getCredenciales() { return credenciales; }
+	    public void setCredenciales(Credenciales credenciales) { this.credenciales = credenciales; }
+	
 		@Override
 		public String toString() {
 			String ret ="";

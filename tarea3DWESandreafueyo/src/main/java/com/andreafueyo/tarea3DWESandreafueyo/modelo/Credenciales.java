@@ -2,6 +2,7 @@ package com.andreafueyo.tarea3DWESandreafueyo.modelo;
 
 import java.io.Serializable;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,12 +30,15 @@ import jakarta.persistence.Table;
 		@Column 
 		private String password;
 		
-		@OneToOne
-		@JoinColumn(name="idpersona")
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name="idpersona", nullable = false)
 		private Persona persona;
+
 		
 		
-		public Credenciales() {}
+		public Credenciales() {
+			this.persona = new Persona();
+		}
 		
 		public Long getId() {
 			return id;
@@ -70,12 +74,12 @@ import jakarta.persistence.Table;
 		
 		@Override
 		public String toString() {
-			String ret ="";
-			ret ="CREDENCIAL";
-			ret += "\tID: " + this.id;
-			ret += "\tUsuario: " + this.usuario;
-			ret += "\tPassword: " + this.password;
-			ret += "\tfk_persona: " + this.persona.getId();
-			return ret;
+		    String ret = "CREDENCIAL";
+		    ret += "\tID: " + this.id;
+		    ret += "\tUsuario: " + this.usuario;
+		    ret += "\tPassword: " + this.password;
+		    ret += "\tfk_persona: " + (this.persona != null ? this.persona.getId() : "null");
+		    return ret;
 		}
+
 }

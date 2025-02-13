@@ -59,7 +59,7 @@ th {
     color: white;
 }
 
-td {
+td.btnseleccion {
     background-color: #d9d9d9;
 }
 
@@ -83,4 +83,9 @@ h2 {
     display: flex;
     background-color: #72845d;
     padding: 10px 20px;
+}
+
+fieldset{
+    color: black;
+    font-family: 'Ubuntu Mono', monospace;
 }

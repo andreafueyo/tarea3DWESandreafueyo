@@ -72,11 +72,10 @@ public class ServiciosEjemplar {
 		
 		Long new_id = this.findUltimoId()+1;
 		Ejemplar ej = new Ejemplar();
-		ej.setId(new_id);
+		//ej.setId(new_id);
 		ej.setNombre(pl.getCodigo()+"_"+new_id);
 		ej.setPlanta(pl);
-//		this.actualizar(ej);	
-		this.insertar(ej);
+		this.actualizar(ej);	
 		Mensaje m = new Mensaje();
 		m.setFechahora(LocalDateTime.now());
 		m.setMensaje(mensaje);

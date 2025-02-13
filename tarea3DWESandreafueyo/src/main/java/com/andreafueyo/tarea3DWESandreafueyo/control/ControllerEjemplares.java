@@ -56,8 +56,37 @@ public class ControllerEjemplares {
         servEjemplar.registrarEjemplar(planta, idPersona, mensaje);
         model.addAttribute("mensajeExito", "¡Ejemplar insertado correctamente!");
 
-        return "redirect:/verplantas"; 
+        return "/registrarejemplar"; 
     }
+    
+    @GetMapping("/vermensajesejemplar")
+    public String mostrarListaEjemplares(Model model) {
+        model.addAttribute("ejemplares", servEjemplar.findAll());
+        return "vermensajesejemplar"; 
+    }
+
+    @PostMapping("/vermensajesejemplar")
+    public String MostrarListaMensajes(@RequestParam("codPlanta") String codPlanta,
+                                    @RequestParam("mensaje") String mensaje,
+                                    Model model) {
+        // Validar si la planta existe
+        Planta planta = servPlanta.findByCod(codPlanta);
+        if (planta == null) {
+        	model.addAttribute("error", "No existe una planta con ese código.");
+            model.addAttribute("plantas", servPlanta.verPlantas());
+            return "registrarejemplar"; 
+        }
+        // Validar que ID Persona sea un número válido
+        Long idPersona = portal.getCredencial().getPersona().getId();
+
+        // Registrar el ejemplar
+        servEjemplar.registrarEjemplar(planta, idPersona, mensaje);
+        model.addAttribute("mensajeExito", "¡Ejemplar insertado correctamente!");
+
+        return "/registrarejemplar"; 
+    }
+    
+    
     
     
 }

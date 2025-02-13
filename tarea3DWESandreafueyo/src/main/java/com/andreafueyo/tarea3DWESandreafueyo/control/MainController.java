@@ -13,6 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaAdmin;
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Persona;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
@@ -95,6 +96,8 @@ public class MainController {
     /*Registrar persona*/
     @GetMapping("/registrarpersona")
     public String registrarPersona(Model model) {
+    	Credenciales credenciales = new Credenciales();
+    	credenciales.setPersona(new Persona());
         model.addAttribute("credenciales", new Credenciales());
         return "registrarpersona";
     }
@@ -102,7 +105,8 @@ public class MainController {
     @PostMapping("/registrarpersona")
     public String procesarRegistro(@ModelAttribute Credenciales credenciales, Model model) {
         if (servCredenciales.validarNuevaCredencial(credenciales)) {
-            servCredenciales.insertar(credenciales);
+        	servCredenciales.insertar(credenciales);
+        	model.addAttribute("credenciales", credenciales);
             return "redirect:/menuadmin"; 
         } else {
             model.addAttribute("error", "El usuario ya existe");
