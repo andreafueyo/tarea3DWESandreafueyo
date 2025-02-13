@@ -1,8 +1,11 @@
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -25,17 +28,12 @@ header {
     height: 50px; 
 }
 
-.login-container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    width: 400px; 
-    margin: 0 auto; 
-}
-
 main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
@@ -73,14 +71,23 @@ button {
 }
 
 button:hover {
-    background-color: #72845d;
+    background-color: #5a6b4a;
+}
+
+.contenedorboton {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
 }
 
 h2 {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 100px;
     color: #333;
     display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #72845d;
     padding: 10px 20px;
+    color: white;
 }

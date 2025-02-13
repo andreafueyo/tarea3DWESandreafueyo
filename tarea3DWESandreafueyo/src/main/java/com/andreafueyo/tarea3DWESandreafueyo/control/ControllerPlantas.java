@@ -60,7 +60,7 @@ public class ControllerPlantas {
             model.addAttribute("error", "Código de planta no proporcionado.");
             List<Planta> listaPlantas = servPlanta.verPlantas();
             model.addAttribute("listaPlantas", listaPlantas);
-            return "gestionplantas";  
+            return "modificarplanta";  
         }
 
         Planta planta = servPlanta.findByCod(codPlanta);
@@ -68,7 +68,7 @@ public class ControllerPlantas {
             model.addAttribute("error", "Planta no encontrada con el código proporcionado.");
             List<Planta> listaPlantas = servPlanta.verPlantas();
             model.addAttribute("listaPlantas", listaPlantas);
-            return "gestionplantas";  
+            return "modificarplanta";  
         }
 
         model.addAttribute("planta", planta);

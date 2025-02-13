@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <div class="logo"><img src="../imagenes/logo.png" alt="Logo"></div>
+        <div class="logo"><img th:src="@{/imagenes/logo2.png}" alt="Logo"></div>
     </header>
     <main>
     <br><br>
@@ -20,13 +20,12 @@
         <div th:if="${mensajeExito}" style="color: green; font-weight: bold;">
             <p th:text="${mensajeExito}"></p>
         </div>
-        
-        <table>
+        <table id="ejemplaresTable">
             <thead>
                 <tr>
-                    <th>Seleccionar</th>
                     <th>ID</th>
-                    <th>NOMBRE</th>
+                    <th>Nombre</th>
+                    <th class="seleccion"> </th>
                 </tr>
             </thead>
             <tbody>
@@ -34,23 +33,32 @@
                     <td th:text="${ejemplar.id}"></td>
                     <td th:text="${ejemplar.nombre}"></td>
                     <td>
-
-					<button id="button-selec" th:data-codigo="${planta.codigo}" th:onclick="mostrarFormulario(this.getAttribute('data-codigo'))">Seleccionar</button>
-
+            <form th:action="@{/vermensajesejemplar}" method="post">
+                <input type="hidden" name="ejemplarId" th:value="${ejemplar.id}" />
+                <button type="submit">Seleccionar</button>
+            </form>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-         <form th:action="@{/registrarejemplar}" method="post" id="formularioRegistro" style="display: none;">
-            <h3>Registrar Ejemplar</h3>
-            <input type="hidden" id="codPlanta" name="codPlanta" value="codPlanta" />
-
-            <label for="mensaje">Mensaje:</label>
-            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
-             <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
-            <button type="submit" id="botonRegistrar" disabled>Registrar Ejemplar</button>
-        </form>
+        <div th:if="${mensajes}">
+        <table id="mensajesTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FECHAHORA</th>
+                    <th>MENSAJE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mensaje : ${mensajes}">
+                    <td th:text="${mensaje.id}"></td>
+                    <td th:text="${mensaje.fechahora}"></td>
+                    <td th:text="${mensaje.mensaje}"></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
 
             <button onclick="window.history.back()">Volver</button>
 
@@ -59,25 +67,16 @@
     </main>
 
     <script>
-        function activarFormulario(radio) {
-            let filas = document.querySelectorAll("tbody tr");
-            filas.forEach(fila => {
-                let boton = fila.querySelector("button");
-                if (fila.contains(radio)) {
-                    boton.disabled = false;
-                } else {
-                    boton.disabled = true;
-                }
-            });
-        }
 
-        function mostrarFormulario(codigoPlanta) {
-        	console.log(codigoPlanta);
-            document.getElementById("formularioRegistro").style.display = "block";
-            document.getElementById("codPlanta").value = codigoPlanta;
-            document.querySelector("table").style.display = "none";
-            document.getElementById("botonRegistrar").disabled = false;
+    document.addEventListener("DOMContentLoaded", function () {
+        var mensajesTable = document.getElementById("mensajesTable");
+        var ejemplaresTable = document.getElementById("ejemplaresTable");
+
+        // Si hay mensajes, oculta la tabla de ejemplares
+        if (mensajesTable) {
+            ejemplaresTable.style.display = "none";
         }
+    });
     </script>
 </body>
 </html>

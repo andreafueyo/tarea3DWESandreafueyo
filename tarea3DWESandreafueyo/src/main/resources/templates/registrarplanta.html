@@ -31,6 +31,10 @@
                 <input type="text" id="nombrecientifico" name="nom_cien" required>
 
                 <button type="submit">Enviar <span>&raquo;</span></button>
+                <br>
+                <div class="contenedorboton">
+		        <button onclick="window.history.back()">Volver</button>
+		        </div>
             </form>
             <!-- Mensaje de error general -->
             <p th:if="${error}" th:text="${error}" style="color: red;"></p>

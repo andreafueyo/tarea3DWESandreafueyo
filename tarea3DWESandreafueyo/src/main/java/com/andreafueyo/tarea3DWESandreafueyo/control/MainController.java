@@ -105,14 +105,15 @@ public class MainController {
     @PostMapping("/registrarpersona")
     public String procesarRegistro(@ModelAttribute Credenciales credenciales, Model model) {
         if (servCredenciales.validarNuevaCredencial(credenciales)) {
-        	servCredenciales.insertar(credenciales);
-        	model.addAttribute("credenciales", credenciales);
-            return "redirect:/menuadmin"; 
+            servCredenciales.insertar(credenciales);
+            model.addAttribute("exito", "Usuario creado con éxito en nuestra base de datos.");
+            return "registrarpersona";
         } else {
-            model.addAttribute("error", "El usuario ya existe");
+        	model.addAttribute("error", "El usuario ya existe.");
             return "registrarpersona";
         }
     }
+
     
     /*Cerrar sesión*/
     @GetMapping("/cerrarsesion")

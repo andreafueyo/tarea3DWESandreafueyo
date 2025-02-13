@@ -31,9 +31,15 @@
                 <input type="password" id="contrasena" name="contrasena" th:field="*{password}" required>
 
                 <button type="submit">Enviar <span>&raquo;</span></button>
+                <br>
+                <div class="contenedorboton">
+		        <button onclick="window.history.back()">Volver</button>
+		        </div>
             </form>
             <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+            <p th:if="${exito}" th:text="${exito}" style="color: green;"></p>
         </div>
     </main>
+
 </body>
 </html>

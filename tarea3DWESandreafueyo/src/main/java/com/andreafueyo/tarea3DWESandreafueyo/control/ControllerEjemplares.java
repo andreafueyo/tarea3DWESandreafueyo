@@ -1,9 +1,13 @@
 package com.andreafueyo.tarea3DWESandreafueyo.control;
 
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Mensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
+import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -25,6 +29,9 @@ public class ControllerEjemplares {
 
     @Autowired
     private ServiciosPlanta servPlanta;
+    
+    @Autowired
+    private ServiciosMensaje servMensaje;
 
     @GetMapping("/gestionejemplares")
     public String gestionEjemplares(@RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen, Model model) {
@@ -32,6 +39,7 @@ public class ControllerEjemplares {
         return "gestionejemplares"; 
     }
 
+    /*Registrar ejemplar*/
     @GetMapping("/registrarejemplar")
     public String mostrarRegistroEjemplar(Model model) {
         model.addAttribute("plantas", servPlanta.verPlantas());
@@ -42,23 +50,22 @@ public class ControllerEjemplares {
     public String registrarEjemplar(@RequestParam("codPlanta") String codPlanta,
                                     @RequestParam("mensaje") String mensaje,
                                     Model model) {
-        // Validar si la planta existe
+    
         Planta planta = servPlanta.findByCod(codPlanta);
         if (planta == null) {
         	model.addAttribute("error", "No existe una planta con ese código.");
             model.addAttribute("plantas", servPlanta.verPlantas());
             return "registrarejemplar"; 
         }
-        // Validar que ID Persona sea un número válido
         Long idPersona = portal.getCredencial().getPersona().getId();
 
-        // Registrar el ejemplar
         servEjemplar.registrarEjemplar(planta, idPersona, mensaje);
         model.addAttribute("mensajeExito", "¡Ejemplar insertado correctamente!");
 
         return "/registrarejemplar"; 
     }
     
+    /*Ver mensajes del ejemplar*/
     @GetMapping("/vermensajesejemplar")
     public String mostrarListaEjemplares(Model model) {
         model.addAttribute("ejemplares", servEjemplar.findAll());
@@ -66,24 +73,20 @@ public class ControllerEjemplares {
     }
 
     @PostMapping("/vermensajesejemplar")
-    public String MostrarListaMensajes(@RequestParam("codPlanta") String codPlanta,
-                                    @RequestParam("mensaje") String mensaje,
+    public String MostrarListaMensajes(@RequestParam("ejemplarId") Long ejemplarId,
                                     Model model) {
-        // Validar si la planta existe
-        Planta planta = servPlanta.findByCod(codPlanta);
-        if (planta == null) {
-        	model.addAttribute("error", "No existe una planta con ese código.");
-            model.addAttribute("plantas", servPlanta.verPlantas());
-            return "registrarejemplar"; 
-        }
-        // Validar que ID Persona sea un número válido
-        Long idPersona = portal.getCredencial().getPersona().getId();
+    	
+    	List<Mensaje> listaMensajes = servMensaje.findByEjemplar(ejemplarId);
+    	
+    	if(listaMensajes == null || listaMensajes.isEmpty()) {
+        	model.addAttribute("error", "No existe mensajes con ese id de ejemplar.");
+            model.addAttribute("ejemplares", servEjemplar.findAll());
+            return "vermensajesejemplar"; 
+    	}
+    	
+        model.addAttribute("mensajes", listaMensajes);
+        return "/vermensajesejemplar";
 
-        // Registrar el ejemplar
-        servEjemplar.registrarEjemplar(planta, idPersona, mensaje);
-        model.addAttribute("mensajeExito", "¡Ejemplar insertado correctamente!");
-
-        return "/registrarejemplar"; 
     }
     
     

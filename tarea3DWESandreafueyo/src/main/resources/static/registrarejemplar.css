@@ -20,9 +20,8 @@ header {
 }
 
 .logo img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px; 
+    width: 65px;
+    height: 65px; 
 }
 
 .login-container {
@@ -59,8 +58,15 @@ th {
     color: white;
 }
 
+th.seleccion {
+    background-color: white;
+    color: white;
+    border:none;
+}
+
 td.btnseleccion {
     background-color: #d9d9d9;
+    border: none;
 }
 
 button {
