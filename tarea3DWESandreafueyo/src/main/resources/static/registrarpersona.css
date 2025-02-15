@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #dedede;
 }
 
 header {
@@ -20,9 +20,8 @@ header {
 }
 
 .logo img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 110px;
+    height: 65px; 
 }
 
 h2, h3 {
@@ -100,4 +99,8 @@ button span {
     display: flex;
     justify-content: center; 
     align-items: center; 
+}
+
+a {
+    text-decoration: none;
 }

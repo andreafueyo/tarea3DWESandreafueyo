@@ -1,12 +1,15 @@
 package com.andreafueyo.tarea3DWESandreafueyo.control;
 
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Mensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
+import com.andreafueyo.tarea3DWESandreafueyo.repositorios.EjemplarRepository;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,9 @@ public class ControllerEjemplares {
     
     @Autowired
     private ServiciosMensaje servMensaje;
+    
+    @Autowired
+    private EjemplarRepository ejemplarrepo;
 
     @GetMapping("/gestionejemplares")
     public String gestionEjemplares(@RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen, Model model) {
@@ -64,6 +70,29 @@ public class ControllerEjemplares {
 
         return "/registrarejemplar"; 
     }
+    
+    /* Filtrar ejemplares */
+    @GetMapping("/filtrarejemplares")
+    public String mostrarFiltrarEjemplares(Model model) {
+        return "filtrarejemplares"; 
+    }
+    
+    @PostMapping("/ejemplarfiltrartipo")
+    public String ejemplarFiltrarTipo(@RequestParam("tipos") String tipos,
+                                    Model model) {
+    	
+    	List<String> lTipos = Arrays.asList(tipos.split("\\s*,\\s*"));
+    	List<Ejemplar> lEjemplar = ejemplarrepo.buscarEjemplaresPorTipos(lTipos);
+    	if(lEjemplar == null || lEjemplar.isEmpty()) {
+        	model.addAttribute("error", "No existen ejemplares con esos tipos.");
+            return "filtrarejemplares"; 
+    	}
+    	
+        model.addAttribute("ejemplares", lEjemplar);
+
+        return "/filtrarejemplares"; 
+    }
+    
     
     /*Ver mensajes del ejemplar*/
     @GetMapping("/vermensajesejemplar")

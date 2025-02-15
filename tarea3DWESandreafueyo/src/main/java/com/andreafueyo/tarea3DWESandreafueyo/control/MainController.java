@@ -85,13 +85,6 @@ public class MainController {
     public String menuPersonal(Model model) {
         return "menupersonal"; 
     }
-    
-    /*Gestión mensajes*/
-    @GetMapping("/gestionmensajes")
-    public String gestionMensajes(@RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen, Model model) {
-        model.addAttribute("origen", origen);  
-        return "gestionmensajes"; 
-    }
 
     /*Registrar persona*/
     @GetMapping("/registrarpersona")

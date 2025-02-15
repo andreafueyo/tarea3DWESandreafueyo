@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,27 +31,19 @@ public class ControllerPlantas {
     /* Registrar Planta */
     @GetMapping("/registrarplanta")
     public String mostrarFormularioRegistroPlanta(Model model) {
-        return "registrarplanta"; 
+    	model.addAttribute("planta", new Planta());
+    	return "registrarplanta"; 
     }
 
     @PostMapping("/registrarplanta")
-    public String registrarPlanta(@RequestParam String codigo, 
-                                  @RequestParam String nom_com, 
-                                  @RequestParam String nom_cien, 
-                                  RedirectAttributes redirectAttributes) {
-        Planta planta = new Planta();
-        planta.setCodigo(codigo);
-        planta.setNombrecomun(nom_com);
-        planta.setNombrecientifico(nom_cien);
-        
-        if (servPlanta.validarPlanta(planta)) {
+    public String registrarPlanta(@ModelAttribute Planta planta, Model model) {
+    	if (servPlanta.validarPlanta(planta)) {
             servPlanta.insertarPlanta(planta);
-            redirectAttributes.addFlashAttribute("success", "Planta registrada con éxito.");
+            model.addAttribute("exito", "Planta registrada con éxito.");
         } else {
-            redirectAttributes.addFlashAttribute("error", "El código de la planta ya existe o es inválido.");
+            model.addAttribute("error", "El código de la planta ya existe o es inválido.");
         }
-        
-        return "redirect:/gestionplantas"; 
+    	return "registrarplanta"; 
     }
 
     /* Modificar Planta */

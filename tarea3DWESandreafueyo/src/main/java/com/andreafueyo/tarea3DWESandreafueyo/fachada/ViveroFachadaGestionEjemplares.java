@@ -136,29 +136,39 @@ public class ViveroFachadaGestionEjemplares {
      */
 	
 	public void filtrarEjemplares() {
-//        List<String> tipos = new ArrayList<>();
-//        
-//        System.out.println("Introduce los tipos de planta uno por uno. Escribe 'FIN' para terminar:");
-//        
-//        while (true) {
-//            System.out.print("Tipo de planta: ");
-//            String input = in.nextLine().trim();
-//            
-//            if (input.equalsIgnoreCase("FIN")) {
-//                break;
-//            }
-//            
-//            if (!input.isEmpty()) {
-//                tipos.add(input);
-//            } else {
-//                System.out.println("El tipo de planta no puede estar vacío. Inténtalo de nuevo.");
-//            }
-//        }
-//        
-//		System.out.println();
-//
-//		controlador.getServEjemplar().buscarEjemplaresPorTipos(tipos);
-//	
+        List<String> tipos = new ArrayList<>();
+        
+        System.out.println("Introduce los tipos de planta uno por uno. Escribe 'FIN' para terminar:");
+        
+        in.nextLine();
+        while (true) {
+            System.out.print("Tipo de planta: ");
+            String tipo = in.nextLine().trim();
+            
+            if (tipo.equalsIgnoreCase("FIN")) {
+                break;
+            }
+            
+            if(tipo.isEmpty()) {
+            	System.out.println("El tipo de planta está vacío. Inténtalo de nuevo.");
+            }
+            else {
+            	Planta p = new Planta();
+            	p.setCodigo(tipo);
+            	
+            	//si es true, es que no existe y no es valido
+            	if(plServ.validarPlanta(p)) {
+                	System.out.println("No existe una planta con ese código. Inténtalo de nuevo.");
+            	}
+            	else {
+                    tipos.add(tipo);
+            	}
+            }
+            
+        }
+
+		controlador.getServEjemplar().buscarEjemplaresPorTipos(tipos);
+	
 	}
 	
 	/**

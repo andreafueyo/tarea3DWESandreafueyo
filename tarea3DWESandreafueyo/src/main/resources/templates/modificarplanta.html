@@ -17,11 +17,12 @@
 <body>
     <header>
         <div class="logo">
-            <img th:src="@{/imagenes/logo.png}" alt="Logo">
+            <img th:src="@{/imagenes/lalaboral.png}" alt="Logo">
         </div>
     </header>
     
     <main>
+    <br>
         <h2>MENÚ DEL ADMINISTRADOR</h2>
         <h3>MODIFICAR PLANTA</h3>
 
@@ -60,22 +61,29 @@
         <div class="form-container">
             <form th:action="@{/modificarplanta}" method="POST">
                 <input type="hidden" id="codPlanta" name="codPlanta" required />
+				
+				<fieldset>
+				<legend>Nombre común:</legend>
+				<input type="text" id="nombreComun" name="nombreComun" required />
+                </fieldset>
 
-                <div class="form-group">
-                    <label for="nombreComun">Nombre Común:</label>
-                    <input type="text" id="nombreComun" name="nombreComun" required />
-                </div>
+				<fieldset>
+				<legend>Nombre científico:</legend>
+				<input type="text" id="nombreCientifico" name="nombreCientifico" required />
+				</fieldset>
 
-                <div class="form-group">
-                    <label for="nombreCientifico">Nombre Científico:</label>
-                    <input type="text" id="nombreCientifico" name="nombreCientifico" required />
-                </div>
 
                 <button type="submit" id="botonModificar" disabled>Modificar Planta</button>
             </form>
         </div>
-
-        <a th:href="@{/gestionplantas}" class="btn-back">Volver a la Gestión de Plantas</a>
+        <!-- 
+        <div class="contenedorboton">
+        <a th:href="@{/gestionplantas}">Volver</a>
+        </div>
+         -->
+        <div class="contenedorboton">
+        <button onclick="window.history.back()">Volver al menú</button>
+        </div>
     </main>
 </body>
 </html>

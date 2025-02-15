@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral</title>
+    <link rel="stylesheet" th:href="@{/registrarejemplar.css}">
+</head>
+    <header>
+        <div class="logo">
+        	<img th:src="@{/imagenes/lalaboral.png}" alt="Logo">
+        </div>
+    </header>
+        <br><br>
+        <h2>REGISTRAR UN NUEVO MENSAJE</h2>
+        <h2>EJEMPLARES DEL VIVERO</h2>
+<body>
+    <main>
+
+        <div th:if="${error}" style="color: red; font-weight: bold;">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${mensajeExito}" style="color: green; font-weight: bold;">
+            <p th:text="${mensajeExito}"></p>
+        </div>
+        
+        <table id="ejemplaresTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NOMBRE</th>
+                    <th>Seleccionar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ejemplar : ${ejemplares}">
+                    <td th:text="${ejemplar.id}"></td>
+                    <td th:text="${ejemplar.nombre}"></td>
+                    <td>
+					<button id="button-selec" th:data-codigo="${ejemplar.id}" onclick="mostrarFormulario(this.getAttribute('data-codigo'))">✔</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+         <form th:action="@{/registrarmensaje}" method="post" id="formularioRegistro" style="display: none;">
+           
+            <input type="hidden" id="ejemplarId" name="ejemplarId" value="ejemplarId" />
+			<fieldset>
+			<legend>Mensaje:</legend>
+                <textarea id="mensaje" name="mensaje" cols="60" rows="10" placeholder="Introduzca un mensaje para el ejemplar." required></textarea>
+        	</fieldset>
+             <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
+            <button type="submit" id="botonRegistrar" disabled>Registrar mensaje</button>
+        </form>
+        <div class="contenedorboton">
+        <button onclick="window.history.back()">Volver al menú</button>
+        </div>
+    </main>
+
+    <script>
+
+    function mostrarFormulario(ejemplarId) {
+    	console.log(ejemplarId);
+        document.getElementById("formularioRegistro").style.display = "block";
+        document.getElementById("ejemplarId").value = ejemplarId;
+        document.querySelector("table").style.display = "none";
+        document.getElementById("botonRegistrar").disabled = false;
+    }
+    </script>
+</body>
+</html>

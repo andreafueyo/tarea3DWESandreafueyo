@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral - Gestión mensajes</title>
+    <link rel="stylesheet" th:href="@{/filtrarmensajes.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/lalaboral.png}" alt="Logo del Vivero">
+        </div>
+    </header>
+    <h2>FILTRAR EJEMPLARES POR TIPO DE PLANTA</h2>
+    
+    <div th:if="${error}" style="color: red; font-weight: bold;">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${mensajeExito}" style="color: green; font-weight: bold;">
+        <p th:text="${mensajeExito}"></p>
+    </div>
+    
+    <form th:action="@{/ejemplarfiltrartipo}" method="post" id="formularioRegistro1">
+        <fieldset>
+        <p>Introduzca los códigos de planta por los que filtrar separados por una coma.</p>
+        </fieldset>
+        <fieldset>
+        <legend>Códigos:</legend>
+        <textarea id="tipos" name="tipos" cols="60" rows="4" required></textarea>
+        <br>
+        <button type="submit" id="botonFiltrarEjemplares">Buscar</button>
+    	</fieldset>
+    </form>
+        <br>
+        <div class="contenedorboton">
+        <button onclick="window.history.back()">Volver al menú</button>
+        </div>
+     <br>
+     <div th:if="${ejemplares}">
+    <table id="ejemplaresTable">
+        <thead>
+            <tr>
+                <th>Seleccionar</th>
+                <th>ID</th>
+                <th>NOMBRE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ejemplar : ${ejemplares}">
+                <td>
+                    <form th:action="@{/vermensajesejemplar}" method="post">
+                        <input type="hidden" name="ejemplarId" th:value="${ejemplar.id}" />
+                        <button type="submit">Seleccionar</button>
+                    </form>
+                </td>
+                <td th:text="${ejemplar.id}"></td>
+                <td th:text="${ejemplar.nombre}"></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    
+</body>
+</html>

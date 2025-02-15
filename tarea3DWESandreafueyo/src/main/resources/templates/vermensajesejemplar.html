@@ -8,11 +8,12 @@
 </head>
 <body>
     <header>
-        <div class="logo"><img th:src="@{/imagenes/logo2.png}" alt="Logo"></div>
+        <div class="logo"><img th:src="@{/imagenes/lalaboral.png}" alt="Logo"></div>
     </header>
-    <main>
     <br><br>
-        <h2>EJEMPLARES DEL VIVERO</h2>
+    <h2>EJEMPLARES DEL VIVERO</h2>
+    <h2>VER MENSAJES DE UN EJEMPLAR</h2>
+    <main>
 
         <div th:if="${error}" style="color: red; font-weight: bold;">
             <p th:text="${error}"></p>
@@ -25,7 +26,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th class="seleccion"> </th>
+                    <th>Seleccionar</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +36,7 @@
                     <td>
             <form th:action="@{/vermensajesejemplar}" method="post">
                 <input type="hidden" name="ejemplarId" th:value="${ejemplar.id}" />
-                <button type="submit">Seleccionar</button>
+                <button type="submit">✔</button>
             </form>
                     </td>
                 </tr>
@@ -60,10 +61,10 @@
         </table>
         </div>
 
-            <button onclick="window.history.back()">Volver</button>
+        <div class="contenedorboton">
+        <button onclick="window.history.back()">Volver</button>
+        </div>
 
-        <br>
-        <button onclick="window.history.back()">Volver al Menú</button>
     </main>
 
     <script>
@@ -72,7 +73,6 @@
         var mensajesTable = document.getElementById("mensajesTable");
         var ejemplaresTable = document.getElementById("ejemplaresTable");
 
-        // Si hay mensajes, oculta la tabla de ejemplares
         if (mensajesTable) {
             ejemplaresTable.style.display = "none";
         }

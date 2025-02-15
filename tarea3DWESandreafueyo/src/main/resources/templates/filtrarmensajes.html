@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivero La Laboral - Gestión mensajes</title>
+    <link rel="stylesheet" th:href="@{/filtrarmensajes.css}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img th:src="@{/imagenes/lalaboral.png}" alt="Logo del Vivero">
+        </div>
+    </header>
+    <h2>FILTRAR MENSAJES</h2>
+    
+    <div th:if="${error}" style="color: red; font-weight: bold;">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${mensajeExito}" style="color: green; font-weight: bold;">
+        <p th:text="${mensajeExito}"></p>
+    </div>
+    
+    <form th:action="@{/mensajeFiltrarPersona}" method="post" id="formularioRegistro1">
+         <fieldset>
+         <legend>Por persona:</legend>
+         <label for="persona">ID persona:</label>
+         <input type="text" id="persona" name="persona" required></input>
+          <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
+         <button type="submit" id="botonFiltrarPersona">Buscar</button>
+     	</fieldset>
+     </form>
+     
+     <form th:action="@{/mensajeFiltrarFechas}" method="post" id="formularioRegistro2">
+         <fieldset>
+         <legend>Por fechas:</legend>
+         <label for="fechaMin">Fecha mínima:</label>
+         <input type="text" id="fechaMin" name="fechaMin" placeholder="yyyy-MM-dd HH:mm" required></input>
+         <label for="fechaMax">Fecha máxima:</label>
+         <input type="text" id="fechaMax" name="fechaMax" placeholder="yyyy-MM-dd HH:mm" required></input>
+          <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
+         <button type="submit" id="botonFiltrarFechas">Buscar</button>
+     	</fieldset>
+     </form>
+     
+     <form th:action="@{/mensajeFiltrarTipoPlanta}" method="post" id="formularioRegistro3">
+         <fieldset>
+         <legend>Por tipo de planta:</legend>
+         <label for="codplanta">Código de planta:</label>
+         <input type="text" id="codplanta" name="codplanta" required></input>
+          <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
+         <button type="submit" id="botonFiltrarTipoPlanta">Buscar</button>
+     	</fieldset>
+     </form>
+     <br>
+        <div th:if="${mensajes}">
+        <table id="mensajesTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FECHAHORA</th>
+                    <th>MENSAJE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mensaje : ${mensajes}">
+                    <td th:text="${mensaje.id}"></td>
+                    <td th:text="${mensaje.fechahora}"></td>
+                    <td th:text="${mensaje.mensaje}"></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <br>
+             <div class="contenedorboton">
+        <button onclick="window.history.back()">Volver al menú</button>
+        </div>
+        <br><br>
+</body>
+</html>
