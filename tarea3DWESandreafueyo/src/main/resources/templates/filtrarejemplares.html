@@ -14,6 +14,25 @@
     </header>
     <h2>FILTRAR EJEMPLARES POR TIPO DE PLANTA</h2>
     
+    <div th:if="${plantas}">
+    <table>
+    <thead>
+        <tr>
+            <th>CÓDIGO DE PLANTA</th>
+            <th>NOMBRE COMÚN</th>
+            <th>NOMBRE CIENTÍFICO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="planta : ${plantas}">
+            <td th:text="${planta.codigo}"></td>
+            <td th:text="${planta.nombrecomun}"></td>
+            <td th:text="${planta.nombrecientifico}"></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+    
     <div th:if="${error}" style="color: red; font-weight: bold;">
         <p th:text="${error}"></p>
     </div>
@@ -33,9 +52,11 @@
     	</fieldset>
     </form>
         <br>
-        <div class="contenedorboton">
-        <button onclick="window.history.back()">Volver al menú</button>
-        </div>
+		<div class="contenedorboton">
+			<a th:href="@{/gestionejemplares}">
+			<button type="button">Volver</button>
+		</a>
+		</div>
      <br>
      <div th:if="${ejemplares}">
     <table id="ejemplaresTable">

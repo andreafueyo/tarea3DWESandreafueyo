@@ -14,6 +14,9 @@
 <body>
     <br><br>
     <h2>REGISTRAR NUEVO EJEMPLAR</h2>
+    <form id="formSeleccion" th:action="@{/registrarejemplar}" method="post">
+    <input type="hidden" name="codPlanta" id="codigoSeleccionado">
+	</form>
     <main>
         <div th:if="${error}" style="color: red; font-weight: bold;">
             <p th:text="${error}"></p>
@@ -26,9 +29,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>CÓDIGO DE PLANTA</th>
-                    <th>NOMBRE COMÚN</th>
-                    <th>NOMBRE CIENTÍFICO</th>
+                    <th>CÓDIGO DE PLANTA</th>
+                    <th>NOMBRE COMÚN</th>
+                    <th>NOMBRE CIENTÍFICO</th>
                     <th>Seleccionar</th>
                 </tr>
             </thead>
@@ -38,50 +41,27 @@
                     <td th:text="${planta.nombrecomun}"></td>
                     <td th:text="${planta.nombrecientifico}"></td>
                     <td class="sinborde">
-					<button id="button-selec" th:data-codigo="${planta.codigo}" onclick="mostrarFormulario(this.getAttribute('data-codigo'))">✔</button>
+					<button type="button" th:data-codigo="${planta.codigo}" onclick="seleccionarPlanta(this)">✔</button>
                     </td>
                 </tr>
             </tbody>
         </table>
         </div>
 
-         <form th:action="@{/registrarejemplar}" method="post" id="formularioRegistro" style="display: none;">
-           
-            <input type="hidden" id="codPlanta" name="codPlanta" value="codPlanta" />
-            <fieldset>
-            <legend>Mensaje:</legend>
-                <textarea id="mensaje" name="mensaje" cols="60" rows="10" placeholder="Introduzca un mensaje para el ejemplar." required></textarea>
-        	<br>
-            <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
-            <button type="submit" id="botonRegistrar" disabled>Registrar Ejemplar</button>
-        </fieldset>
-        </form>
-
         <br>
-        <div class="contenedorboton">
-        <button onclick="window.history.back()">Volver al menú</button>
-        </div>
+		<div class="contenedorboton">
+			<a th:href="@{/gestionejemplares}">
+				<button type="button">Volver</button>
+			</a>
+		</div>
     </main>
 
     <script>
-        function activarFormulario(radio) {
-            let filas = document.querySelectorAll("tbody tr");
-            filas.forEach(fila => {
-                let boton = fila.querySelector("button");
-                if (fila.contains(radio)) {
-                    boton.disabled = false;
-                } else {
-                    boton.disabled = true;
-                }
-            });
-        }
 
-        function mostrarFormulario(codigoPlanta) {
-        	console.log(codigoPlanta);
-            document.getElementById("formularioRegistro").style.display = "block";
-            document.getElementById("codPlanta").value = codigoPlanta;
-            document.querySelector("table").style.display = "none";
-            document.getElementById("botonRegistrar").disabled = false;
+        function seleccionarPlanta(button) {
+            let codigo = button.getAttribute("data-codigo");
+            document.getElementById("codigoSeleccionado").value = codigo;
+            document.getElementById("formSeleccion").submit(); // Envía el formulario
         }
     </script>
 </body>

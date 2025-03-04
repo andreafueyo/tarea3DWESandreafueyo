@@ -38,10 +38,13 @@ public class ControllerEjemplares {
     
     @Autowired
     private EjemplarRepository ejemplarrepo;
+    
+    @Autowired
+    private MainController maincontroller;
 
     @GetMapping("/gestionejemplares")
-    public String gestionEjemplares(@RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen, Model model) {
-        model.addAttribute("origen", origen);  
+    public String gestionEjemplares(Model model) {
+        model.addAttribute("origen", maincontroller.getMenuLogin());  
         return "gestionejemplares"; 
     }
 
@@ -49,46 +52,57 @@ public class ControllerEjemplares {
     @GetMapping("/registrarejemplar")
     public String mostrarRegistroEjemplar(Model model) {
         model.addAttribute("plantas", servPlanta.verPlantas());
+        model.addAttribute("origen", maincontroller.getMenuLogin());
         return "registrarejemplar"; 
     }
 
     @PostMapping("/registrarejemplar")
     public String registrarEjemplar(@RequestParam("codPlanta") String codPlanta,
-                                    @RequestParam("mensaje") String mensaje,
-                                    Model model) {
-    
-        Planta planta = servPlanta.findByCod(codPlanta);
-        if (planta == null) {
-        	model.addAttribute("error", "No existe una planta con ese código.");
-            model.addAttribute("plantas", servPlanta.verPlantas());
-            return "registrarejemplar"; 
-        }
-        Long idPersona = portal.getCredencial().getPersona().getId();
-
-        servEjemplar.registrarEjemplar(planta, idPersona, mensaje);
-        model.addAttribute("mensajeExito", "¡Ejemplar insertado correctamente!");
-
-        return "/registrarejemplar"; 
+            Model model) {
+		
+		Planta planta = servPlanta.findByCod(codPlanta);
+			if (planta == null) {
+				model.addAttribute("error", "No existe una planta con ese código.");
+				model.addAttribute("plantas", servPlanta.verPlantas());
+				model.addAttribute("origen", maincontroller.getMenuLogin());
+				return "registrarejemplar"; 
+		}
+			
+		Long idPersona = portal.getCredencial().getPersona().getId();
+		
+		String mensaje = "Ejemplar insertado por la persona: " + portal.getCredencial().getPersona().getNombre();
+		servEjemplar.registrarEjemplar(planta, idPersona, mensaje);
+		model.addAttribute("mensajeExito", "¡Ejemplar insertado correctamente!");
+		model.addAttribute("origen", maincontroller.getMenuLogin());
+		 
+        return "registrarejemplar"; 
     }
     
     /* Filtrar ejemplares */
     @GetMapping("/filtrarejemplares")
     public String mostrarFiltrarEjemplares(Model model) {
+        List<Planta> listaPlantas = servPlanta.verPlantas();
+        model.addAttribute("plantas", listaPlantas); 
+        model.addAttribute("origen", maincontroller.getMenuLogin());
+
         return "filtrarejemplares"; 
     }
     
     @PostMapping("/ejemplarfiltrartipo")
     public String ejemplarFiltrarTipo(@RequestParam("tipos") String tipos,
-                                    Model model) {
+            Model model) {
     	
     	List<String> lTipos = Arrays.asList(tipos.split("\\s*,\\s*"));
     	List<Ejemplar> lEjemplar = ejemplarrepo.buscarEjemplaresPorTipos(lTipos);
     	if(lEjemplar == null || lEjemplar.isEmpty()) {
         	model.addAttribute("error", "No existen ejemplares con esos tipos.");
+        	model.addAttribute("origen", maincontroller.getMenuLogin());
+        	
             return "filtrarejemplares"; 
     	}
     	
         model.addAttribute("ejemplares", lEjemplar);
+        model.addAttribute("origen", maincontroller.getMenuLogin());
 
         return "/filtrarejemplares"; 
     }
@@ -98,22 +112,27 @@ public class ControllerEjemplares {
     @GetMapping("/vermensajesejemplar")
     public String mostrarListaEjemplares(Model model) {
         model.addAttribute("ejemplares", servEjemplar.findAll());
+        model.addAttribute("origen", maincontroller.getMenuLogin());
         return "vermensajesejemplar"; 
     }
 
     @PostMapping("/vermensajesejemplar")
     public String MostrarListaMensajes(@RequestParam("ejemplarId") Long ejemplarId,
-                                    Model model) {
+            Model model) {
     	
     	List<Mensaje> listaMensajes = servMensaje.findByEjemplar(ejemplarId);
     	
     	if(listaMensajes == null || listaMensajes.isEmpty()) {
         	model.addAttribute("error", "No existe mensajes con ese id de ejemplar.");
             model.addAttribute("ejemplares", servEjemplar.findAll());
+            model.addAttribute("origen", maincontroller.getMenuLogin());
+            
             return "vermensajesejemplar"; 
     	}
     	
         model.addAttribute("mensajes", listaMensajes);
+        model.addAttribute("origen", maincontroller.getMenuLogin());
+        
         return "/vermensajesejemplar";
 
     }

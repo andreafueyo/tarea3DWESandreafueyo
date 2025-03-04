@@ -3,8 +3,10 @@ package com.andreafueyo.tarea3DWESandreafueyo.control;
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Mensaje;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosEjemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosMensaje;
+import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,12 +33,18 @@ public class ControllerMensajes {
     
     @Autowired
     private ServiciosMensaje servMensaje;
+    
+    @Autowired
+    private ServiciosPlanta servPlanta;
+    
+    @Autowired
+    private MainController maincontroller;
 
     
     /*Gestión mensajes*/
     @GetMapping("/gestionmensajes")
-    public String gestionMensajes(@RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen, Model model) {
-        model.addAttribute("origen", origen);  
+    public String gestionMensajes(Model model) {
+        model.addAttribute("origen", maincontroller.getMenuLogin());   
         return "gestionmensajes"; 
     }
     
@@ -44,33 +52,39 @@ public class ControllerMensajes {
     @GetMapping("/registrarmensaje")
     public String mostrarListaEjemplares(Model model) {
         model.addAttribute("ejemplares", servEjemplar.findAll());
+        model.addAttribute("origen", maincontroller.getMenuLogin());
         return "registrarmensaje"; 
     }
 
     @PostMapping("/registrarmensaje")
-    public String registrarEjemplar(@RequestParam("ejemplarId") Long ejemplarId,
-                                    @RequestParam("mensaje") String mensaje,
-                                    Model model) {
-        Ejemplar ejemplar = servEjemplar.findById(ejemplarId);
-        if (ejemplar == null) {
-        	model.addAttribute("error", "No existe un ejemplar con ese id.");
-            model.addAttribute("ejemplares", servEjemplar.findAll());
-            return "registrarmensaje"; 
-        }
-        Long idPersona = portal.getCredencial().getPersona().getId();
+    public String registrarEjemplar(@RequestParam("ejemplarId") Long ejemplarId, @RequestParam("mensaje") String mensaje, @RequestParam(value = "origen", required = false, defaultValue = "menuadmin") String origen,Model model) {
+			
+    	Ejemplar ejemplar = servEjemplar.findById(ejemplarId);
+		if (ejemplar == null) {
+		model.addAttribute("error", "No existe un ejemplar con ese id.");
+		model.addAttribute("ejemplares", servEjemplar.findAll());
+		model.addAttribute("origen", origen); 
+		return "registrarmensaje"; 
+	}
 
-        servMensaje.registrarMensaje(ejemplarId, idPersona, mensaje);
-        model.addAttribute("mensajeExito", "¡Mensaje insertado correctamente!");
-
-        return "/registrarmensaje"; 
+		Long idPersona = portal.getCredencial().getPersona().getId();
+		servMensaje.registrarMensaje(ejemplarId, idPersona, mensaje);
+		model.addAttribute("mensajeExito", "¡Mensaje insertado correctamente!");
+		model.addAttribute("origen", origen); 
+        return "registrarmensaje"; 
     }
     
     
     /*Filtrar mensajes*/
     @GetMapping("/filtrarmensajes")
     public String mostrarFiltrarMensajes(Model model) {
-        return "filtrarmensajes"; 
+        model.addAttribute("origen", maincontroller.getMenuLogin());
+        List<Planta> listaPlantas = servPlanta.verPlantas();
+        model.addAttribute("plantas", listaPlantas); 
+
+        return "filtrarmensajes";
     }
+
     
     @PostMapping("/mensajeFiltrarPersona")
     public String mensajeFiltrarPersona(@RequestParam("persona") String persona,

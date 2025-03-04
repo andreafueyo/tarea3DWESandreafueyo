@@ -11,6 +11,7 @@
             document.getElementById("nombreComun").value = radio.dataset.nombrecomun;
             document.getElementById("nombreCientifico").value = radio.dataset.nombrecientifico;
             document.getElementById("botonModificar").disabled = false;
+            document.getElementById("formulario").style.display = "block";
         }
     </script>
 </head>
@@ -23,7 +24,7 @@
     
     <main>
     <br>
-        <h2>MENÚ DEL ADMINISTRADOR</h2>
+        <h2>MENÚ DEL ADMINISTRADOR</h2>
         <h3>MODIFICAR PLANTA</h3>
 
         <div th:if="${error}" style="color: red; font-weight: bold;">
@@ -37,9 +38,9 @@
     <thead>
         <tr>
             <th>Seleccionar</th>
-            <th>CÓDIGO DE PLANTA</th>
-            <th>NOMBRE COMÚN</th>
-            <th>NOMBRE CIENTÍFICO</th>
+            <th>CÓDIGO DE PLANTA</th>
+            <th>NOMBRE COMÚN</th>
+            <th>NOMBRE CIENTÍFICO</th>
         </tr>
     </thead>
     <tbody>
@@ -58,17 +59,17 @@
     </tbody>
 </table>
 
-        <div class="form-container">
+        <div class="form-container" style="display: none" id="formulario">
             <form th:action="@{/modificarplanta}" method="POST">
                 <input type="hidden" id="codPlanta" name="codPlanta" required />
 				
 				<fieldset>
-				<legend>Nombre común:</legend>
+				<legend>Nombre común:</legend>
 				<input type="text" id="nombreComun" name="nombreComun" required />
                 </fieldset>
 
 				<fieldset>
-				<legend>Nombre científico:</legend>
+				<legend>Nombre científico:</legend>
 				<input type="text" id="nombreCientifico" name="nombreCientifico" required />
 				</fieldset>
 
@@ -76,13 +77,10 @@
                 <button type="submit" id="botonModificar" disabled>Modificar Planta</button>
             </form>
         </div>
-        <!-- 
-        <div class="contenedorboton">
-        <a th:href="@{/gestionplantas}">Volver</a>
-        </div>
-         -->
-        <div class="contenedorboton">
-        <button onclick="window.history.back()">Volver al menú</button>
+		<div class="contenedorboton">
+			<a th:href="@{/gestionplantas}">
+			<button type="button">Volver</button>
+		</a>
         </div>
     </main>
 </body>

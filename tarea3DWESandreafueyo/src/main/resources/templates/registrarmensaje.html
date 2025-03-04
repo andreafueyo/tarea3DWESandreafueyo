@@ -24,6 +24,7 @@
             <p th:text="${mensajeExito}"></p>
         </div>
         
+        <div th:if="${ejemplares}">
         <table id="ejemplaresTable">
             <thead>
                 <tr>
@@ -42,6 +43,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
         
          <form th:action="@{/registrarmensaje}" method="post" id="formularioRegistro" style="display: none;">
            
@@ -53,9 +55,12 @@
              <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
             <button type="submit" id="botonRegistrar" disabled>Registrar mensaje</button>
         </form>
-        <div class="contenedorboton">
-        <button onclick="window.history.back()">Volver al menú</button>
-        </div>
+		<div class="contenedorboton">
+			<a th:href="@{/gestionmensajes}">
+				<button type="button">Volver</button>
+			</a>
+
+		</div>
     </main>
 
     <script>

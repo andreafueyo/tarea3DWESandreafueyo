@@ -14,22 +14,23 @@
     </header>
     <h2>GESTIÓN DE EJEMPLARES</h2>
     <div class="menupersonal">
-         <a th:href="@{/registrarejemplar}" class="menu-item">
+         <a th:href="@{/registrarejemplar(origen=${origen})}" class="menu-item">
             <img th:src="@{/imagenes/registrar.png}" alt="REGISTRAR EJEMPLAR">
             <span>1. Registrar un nuevo ejemplar.</span>
         </a>
-        <a th:href="@{/filtrarejemplares}" class="menu-item">
+        <a th:href="@{/filtrarejemplares(origen=${origen})}" class="menu-item">
             <img th:src="@{/imagenes/filtrar.png}" alt="FILTRAR EJEMPLARES">
             <span>2. Filtrar ejemplares por tipo de planta.</span>
         </a>
-        <a th:href="@{/vermensajesejemplar}" class="menu-item">
+        <a th:href="@{/vermensajesejemplar(origen=${origen})}" class="menu-item">
             <img th:src="@{/imagenes/mensajes.png}" alt="MENSAJES EJEMPLARES">
             <span>3. Ver mensajes de seguimiento de un ejemplar.</span>
-        </a>
-		<a th:href="@{${origen == 'menuadmin' ? '/menuadmin' : '/menupersonal'}}" class="menu-item">
-		    <img th:src="@{/imagenes/casa.png}" alt="VOLVER">
-		    <span>4. Volver al menú anterior.</span>
+        </a> 
+        <a th:href="@{${origen == 'menuadmin' ? '/menuadmin' : '/menupersonal'}(origen=${origen})}"
+			class="menu-item"> <img th:src="@{/imagenes/casa.png}"
+			alt="VOLVER"> <span>4. Volver al menú anterior.</span>
 		</a>
-    </div>
+
+	</div>
 </body>
 </html>

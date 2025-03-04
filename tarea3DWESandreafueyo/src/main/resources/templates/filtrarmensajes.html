@@ -42,10 +42,29 @@
          <button type="submit" id="botonFiltrarFechas">Buscar</button>
      	</fieldset>
      </form>
-     
+    
      <form th:action="@{/mensajeFiltrarTipoPlanta}" method="post" id="formularioRegistro3">
+     
          <fieldset>
          <legend>Por tipo de planta:</legend>
+         
+             <table>
+    <thead>
+        <tr>
+            <th>CÓDIGO DE PLANTA</th>
+            <th>NOMBRE COMÚN</th>
+            <th>NOMBRE CIENTÍFICO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="planta : ${plantas}">
+            <td th:text="${planta.codigo}"></td>
+            <td th:text="${planta.nombrecomun}"></td>
+            <td th:text="${planta.nombrecientifico}"></td>
+        </tr>
+    </tbody>
+	</table>
+         
          <label for="codplanta">Código de planta:</label>
          <input type="text" id="codplanta" name="codplanta" required></input>
           <div th:if="${mensajeExito}" class="mensajeExito" th:text="${mensajeExito}"></div>
@@ -72,9 +91,11 @@
         </table>
         </div>
         <br>
-             <div class="contenedorboton">
-        <button onclick="window.history.back()">Volver al menú</button>
-        </div>
+		<div class="contenedorboton">
+			<a th:href="@{/gestionmensajes}">
+			    <button type="button">Volver</button>
+			</a>
+				</div>
         <br><br>
 </body>
 </html>

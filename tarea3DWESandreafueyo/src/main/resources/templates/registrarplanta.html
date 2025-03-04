@@ -25,16 +25,18 @@
                 <p th:if="${errorCodigo}" th:text="${errorCodigo}" style="color: red;"></p>
 
                 <label for="nombrecomun">Nombre común:</label>
-                <input type="text" id="nombrecomun" name="nom_com" required>
+                <input type="text" id="nombrecomun" name="nombrecomun" required>
 
                 <label for="nombrecientifico">Nombre científico:</label>
-                <input type="text" id="nombrecientifico" name="nom_cien" required>
+                <input type="text" id="nombrecientifico" name="nombrecientifico" required>
 
                 <button type="submit">Enviar <span>&raquo;</span></button>
                 <br>
-                <div class="contenedorboton">
-		        <button onclick="window.history.back()">Volver</button>
-		        </div>
+				<div class="contenedorboton">
+				    <a th:href="@{/gestionplantas}">
+				        <button type="button">Volver</button>
+				    </a>
+				</div>
             </form>
             <p th:if="${error}" th:text="${error}" style="color: red;"></p>
             <p th:if="${exito}" th:text="${exito}" style="color: green;"></p>

@@ -119,9 +119,10 @@ public class ViveroFachadaGestionEjemplares {
 				plantaCorrecta = true;
 			}			
 		}
-		System.out.println("Introduzca una anotación: ");
-		String mensaje = in.nextLine();
+		//System.out.println("Introduzca una anotación: ");
+		//String mensaje = in.nextLine();
 		
+		String mensaje = "Ejemplar insertado por la persona: " + portal.getCredencial().getPersona().getNombre();
 		controlador.getServEjemplar().registrarEjemplar(p, portal.getCredencial().getPersona().getId(), mensaje);
 		System.out.println("¡Ejemplar insertado!");
 	}
