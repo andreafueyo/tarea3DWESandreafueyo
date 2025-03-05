@@ -30,12 +30,13 @@ import jakarta.persistence.Table;
 		@Column 
 		private String password;
 		
+//		@Column 
+//		private String rol;
+		
 		@OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name="idpersona", nullable = false)
 		private Persona persona;
 
-		
-		
 		public Credenciales() {
 			this.persona = new Persona();
 		}
@@ -72,6 +73,14 @@ import jakarta.persistence.Table;
 			this.persona = persona;
 		}
 		
+//		public String getRol() {
+//			return rol;
+//		}
+//
+//		public void setRol(String rol) {
+//			this.rol = rol;
+//		}
+
 		@Override
 		public String toString() {
 		    String ret = "CREDENCIAL";
