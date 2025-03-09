@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.andreafueyo.tarea3DWESandreafueyo.repositorios.CredencialesRepository;
@@ -18,6 +19,8 @@ public class ServiciosCredenciales {
 	CredencialesRepository credencialesrepo;
 	@Autowired
 	PersonaRepository personarepo;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public boolean validarNuevaCredencial(Credenciales c) { //Si ya existe, devuelve false
 		
@@ -55,6 +58,8 @@ public class ServiciosCredenciales {
 	}
 	
 	public Credenciales insertar(Credenciales c) {
+        String passwordEncriptada = passwordEncoder.encode(c.getPassword());
+        c.setPassword(passwordEncriptada);
 		return credencialesrepo.saveAndFlush(c);
 	}
 
@@ -82,5 +87,9 @@ public class ServiciosCredenciales {
 		c.setPersona(persona);
 		
 		return this.insertar(c);
-	}	
+	}
+	
+    public void registrarUsuario(Credenciales credenciales) {
+        credencialesrepo.save(credenciales);
+    }
 }

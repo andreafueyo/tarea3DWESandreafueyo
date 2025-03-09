@@ -12,9 +12,11 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaAdmin;
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Cliente;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Persona;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Planta;
+import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCliente;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
@@ -30,13 +32,19 @@ public class MainController {
 	@Autowired
 	private ServiciosPersona servPersona;
 	@Autowired
+	private ServiciosCliente servCliente;
+	@Autowired
 	private ViveroFachadaAdmin viveroFachadaAdmin;
 	@Autowired
 	private ViveroFachadaPrincipal portal;
 	@Autowired
 	Controlador controlador;
 	
-	private String menuLogin = "menupersonal";
+	private String menuLogin;
+	
+	public MainController() {
+		this.menuLogin = "menucliente";
+	}
 		
     public String getMenuLogin() {
 		return menuLogin;
@@ -60,35 +68,6 @@ public class MainController {
 		return "iniciarsesion";
 	}
 
-	@PostMapping("/login")
-	public String login(@RequestParam("usuario") String usuario,
-			@RequestParam("contrasena") String contrasena,
-			Model model) {
-
-		Credenciales credenciales = new Credenciales();
-		credenciales.setUsuario(usuario);
-		credenciales.setPassword(contrasena);
-
-		if (servCredenciales.validarCredencialContraseña(credenciales)) {
-			model.addAttribute("usuario", usuario);
-
-			String tipoUsuario = servCredenciales.validarTipoUsuario(credenciales);
-			credenciales = controlador.getServCredenciales().findByUsuario(credenciales.getUsuario());
-			portal.setCredencial(credenciales);
-			if ("admin".equals(tipoUsuario)) {
-				this.setMenuLogin("menuadmin");
-				return "redirect:/menuadmin";
-			} else {
-				this.setMenuLogin("menupersonal");
-				return "redirect:/menupersonal";
-			}
-		} else {
-			model.addAttribute("error", "Usuario o contraseña incorrectos.");
-			return "iniciarsesion";
-		}
-
-	}
-
 	/*Sesión ADMIN*/
 	@GetMapping("/menuadmin")
 	public String menuAdmin(Model model) {
@@ -99,6 +78,12 @@ public class MainController {
 	@GetMapping("/menupersonal")
 	public String menuPersonal(Model model) {
 		return "menupersonal"; 
+	}
+	
+	/*Sesión CLIENTE*/
+	@GetMapping("/menucliente")
+	public String menuCliente(Model model) {
+		return "menucliente"; 
 	}
 
 	/*Registrar persona*/
@@ -111,7 +96,7 @@ public class MainController {
 	}
 
 	@PostMapping("/registrarpersona")
-	public String procesarRegistro(@ModelAttribute Credenciales credenciales, Model model) {
+	public String procesarRegistroPersona(@ModelAttribute Credenciales credenciales, Model model) {
 		if(credenciales.getUsuario().contains(" ") || credenciales.getPassword().contains(" ")
 				|| credenciales.getPersona().getEmail().contains(" ")) {
 			model.addAttribute("error", "Usuario, contraseña o nombre no válidos. Introduzca de nuevo los datos sin espacios.");
@@ -120,6 +105,7 @@ public class MainController {
 		else {
 			if (servCredenciales.validarNuevaCredencial(credenciales) 
 					&& servPersona.findByEmail(credenciales.getPersona().getEmail()) == null) {
+				credenciales.setRol("ROLE_PERSONAL");
 				servCredenciales.insertar(credenciales);
 				model.addAttribute("exito", "Usuario creado con éxito en nuestra base de datos.");
 				model.addAttribute("credenciales", new Credenciales());
@@ -130,6 +116,38 @@ public class MainController {
 			}
 		}
 	}
+	
+	/*Registrar cliente*/
+	@GetMapping("/registrarcliente")
+	public String registrarCliente(Model model) {
+		Credenciales credenciales = new Credenciales();
+		credenciales.setCliente(new Cliente());
+		model.addAttribute("credenciales", new Credenciales());
+		return "registrarcliente";
+	}
+
+	@PostMapping("/registrarcliente")
+	public String procesarRegistroCliente(@ModelAttribute Credenciales credenciales, Model model) {
+		if(credenciales.getUsuario().contains(" ") || credenciales.getPassword().contains(" ")
+				|| credenciales.getCliente().getEmail().contains(" ")) {
+			model.addAttribute("error", "Usuario, contraseña o nombre no válidos. Introduzca de nuevo los datos sin espacios.");
+			return "registrarcliente";
+		}
+		else {
+			if (servCredenciales.validarNuevaCredencial(credenciales) 
+					&& servCliente.findByEmail(credenciales.getCliente().getEmail()) == null) {
+				credenciales.setRol("ROLE_CLIENTE");
+				servCredenciales.insertar(credenciales);
+				model.addAttribute("exito", "Usuario creado con éxito en nuestra base de datos.");
+				model.addAttribute("credenciales", new Credenciales());
+				return "registrarcliente";
+			} else {
+				model.addAttribute("error", "El usuario ya existe.");
+				return "registrarcliente";
+			}
+		}
+	}
+
 
 
 	/*Cerrar sesión*/

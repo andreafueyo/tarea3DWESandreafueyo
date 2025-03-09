@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar usuario</title>
+    <title>Registrar cliente</title>
     <link rel="stylesheet" th:href="@{/css/registrarpersona.css}">
 </head>
 <body>
@@ -13,17 +13,28 @@
         </div>
     </header> 
     <main>
-        <h2>MENÚ DEL ADMINISTRADOR</h2>
-        <h3>REGISTRO DE NUEVO USUARIO</h3>
+        <h3>REGISTRO DE NUEVO CLIENTE</h3>
         
         <div class="form-container">
-        <p>Introduzca los datos del nuevo usuario.</p>
-            <form th:action="@{/registrarpersona}" th:object="${credenciales}" method="post">
+        <p>Introduzca los datos del nuevo cliente.</p>
+            <form th:action="@{/registrarcliente}" th:object="${credenciales}" method="post">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" th:field="*{persona.nombre}" required>
+                <input type="text" id="nombre" name="nombre" th:field="*{cliente.nombre}" required>
 
+		        <label for="fechaNac">Fecha de nacimiento:</label>
+		        <input type="text" id="fechaNac" name="fechaNac" th:field="*{cliente.fecha_nac}" placeholder="yyyy-MM-dd" required></input>
+
+                <label for="nif">NIF/NIE:</label>
+                <input type="text" id="nif" name="nif" th:field="*{cliente.NIF}" required>
+                
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" th:field="*{cliente.direccion}" required>
+                
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" th:field="*{persona.email}" required>
+                <input type="email" id="email" name="email" th:field="*{cliente.email}" required>
+                
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" th:field="*{cliente.telefono}" required>
 
                 <label for="usuario">Usuario:</label>
                 <input type="text" id="usuario" name="usuario" th:field="*{usuario}" required>
@@ -34,9 +45,7 @@
                 <button type="submit">Enviar <span>&raquo;</span></button>
                 <br>
 				<div class="contenedorboton">
-				    <a th:href="@{/menuadmin}">
-				        <button type="button">Volver</button>
-				    </a>
+					<button onclick="window.history.back()">Volver</button>
 				</div>
             </form>
             <p th:if="${error}" th:text="${error}" style="color: red;"></p>

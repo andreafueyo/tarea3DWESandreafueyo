@@ -30,15 +30,18 @@ import jakarta.persistence.Table;
 		@Column 
 		private String password;
 		
-//		@Column 
-//		private String rol;
+		@Column 
+		private String rol;
 		
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name="idpersona", nullable = false)
+		@JoinColumn(name="idcliente", referencedColumnName = "id", nullable = true)
+		private Cliente cliente;
+
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name="idpersona", referencedColumnName = "id", nullable = true)
 		private Persona persona;
 
 		public Credenciales() {
-			this.persona = new Persona();
 		}
 		
 		public Long getId() {
@@ -73,13 +76,21 @@ import jakarta.persistence.Table;
 			this.persona = persona;
 		}
 		
-//		public String getRol() {
-//			return rol;
-//		}
-//
-//		public void setRol(String rol) {
-//			this.rol = rol;
-//		}
+		public Cliente getCliente() {
+			return cliente;
+		}
+
+		public void setCliente(Cliente cliente) {
+			this.cliente = cliente;
+		}
+		
+		public String getRol() {
+			return rol;
+		}
+
+		public void setRol(String rol) {
+			this.rol = rol;
+		}
 
 		@Override
 		public String toString() {
@@ -88,6 +99,7 @@ import jakarta.persistence.Table;
 		    ret += "\tUsuario: " + this.usuario;
 		    ret += "\tPassword: " + this.password;
 		    ret += "\tfk_persona: " + (this.persona != null ? this.persona.getId() : "null");
+		    ret += "\tfk_cliente: " + (this.cliente != null ? this.cliente.getId() : "null");
 		    return ret;
 		}
 
