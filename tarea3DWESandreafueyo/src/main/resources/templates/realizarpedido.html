@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivero La Laboral</title>
+<link rel="stylesheet" th:href="@{/css/verplantas.css}">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img th:src="@{/imagenes/lalaboral.png}">
+		</div>
+	</header>
+	<h2>PLANTAS DEL VIVERO</h2>
+	<main>
+		<div th:if="${error}" style="color: red; font-weight: bold;">
+			<p th:text="${error}"></p>
+		</div>
+		<div th:if="${mensajeExito}" style="color: green; font-weight: bold;">
+			<p th:text="${mensajeExito}"></p>
+		</div>
+		<a th:href="@{/vercarrito}" class="menu-item"> <img
+			th:src="@{/imagenes/pedido.png}" alt="VER CARRITO"> <span>4.
+				VER CARRITO</span></a>
+
+		<form id="formSeleccion" th:action="@{/anadirpedido}" method="post">
+			<input type="hidden" name="codPlanta" id="codigoSeleccionado">
+			<input type="hidden" name="cantidadSeleccionada"
+				id="cantidadSeleccionada"> <input type="hidden"
+				name="ejemplaresDisponibles" id="ejemplaresDisponibles">
+		</form>
+
+		<table>
+			<thead>
+				<tr>
+					<th>CÓDIGO DE PLANTA</th>
+					<th>NOMBRE COMÚN</th>
+					<th>NOMBRE CIENTÍFICO</th>
+					<th>EJEMPLARES DISPONIBLES</th>
+					<th>EJEMPLARES A COMPRAR</th>
+					<th>SELECCIONAR</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="planta : ${plantas}">
+					<!-- Campo oculto con el código de la planta -->
+					<td><input type="hidden" name="codigo"
+						th:value="${planta.codigo}"> <span
+						th:text="${planta.codigo}"></span></td>
+					<td th:text="${planta.nombrecomun}"></td>
+					<td th:text="${planta.nombrecientifico}"></td>
+					<td><input type="hidden" name="ejemplaresDisponibles"
+						th:value="${planta.ejemplaresDisponibles}"> <span
+						th:text="${planta.ejemplaresDisponibles}"></span></td>
+					<td><input type="number" name="cantidad" th:min="0"
+						th:max="${planta.ejemplaresDisponibles}" th:value="0"
+						onchange="this.closest('tr').querySelector('button').setAttribute('data-cantidad', this.value)"></td>
+					<td>
+						<button type="submit" th:data-codigo="${planta.codigo}"
+							th:data-ejemplaresdisponibles="${planta.ejemplaresDisponibles}"
+							onclick="seleccionarPlanta(this)">✔</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<script>
+
+        function seleccionarPlanta(button) {
+            let codigo = button.getAttribute("data-codigo");
+            let cantidad = button.getAttribute("data-cantidad");
+            let ejemplaresDisponibles = button.getAttribute("data-ejemplaresdisponibles");
+            console.log(button.getAttribute("data-ejemplaresdisponibles"));
+            document.getElementById("codigoSeleccionado").value = codigo;
+            document.getElementById("cantidadSeleccionada").value = cantidad;
+            document.getElementById("ejemplaresDisponibles").value = ejemplaresDisponibles;
+            document.getElementById("formSeleccion").submit(); // envía el formulario
+        }
+    </script>
+
+		<br> <br>
+		<div class="contenedorboton">
+			<a th:href="@{/menucliente}">
+				<button type="button">Volver</button>
+			</a>
+		</div>
+	</main>
+</body>

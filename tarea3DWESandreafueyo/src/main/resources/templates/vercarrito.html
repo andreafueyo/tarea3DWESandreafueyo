@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Pedido</title>
+	<link rel="stylesheet" th:href="@{/css/verplantas.css}">
+</head>
+<body>
+    <h2>Carrito de Pedido</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código de Planta</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="entry : ${carrito}">
+                <td th:text="${entry.key}"></td>
+                <td th:text="${entry.value}"></td>
+                <td>
+                    <form th:action="@{/eliminarpedido}" method="post">
+                        <input type="hidden" name="codigo" th:value="${entry.key}">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/vaciarcarrito}" method="post">
+        <button type="submit">Vaciar Carrito</button>
+    </form>
+    <a href="/realizarpedido">Seguir comprando</a>
+</body>
+</html>

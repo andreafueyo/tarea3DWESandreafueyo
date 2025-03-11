@@ -22,10 +22,10 @@
                 <input type="text" id="nombre" name="nombre" th:field="*{cliente.nombre}" required>
 
 		        <label for="fechaNac">Fecha de nacimiento:</label>
-		        <input type="text" id="fechaNac" name="fechaNac" th:field="*{cliente.fecha_nac}" placeholder="yyyy-MM-dd" required></input>
+		        <input type="date" id="fechaNac" name="fechaNac" th:field="*{cliente.fecha_nac}" placeholder="yyyy-MM-dd" required></input>
 
                 <label for="nif">NIF/NIE:</label>
-                <input type="text" id="nif" name="nif" th:field="*{cliente.NIF}" required>
+                <input type="text" id="nif" name="nif" th:field="*{cliente.NIF}" placeholder="XXXXXXXXQ" required pattern="[0-9]{8}[a-zA-Z]">
                 
                 <label for="direccion">Dirección:</label>
                 <input type="text" id="direccion" name="direccion" th:field="*{cliente.direccion}" required>
@@ -44,8 +44,11 @@
 
                 <button type="submit">Enviar <span>&raquo;</span></button>
                 <br>
+                
 				<div class="contenedorboton">
-					<button onclick="window.history.back()">Volver</button>
+					<a th:href="@{/}">
+					<button type="button">Volver</button>
+					</a>
 				</div>
             </form>
             <p th:if="${error}" th:text="${error}" style="color: red;"></p>

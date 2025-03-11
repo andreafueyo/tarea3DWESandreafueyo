@@ -68,13 +68,14 @@ public class ServiciosEjemplar {
 		return ejemplarrepo.findUltimoId();
 	}
 	
-	public void registrarEjemplar(Planta pl, Long id_persona, String mensaje) {
+public void registrarEjemplar(Planta pl, Long id_persona, String mensaje) {
 		
 		Long new_id = this.findUltimoId()+1;
 		Ejemplar ej = new Ejemplar();
 		//ej.setId(new_id);
 		ej.setNombre(pl.getCodigo()+"_"+new_id);
 		ej.setPlanta(pl);
+		ej.setDisponible(true);
 		this.actualizar(ej);	
 		Mensaje m = new Mensaje();
 		m.setFechahora(LocalDateTime.now());

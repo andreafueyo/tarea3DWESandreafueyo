@@ -49,6 +49,9 @@ import jakarta.persistence.Table;
 		@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
 	    private Credenciales credenciales;	
 		
+		@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+		private List<Pedido> pedidos = new LinkedList<Pedido>();
+		
 		public Cliente() {}
 		
 		public Long getId() {

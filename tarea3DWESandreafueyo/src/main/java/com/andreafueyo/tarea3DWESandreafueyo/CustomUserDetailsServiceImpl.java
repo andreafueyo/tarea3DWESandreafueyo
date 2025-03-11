@@ -40,6 +40,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService{
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println("Comparando contraseña: " + encoder.matches("personal", credenciales.getPassword()));
         
+        //prueba cliente ya creado
         System.out.println("CODIFICADA");
         System.out.println(encoder.encode("andre"));
 

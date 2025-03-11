@@ -35,10 +35,12 @@
 			<p style="color: green;">Has cerrado sesión correctamente</p>
 		</div>
 
-
 		<div class="contenedorboton">
-			<button onclick="window.history.back()">Volver</button>
+			<a th:href="@{/}">
+				<button type="button">Volver</button>
+			</a>
 		</div>
+
 	</div>
 </body>
 

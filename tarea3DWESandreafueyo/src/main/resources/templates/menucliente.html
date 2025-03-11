@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vivero La Laboral - Menú CLIENTE</title>
-    <link rel="stylesheet" th:href="@{/css/menuadmin.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivero La Laboral - Menú CLIENTE</title>
+<link rel="stylesheet" th:href="@{/css/menuadmin.css}">
 </head>
-    <header>
-        <div class="logo">
-            <img th:src="@{/imagenes/lalaboral.png}" alt="Logo del Vivero">
-        </div>
-    </header>
+<header>
+	<div class="logo">
+		<img th:src="@{/imagenes/lalaboral.png}" alt="Logo del Vivero">
+	</div>
+</header>
 <body>
-    <h2>MENÚ CLIENTE</h2>
-    <div class="menucliente">
-         <a th:href="@{/realizarpedido}" class="menu-item">
-            <img th:src="@{/imagenes/planta.png}" alt="REALIZAR PEDIDO">
-            <span>1. REALIZAR PEDIDO</span>
-        </a>
-        <a th:href="@{/cerrarsesion}" class="menu-item">
-            <img th:src="@{/imagenes/cerrarsesion.png}" alt="CERRAR SESIÓN">
-            <span>4. CERRAR SESIÓN</span>
-        </a>
-    </div>
+	<h2>MENÚ CLIENTE</h2>
+	<div class="menucliente">
+		<a th:href="@{/realizarpedido}" class="menu-item"> <img
+			th:src="@{/imagenes/realizarp.png}" alt="REALIZAR PEDIDO"> <span>1.
+				REALIZAR PEDIDO</span>
+		</a> <a th:href="@{/vercarrito}" class="menu-item"> <img
+			th:src="@{/imagenes/pedido.png}" alt="VER CARRITO"> <span>2.
+				VER CARRITO</span>
+		</a> <a th:href="@{/finalizarpedido}" class="menu-item"> <img
+			th:src="@{/imagenes/finalizarpedido.png}" alt="CERRAR SESIÓN">
+			<span>3. FINALIZAR PEDIDO</span>
+		</a> <a th:href="@{/cerrarsesion}" class="menu-item"> <img
+			th:src="@{/imagenes/cerrarsesion.png}" alt="CERRAR SESIÓN"> <span>4.
+				CERRAR SESIÓN</span>
+		</a>
+	</div>
 </body>
 </html>

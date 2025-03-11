@@ -44,6 +44,7 @@ public class ControllerMensajes {
     /*Gestión mensajes*/
     @GetMapping("/gestionmensajes")
     public String gestionMensajes(Model model) {
+    	System.out.print(maincontroller.getMenuLogin());
         model.addAttribute("origen", maincontroller.getMenuLogin());   
         return "gestionmensajes"; 
     }
@@ -92,14 +93,10 @@ public class ControllerMensajes {
 		List<Mensaje> listaMensajes = servMensaje.findByNombrePersona(persona);
     	if(listaMensajes == null || listaMensajes.isEmpty()) {
         	model.addAttribute("error", "No existen mensajes con ese nombre de persona.");
-            List<Planta> listaPlantas = servPlanta.verPlantas();
-            model.addAttribute("plantas", listaPlantas); 
             return "filtrarmensajes"; 
     	}
     	
         model.addAttribute("mensajes", listaMensajes);
-        List<Planta> listaPlantas = servPlanta.verPlantas();
-        model.addAttribute("plantas", listaPlantas); 
 
         return "filtrarmensajes"; 
     }
@@ -126,14 +123,10 @@ public class ControllerMensajes {
 		List<Mensaje> listaMensajes =  servMensaje.findMensajesEntreFechas(fechaInicio, fechaFin);
 	 	if(listaMensajes == null || listaMensajes.isEmpty()) {
         	model.addAttribute("error", "No hay mensajes entre esas fechas.");
-            List<Planta> listaPlantas = servPlanta.verPlantas();
-            model.addAttribute("plantas", listaPlantas); 
             return "filtrarmensajes"; 
 	 	} else {
 	        model.addAttribute("mensajes", listaMensajes);
 	 	}
-        List<Planta> listaPlantas = servPlanta.verPlantas();
-        model.addAttribute("plantas", listaPlantas); 
 
         return "filtrarmensajes"; 
     }
@@ -144,14 +137,10 @@ public class ControllerMensajes {
 		List<Mensaje> listaMensajes = servMensaje.findByTipoPlanta(codplanta);
     	if(listaMensajes == null || listaMensajes.isEmpty()) {
         	model.addAttribute("error", "No existen mensajes con ese código de planta.");
-            List<Planta> listaPlantas = servPlanta.verPlantas();
-            model.addAttribute("plantas", listaPlantas); 
             return "filtrarmensajes"; 
     	}
     	
         model.addAttribute("mensajes", listaMensajes);
-        List<Planta> listaPlantas = servPlanta.verPlantas();
-        model.addAttribute("plantas", listaPlantas); 
 
         return "filtrarmensajes"; 
     }

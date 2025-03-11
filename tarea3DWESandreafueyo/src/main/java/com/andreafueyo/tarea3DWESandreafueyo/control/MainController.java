@@ -1,5 +1,8 @@
 package com.andreafueyo.tarea3DWESandreafueyo.control;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,11 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaAdmin;
-import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Cliente;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Persona;
@@ -33,11 +33,8 @@ public class MainController {
 	private ServiciosPersona servPersona;
 	@Autowired
 	private ServiciosCliente servCliente;
-	@Autowired
-	private ViveroFachadaAdmin viveroFachadaAdmin;
-	@Autowired
-	private ViveroFachadaPrincipal portal;
-	@Autowired
+	
+	
 	Controlador controlador;
 	
 	private String menuLogin;
@@ -128,24 +125,42 @@ public class MainController {
 
 	@PostMapping("/registrarcliente")
 	public String procesarRegistroCliente(@ModelAttribute Credenciales credenciales, Model model) {
-		if(credenciales.getUsuario().contains(" ") || credenciales.getPassword().contains(" ")
-				|| credenciales.getCliente().getEmail().contains(" ")) {
-			model.addAttribute("error", "Usuario, contraseña o nombre no válidos. Introduzca de nuevo los datos sin espacios.");
-			return "registrarcliente";
-		}
-		else {
-			if (servCredenciales.validarNuevaCredencial(credenciales) 
-					&& servCliente.findByEmail(credenciales.getCliente().getEmail()) == null) {
-				credenciales.setRol("ROLE_CLIENTE");
-				servCredenciales.insertar(credenciales);
-				model.addAttribute("exito", "Usuario creado con éxito en nuestra base de datos.");
-				model.addAttribute("credenciales", new Credenciales());
-				return "registrarcliente";
-			} else {
-				model.addAttribute("error", "El usuario ya existe.");
-				return "registrarcliente";
-			}
-		}
+	    String telefono = credenciales.getCliente().getTelefono();
+	    String nif = credenciales.getCliente().getNIF();
+
+	    if (credenciales.getUsuario().contains(" ") || credenciales.getPassword().contains(" ")
+	            || credenciales.getCliente().getEmail().contains(" ")) {
+	        model.addAttribute("error", "Usuario, contraseña o nombre no válidos. Introduzca de nuevo los datos sin espacios.");
+	        return "registrarcliente";
+	    }
+
+	    if (telefono == null || !telefono.matches("^[0-9]{9}$")) {
+	        model.addAttribute("error", "El número de teléfono debe tener exactamente 9 dígitos numéricos.");
+	        return "registrarcliente";
+	    }
+
+	    LocalDate fechaNac = credenciales.getCliente().getFecha_nac();
+	    if (fechaNac == null) {
+	        model.addAttribute("error", "La fecha de nacimiento no puede estar vacía.");
+	        return "registrarcliente";
+	    }
+	    
+	    if (nif == null || !nif.matches("^[0-9]{8}[a-zA-Z]$")) {
+	        model.addAttribute("error", "El DNI debe tener 8 números seguidos de una letra.");
+	        return "registrarcliente";
+	    }
+
+	    if (servCredenciales.validarNuevaCredencial(credenciales) 
+	            && servCliente.findByEmail(credenciales.getCliente().getEmail()) == null) {
+	        credenciales.setRol("ROLE_CLIENTE");
+	        servCredenciales.insertar(credenciales);
+	        model.addAttribute("exito", "Usuario creado con éxito en nuestra base de datos.");
+	        model.addAttribute("credenciales", new Credenciales());
+	        return "registrarcliente";
+	    } else {
+	        model.addAttribute("error", "El usuario ya existe.");
+	        return "registrarcliente";
+	    }
 	}
 
 
