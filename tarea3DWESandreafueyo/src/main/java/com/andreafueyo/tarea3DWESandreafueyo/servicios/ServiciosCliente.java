@@ -30,6 +30,10 @@ public class ServiciosCliente {
 	public Cliente findById(Long id) {
 		return clienterepo.findByClienteId(id);
 	}
+	
+	public Cliente findByNIF(String NIF) {
+		return clienterepo.findByNIF(NIF);
+	}
 
 	public Cliente registrarCliente(String nombre,LocalDate fechaNac, String NIF,String direccion, String email, String telefono) {
 		Cliente cl = new Cliente();

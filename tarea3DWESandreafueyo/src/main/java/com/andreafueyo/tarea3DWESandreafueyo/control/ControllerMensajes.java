@@ -1,5 +1,6 @@
 package com.andreafueyo.tarea3DWESandreafueyo.control;
 
+import com.andreafueyo.tarea3DWESandreafueyo.CustomUserDetailsServiceImpl;
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Mensaje;
@@ -39,7 +40,9 @@ public class ControllerMensajes {
     
     @Autowired
     private MainController maincontroller;
-
+    
+    @Autowired
+    private CustomUserDetailsServiceImpl userDetails;
     
     /*Gestión mensajes*/
     @GetMapping("/gestionmensajes")
@@ -62,13 +65,13 @@ public class ControllerMensajes {
 			
     	Ejemplar ejemplar = servEjemplar.findById(ejemplarId);
 		if (ejemplar == null) {
-		model.addAttribute("error", "No existe un ejemplar con ese id.");
-		model.addAttribute("ejemplares", servEjemplar.findAll());
-		model.addAttribute("origen", origen); 
-		return "registrarmensaje"; 
-	}
+			model.addAttribute("error", "No existe un ejemplar con ese id.");
+			model.addAttribute("ejemplares", servEjemplar.findAll());
+			model.addAttribute("origen", origen); 
+			return "registrarmensaje"; 
+		}
 
-		Long idPersona = portal.getCredencial().getPersona().getId();
+		Long idPersona = userDetails.getCredenciales().getPersona().getId();
 		servMensaje.registrarMensaje(ejemplarId, idPersona, mensaje);
 		model.addAttribute("mensajeExito", "¡Mensaje insertado correctamente!");
 		model.addAttribute("origen", origen); 
@@ -93,10 +96,14 @@ public class ControllerMensajes {
 		List<Mensaje> listaMensajes = servMensaje.findByNombrePersona(persona);
     	if(listaMensajes == null || listaMensajes.isEmpty()) {
         	model.addAttribute("error", "No existen mensajes con ese nombre de persona.");
+            List<Planta> listaPlantas = servPlanta.verPlantas();
+            model.addAttribute("plantas", listaPlantas);
             return "filtrarmensajes"; 
     	}
     	
         model.addAttribute("mensajes", listaMensajes);
+        List<Planta> listaPlantas = servPlanta.verPlantas();
+        model.addAttribute("plantas", listaPlantas);
 
         return "filtrarmensajes"; 
     }
@@ -117,17 +124,22 @@ public class ControllerMensajes {
             fechaFin = LocalDateTime.parse(inputMax, formatter);
         } catch (DateTimeParseException e) {
         	model.addAttribute("error", "Formato no válido.");
+            List<Planta> listaPlantas = servPlanta.verPlantas();
+            model.addAttribute("plantas", listaPlantas);
             return "filtrarmensajes"; 
         }
         
 		List<Mensaje> listaMensajes =  servMensaje.findMensajesEntreFechas(fechaInicio, fechaFin);
 	 	if(listaMensajes == null || listaMensajes.isEmpty()) {
         	model.addAttribute("error", "No hay mensajes entre esas fechas.");
+            List<Planta> listaPlantas = servPlanta.verPlantas();
+            model.addAttribute("plantas", listaPlantas);
             return "filtrarmensajes"; 
 	 	} else {
 	        model.addAttribute("mensajes", listaMensajes);
 	 	}
-
+        List<Planta> listaPlantas = servPlanta.verPlantas();
+        model.addAttribute("plantas", listaPlantas);
         return "filtrarmensajes"; 
     }
     
@@ -140,10 +152,11 @@ public class ControllerMensajes {
             return "filtrarmensajes"; 
     	}
     	
-        model.addAttribute("mensajes", listaMensajes);
+        model.addAttribute("mensajes", listaMensajes);        
+        List<Planta> listaPlantas = servPlanta.verPlantas();
+        model.addAttribute("plantas", listaPlantas);
 
         return "filtrarmensajes"; 
     }
     
 }
-

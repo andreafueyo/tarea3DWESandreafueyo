@@ -98,7 +98,7 @@ public class Planta {
 		return ejemplares;
 	}
 	
-    public int getEjemplaresDisponibles() {
+    public List<Ejemplar> getListaEjemplaresDisponibles() {
     	List<Ejemplar> ejemplaresDisponibles = new ArrayList<Ejemplar>();
     	
     	for(Ejemplar e : ejemplares) {
@@ -106,7 +106,11 @@ public class Planta {
     			ejemplaresDisponibles.add(e);
     		}
     	}
-        return ejemplaresDisponibles.size();
+        return ejemplaresDisponibles;
+    }
+	
+    public int getEjemplaresDisponibles() {
+    	return getListaEjemplaresDisponibles().size();
     }
 
 	public void setEjemplaresEjemplars(List<Ejemplar> ejemplares) {
@@ -126,5 +130,8 @@ public class Planta {
 		 */
 		return ret;
 	}
+	
+	
+	
 	
 }

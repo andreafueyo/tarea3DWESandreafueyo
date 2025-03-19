@@ -34,6 +34,9 @@
 		<div th:if="${param.logout}">
 			<p style="color: green;">Has cerrado sesión correctamente</p>
 		</div>
+		<div th:if="${param.sessionExpired}">
+			<p style="color: red;">Tu sesión ha expirado</p>
+		</div>
 
 		<div class="contenedorboton">
 			<a th:href="@{/}">

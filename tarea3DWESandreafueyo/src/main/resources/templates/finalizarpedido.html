@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivero La Laboral</title>
+<link rel="stylesheet" th:href="@{/css/finalizarpedido.css}">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img th:src="@{/imagenes/lalaboral.png}">
+		</div>
+	</header>
+	<h1>FINALIZAR PEDIDO</h1>
+	<div class="cliente">
+	<div th:if="${error}" style="color: red; font-weight: bold;">
+		<p th:text="${error}"></p>
+	</div>
+	<div th:if="${mensajeExito}" style="color: green; font-weight: bold;">
+		<p th:text="${mensajeExito}"></p>
+	</div>
+	</div>
+	<div th:if="${cliente}">
+		<h2 class="yepa">Datos del cliente</h2>
+		<div class="cliente">
+		<p>
+			<strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span>
+		</p>
+		<p>
+			<strong>Email:</strong> <span th:text="${cliente.email}"></span>
+		</p>
+		<p>
+			<strong>Dirección:</strong> <span th:text="${cliente.direccion}"></span>
+		</p>
+	</div>
+
+		<h2 class="yepa">Resumen del pedido</h2>
+		<div class="cliente">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Código de Planta</th>
+					<th>Cantidad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${carrito}">
+					<td th:text="${item.key}"></td>
+					<!-- Código de planta -->
+					<td th:text="${item.value}"></td>
+					<!-- Cantidad comprada -->
+				</tr>
+			</tbody>
+		</table>
+
+		<form th:action="@{/finalizarpedido}" method="post" th:if="${mensajeExito == null}">
+			<button type="submit">CONFIRMAR PEDIDO</button>
+		</form>
+		</div>
+	</div>
+	<main>
+		<br> <br>
+		<div class="contenedorboton" >
+			<a href="/menucliente">
+				<button type="button">Volver</button>
+			</a>
+		</div>
+	</main>
+</body>
+</html>

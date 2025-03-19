@@ -9,18 +9,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.repositorios.CredencialesRepository;
 
-import jakarta.annotation.PostConstruct;
-
 @Service
 public class CustomUserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
     private CredencialesRepository credencialesRepository;
+	
+	private Credenciales credenciales;
 
     public CustomUserDetailsServiceImpl(CredencialesRepository credencialesRepository) {
         this.credencialesRepository = credencialesRepository;
@@ -28,7 +27,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Credenciales credenciales = credencialesRepository.findByUsuario(username);
+        credenciales = credencialesRepository.findByUsuario(username);
 
         if (credenciales == null) {
             throw new UsernameNotFoundException("Usuario no encontrado: " + username);
@@ -40,15 +39,24 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService{
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println("Comparando contraseña: " + encoder.matches("personal", credenciales.getPassword()));
         
-        //prueba cliente ya creado
         System.out.println("CODIFICADA");
         System.out.println(encoder.encode("andre"));
 
         return new User(
                 credenciales.getUsuario(),
-                credenciales.getPassword(), // Aquí va la contraseña tal cual
+                credenciales.getPassword(), // aquí va la contraseña tal cual
                 List.of(new SimpleGrantedAuthority(credenciales.getRol()))
         );
     }
+
+	public Credenciales getCredenciales() {
+		return credenciales;
+	}
+
+	public void setCredenciales(Credenciales credenciales) {
+		this.credenciales = credenciales;
+	}
+    
+    
 
 }

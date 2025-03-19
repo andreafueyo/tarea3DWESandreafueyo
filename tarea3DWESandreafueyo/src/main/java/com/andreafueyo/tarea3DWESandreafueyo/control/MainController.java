@@ -1,8 +1,6 @@
 package com.andreafueyo.tarea3DWESandreafueyo.control;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaAdmin;
+import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Cliente;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Credenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Persona;
@@ -20,6 +21,9 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCliente;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosCredenciales;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPersona;
 import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -33,8 +37,11 @@ public class MainController {
 	private ServiciosPersona servPersona;
 	@Autowired
 	private ServiciosCliente servCliente;
-	
-	
+	@Autowired
+	private ViveroFachadaAdmin viveroFachadaAdmin;
+	@Autowired
+	private ViveroFachadaPrincipal portal;
+	@Autowired
 	Controlador controlador;
 	
 	private String menuLogin;
@@ -123,6 +130,7 @@ public class MainController {
 		return "registrarcliente";
 	}
 
+
 	@PostMapping("/registrarcliente")
 	public String procesarRegistroCliente(@ModelAttribute Credenciales credenciales, Model model) {
 	    String telefono = credenciales.getCliente().getTelefono();
@@ -145,13 +153,22 @@ public class MainController {
 	        return "registrarcliente";
 	    }
 	    
+	    LocalDate hoy = LocalDate.now();
+	    if (fechaNac.isAfter(hoy)) {
+	        model.addAttribute("error", "La fecha de nacimiento aún no pasó.");
+	        return "registrarcliente";
+	    }
+	    
+	    
+	    
+	    
 	    if (nif == null || !nif.matches("^[0-9]{8}[a-zA-Z]$")) {
 	        model.addAttribute("error", "El DNI debe tener 8 números seguidos de una letra.");
 	        return "registrarcliente";
 	    }
 
 	    if (servCredenciales.validarNuevaCredencial(credenciales) 
-	            && servCliente.findByEmail(credenciales.getCliente().getEmail()) == null) {
+	    		&& servCliente.findByNIF(credenciales.getCliente().getNIF()) == null) {
 	        credenciales.setRol("ROLE_CLIENTE");
 	        servCredenciales.insertar(credenciales);
 	        model.addAttribute("exito", "Usuario creado con éxito en nuestra base de datos.");
@@ -171,6 +188,11 @@ public class MainController {
 		status.setComplete(); 
 		return "redirect:/"; 
 	}
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().invalidate(); // Invalida la sesión manualmente
+        return "redirect:/iniciarsesion?logout";
+    }
 
 	/*Raíz*/
 	@GetMapping("/")

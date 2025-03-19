@@ -3,6 +3,7 @@ package com.andreafueyo.tarea3DWESandreafueyo.modelo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,8 +34,12 @@ public class Mensaje implements Serializable{
 	@JoinColumn(name="idejemplar")
 	private Ejemplar ejemplar;
 	
-	@ManyToOne
-	@JoinColumn(name="idpersona")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="idcliente", referencedColumnName = "id", nullable = true)
+	private Cliente cliente;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="idpersona", referencedColumnName = "id", nullable = true)
 	private Persona persona;
 
 	public Long getId() {
@@ -74,6 +80,14 @@ public class Mensaje implements Serializable{
 	
 	public Persona getPersona() {
 		return persona;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
 	}
 	
 	@Override

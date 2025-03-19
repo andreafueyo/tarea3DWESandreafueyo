@@ -19,6 +19,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	@Query("SELECT cl FROM Cliente cl WHERE cl.id = :id")
 	Cliente findByClienteId(@Param("id") Long id);
 	
+	@Query("SELECT cl FROM Cliente cl WHERE cl.NIF = :NIF")
+	Cliente findByNIF(@Param("NIF") String NIF);
+	
 	
 	default boolean validarCliente(Cliente cl) { 
 		
@@ -34,4 +37,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 		return findAll((Sort.by(Sort.Direction.DESC, "id")));
 	}
 
+	
+	
 }

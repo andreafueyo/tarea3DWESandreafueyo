@@ -1,5 +1,6 @@
 package com.andreafueyo.tarea3DWESandreafueyo.control;
 
+import com.andreafueyo.tarea3DWESandreafueyo.CustomUserDetailsServiceImpl;
 import com.andreafueyo.tarea3DWESandreafueyo.fachada.ViveroFachadaPrincipal;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Mensaje;
@@ -11,6 +12,7 @@ import com.andreafueyo.tarea3DWESandreafueyo.servicios.ServiciosPlanta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -41,6 +43,9 @@ public class ControllerEjemplares {
     
     @Autowired
     private MainController maincontroller;
+    
+    @Autowired
+    private CustomUserDetailsServiceImpl userDetails;
 
     @GetMapping("/gestionejemplares")
     public String gestionEjemplares(Model model) {
@@ -68,9 +73,9 @@ public class ControllerEjemplares {
 				return "registrarejemplar"; 
 		}
 			
-		Long idPersona = portal.getCredencial().getPersona().getId();
+		Long idPersona = userDetails.getCredenciales().getPersona().getId();
 		
-		String mensaje = "Ejemplar insertado por la persona: " + portal.getCredencial().getPersona().getNombre();
+		String mensaje = "Ejemplar insertado por la persona: " + userDetails.getCredenciales().getPersona().getNombre();
 		servEjemplar.registrarEjemplar(planta, idPersona, mensaje);
 		model.addAttribute("mensajeExito", "¡Ejemplar insertado correctamente!");
 		model.addAttribute("origen", maincontroller.getMenuLogin());
@@ -92,7 +97,9 @@ public class ControllerEjemplares {
     public String ejemplarFiltrarTipo(@RequestParam("tipos") String tipos,
             Model model) {
     	
-    	List<String> lTipos = Arrays.asList(tipos.split("\\s*,\\s*"));
+    	List<String> lTipos = Arrays.stream(tipos.split("\\s*,\\s*"))
+                .filter(tipo -> !tipo.isEmpty())
+                .collect(Collectors.toList());
     	List<Ejemplar> lEjemplar = ejemplarrepo.buscarEjemplaresPorTipos(lTipos);
     	if(lEjemplar == null || lEjemplar.isEmpty()) {
         	model.addAttribute("error", "No existen ejemplares con esos tipos.");

@@ -4,14 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vivero La Laboral</title>
-<link rel="stylesheet" th:href="@{/css/verplantas.css}">
+<link rel="stylesheet" th:href="@{/css/realizarpedido.css}">
 </head>
 <body>
 	<header>
 		<div class="logo">
 			<img th:src="@{/imagenes/lalaboral.png}">
 		</div>
+		<div class="cart">
+			<a th:href="@{/vercarrito}" class="menu-item"> <img
+				th:src="@{/imagenes/pedido.png}" alt="VER CARRITO"> <span>VER
+					CARRITO</span>
+			</a>
+		</div>
 	</header>
+
 	<h2>PLANTAS DEL VIVERO</h2>
 	<main>
 		<div th:if="${error}" style="color: red; font-weight: bold;">
@@ -20,9 +27,6 @@
 		<div th:if="${mensajeExito}" style="color: green; font-weight: bold;">
 			<p th:text="${mensajeExito}"></p>
 		</div>
-		<a th:href="@{/vercarrito}" class="menu-item"> <img
-			th:src="@{/imagenes/pedido.png}" alt="VER CARRITO"> <span>4.
-				VER CARRITO</span></a>
 
 		<form id="formSeleccion" th:action="@{/anadirpedido}" method="post">
 			<input type="hidden" name="codPlanta" id="codigoSeleccionado">
@@ -75,15 +79,16 @@
             document.getElementById("codigoSeleccionado").value = codigo;
             document.getElementById("cantidadSeleccionada").value = cantidad;
             document.getElementById("ejemplaresDisponibles").value = ejemplaresDisponibles;
-            document.getElementById("formSeleccion").submit(); // envía el formulario
+            document.getElementById("formSeleccion").submit(); // Envía el formulario
         }
     </script>
 
 		<br> <br>
 		<div class="contenedorboton">
-			<a th:href="@{/menucliente}">
+			<a href="/menucliente">
 				<button type="button">Volver</button>
 			</a>
 		</div>
 	</main>
 </body>
+</html>

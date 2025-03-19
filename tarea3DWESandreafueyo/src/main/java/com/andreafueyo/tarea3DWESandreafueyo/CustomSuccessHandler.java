@@ -32,20 +32,16 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
 		// Redirigir según el rol
 		if ("ROLE_ADMIN".equals(role)) {
-			response.sendRedirect("/menuadmin"); // Redirige a menú de admin
-			System.out.print("rol admin");
+			response.sendRedirect("/menuadmin"); // redirige a menú de admin
 			maincontroller.setMenuLogin("menuadmin");
 		} else if ("ROLE_PERSONAL".equals(role)) {
-			response.sendRedirect("/menupersonal"); // Redirige a menú de personal
-			System.out.print("rol personal");
+			response.sendRedirect("/menupersonal"); 
 			maincontroller.setMenuLogin("menupersonal");
 		} else if ("ROLE_CLIENTE".equals(role)){
-			response.sendRedirect("/menucliente"); // Redirige a menú de personal
-			System.out.print("rol cliente"
-					+ "32");
+			response.sendRedirect("/menucliente"); 
 			maincontroller.setMenuLogin("menucliente");
 		}else {
-			response.sendRedirect("/iniciarsesion"); // Redirige a una página por defecto
+			response.sendRedirect("/iniciarsesion");
 		}
 	}
 }

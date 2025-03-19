@@ -72,24 +72,28 @@
      	</fieldset>
      </form>
      <br>
-        <div th:if="${mensajes}">
-        <table id="mensajesTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>FECHAHORA</th>
-                    <th>MENSAJE</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="mensaje : ${mensajes}">
-                    <td th:text="${mensaje.id}"></td>
-                    <td th:text="${mensaje.fechahora}"></td>
-                    <td th:text="${mensaje.mensaje}"></td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
+       <div th:if="${mensajes}">
+		<table id="mensajesTable">
+			<thead>
+				<tr>
+					<th>NOMBRE USUARIO</th>
+					<th>NOMBRE EJEMPLAR</th>
+					<th>ID</th>
+					<th>FECHAHORA</th>
+					<th>MENSAJE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="mensaje : ${mensajes}">
+					<td	th:text="${mensaje.persona != null ? mensaje.persona.nombre : mensaje.cliente.nombre}"></td>
+					<td th:text="${mensaje.ejemplar.nombre}"></td>
+					<td th:text="${mensaje.id}"></td>
+					<td th:text="${mensaje.fechahora}"></td>
+					<td th:text="${mensaje.mensaje}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
         <br>
 		<div class="contenedorboton">
 			<a th:href="@{/gestionmensajes}">

@@ -7,9 +7,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.andreafueyo.tarea3DWESandreafueyo.repositorios.ClienteRepository;
 import com.andreafueyo.tarea3DWESandreafueyo.repositorios.EjemplarRepository;
 import com.andreafueyo.tarea3DWESandreafueyo.repositorios.MensajeRepository;
 import com.andreafueyo.tarea3DWESandreafueyo.repositorios.PersonaRepository;
+import com.andreafueyo.tarea3DWESandreafueyo.CustomUserDetailsServiceImpl;
+import com.andreafueyo.tarea3DWESandreafueyo.modelo.Cliente;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Ejemplar;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Mensaje;
 import com.andreafueyo.tarea3DWESandreafueyo.modelo.Persona;
@@ -23,6 +26,10 @@ public class ServiciosMensaje {
 	PersonaRepository personarepo;
 	@Autowired
 	EjemplarRepository ejemplarrepo;
+	@Autowired
+	ClienteRepository clienterepo;	
+	@Autowired
+	private CustomUserDetailsServiceImpl userDetails;
 
 	public Mensaje insertar(Mensaje m) {
 		return mensajerepo.saveAndFlush(m);
@@ -59,6 +66,18 @@ public class ServiciosMensaje {
 		m.setFechahora(LocalDateTime.now());
 		m.setMensaje(mensaje);
 		m.setPersona(persona);
+		m.setEjemplar(ejemplarOptional.get());
+		this.insertar(m);
+	}
+	
+	public void registrarMensajeCliente(Long id_ej, Long id_cl, String mensaje) {
+		Mensaje m = new Mensaje();
+
+		Cliente cliente = clienterepo.findByClienteId(id_cl);
+		Optional<Ejemplar> ejemplarOptional = ejemplarrepo.findById(id_ej);
+		m.setFechahora(LocalDateTime.now());
+		m.setMensaje(mensaje);
+		m.setCliente(cliente);
 		m.setEjemplar(ejemplarOptional.get());
 		this.insertar(m);
 	}

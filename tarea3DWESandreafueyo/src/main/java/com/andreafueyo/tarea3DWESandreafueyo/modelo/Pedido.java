@@ -20,23 +20,23 @@ import jakarta.persistence.Table;
 @Table(name="pedidos")
 
 public class Pedido implements Serializable{
-	
+
 	private static final long serialVersionUID=1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	private LocalDate fecha;
-	
+
 	@ManyToOne
 	@JoinColumn(name="idcliente")
 	private Cliente cliente;
-	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();	
-		
+
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();    
+
 	public Long getId() {
 		return id;
 	}
@@ -69,6 +69,6 @@ public class Pedido implements Serializable{
 		ret += "\tFecha: " + this.fecha;
 		return ret;
 	}
-	
-	
+
+
 }
